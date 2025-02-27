@@ -1,11 +1,9 @@
 import Warning from '@/assets/images/warning.svg?react';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import styled from 'styled-components';
 
 // 5.4 답변 작성 실패 시
 const ReviewFail = () => {
-  const navigate = useNavigate();
-
   return (
     <Container>
       <Wrapper>
@@ -16,13 +14,7 @@ const ReviewFail = () => {
           잠시 후 다시 시도해 주세요.
         </Label>
       </Wrapper>
-      <Button
-        onClick={() => {
-          navigate('/review');
-        }}
-      >
-        확인
-      </Button>
+      <Button to='/review'>확인</Button>
     </Container>
   );
 };
@@ -53,7 +45,7 @@ const Label = styled.div`
   line-height: 30px;
 `;
 
-const Button = styled.button`
+const Button = styled(Link)`
   position: absolute;
   left: 32px;
   right: 32px;
@@ -65,6 +57,7 @@ const Button = styled.button`
   height: 58px;
   border-radius: 12px;
   background: ${({ theme }) => theme.colors['neutral-600']};
+  cursor: pointer;
 
   color: ${({ theme }) => theme.colors.white};
   font-family: 'Pretendard Variable';
