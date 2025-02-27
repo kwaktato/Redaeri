@@ -83,7 +83,7 @@ const LabelWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
 `;
 
 const Title = styled.label`
