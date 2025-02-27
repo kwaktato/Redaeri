@@ -22,7 +22,7 @@ const ReviewFail = () => {
 export default ReviewFail;
 
 const Container = styled.div`
-  height: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,8 +41,8 @@ const Label = styled.div`
   color: ${({ theme }) => theme.colors['neutral-600']};
   text-align: center;
   font-family: 'GmarketSansMedium';
-  font-size: 22px;
-  line-height: 30px;
+  font-size: 18px;
+  line-height: 136%;
 `;
 
 const Button = styled(Link)`
@@ -61,7 +61,7 @@ const Button = styled(Link)`
 
   color: ${({ theme }) => theme.colors.white};
   font-family: 'Pretendard Variable';
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   line-height: 30px;
 `;
