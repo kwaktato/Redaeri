@@ -88,15 +88,15 @@ const LabelWrapper = styled.div`
 
 const Title = styled.label`
   font-family: 'GmarketSansMedium';
-  font-size: 26px;
-  line-height: 34px;
+  font-size: 21px;
+  line-height: 130%;
   text-align: center;
   color: ${({ theme }) => theme.colors.white};
 `;
 
 const Detail = styled.label`
   font-family: 'Pretendard Variable';
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 500;
   text-align: center;
   color: ${({ theme }) => theme.colors['primary-200']};
