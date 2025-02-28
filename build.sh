@@ -3,5 +3,5 @@
 #!/bin/sh
 cd ../
 mkdir output
-cp -R ./[your-repository-name]/* ./output
-cp -R ./output ./[your-repository-name]/
+cp -R ./Frontend/* ./output
+cp -R ./output ./Frontend/
