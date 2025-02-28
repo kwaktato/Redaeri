@@ -1,22 +1,25 @@
 import MyInfo from '@/assets/images/myInfo.svg?react';
 import { useState } from 'react';
-import { Link } from 'react-router';
 import styled from 'styled-components';
 
 interface ReviewIncludeProps {
+  includeText: string;
   handleIncludeText: (text: string) => void;
   handlePostAnswer: () => void;
+  beforeButton: () => void;
 }
 
 // 5.2 포함 문구 입력
 const ReviewInclude = ({
+  includeText,
   handleIncludeText,
   handlePostAnswer,
+  beforeButton,
 }: ReviewIncludeProps) => {
   const [textCount, setTextCount] = useState(0);
-  const [includeText, setIncludeText] = useState('');
 
   const handleAnswer = () => {
+    includeText = '';
     handleIncludeText(includeText);
     handlePostAnswer();
   };
@@ -39,11 +42,10 @@ const ReviewInclude = ({
       <IncludeWrapper>
         <Include
           placeholder='포함하고 싶은 내용을 이모티콘 없이 작성해주세요.'
-          value={includeText}
           maxLength={100}
           onChange={(e) => {
+            handleIncludeText(e.target.value);
             setTextCount(e.target.value.length);
-            setIncludeText(e.target.value);
           }}
         />
         <IncludeCount>{textCount}/100</IncludeCount>
@@ -65,7 +67,7 @@ const ReviewInclude = ({
         </Exam>
       </ExamWrapper>
 
-      <Before to='/review'>
+      <Before onClick={beforeButton}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='11'
@@ -88,6 +90,7 @@ export default ReviewInclude;
 const Container = styled.div`
   position: relative;
   padding: 68px 28px 0px 28px;
+  min-height: 100vh;
 `;
 
 const My = styled.div`
@@ -197,7 +200,7 @@ const Exam = styled.label`
   line-height: 22px;
 `;
 
-const Before = styled(Link)`
+const Before = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;

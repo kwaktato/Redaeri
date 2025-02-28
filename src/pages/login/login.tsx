@@ -64,7 +64,7 @@ const Container = styled.div`
 
 const SwiperContainer = styled(Swiper)`
   width: 100%;
-  padding: 0 35px;
+  padding: 0 28px;
   margin-top: 27px;
   .swiper-pagination-bullets {
     position: relative;
@@ -129,7 +129,7 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 599;
   svg {
     width: 15px;
     height: 15px;

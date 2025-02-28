@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
 
+/* eslint-disable no-console */
 const Review = () => {
   const [score, setScore] = useState(0);
   const [reviewText, setReviewText] = useState('');
@@ -28,17 +29,17 @@ const Review = () => {
     setIsLoading(true);
 
     // api 연결 코드
+    // 리대리 답변해 api, response는 받아서 reviewcomplete에 전달
     const data = {
       score: score,
       reviewText: reviewText,
       includeText: includeText,
     };
+    console.log(data);
     try {
       const result = await axios.post('', data);
-      /* eslint-disable no-console */
       console.log(result);
     } catch (e) {
-      /* eslint-disable no-console */
       console.log('리뷰 생성 에러: ', e);
     }
 
@@ -56,8 +57,10 @@ const Review = () => {
 
       {currentStep === 2 && (
         <ReviewInclude
+          includeText={includeText}
           handleIncludeText={handleIncludeText}
           handlePostAnswer={postReview}
+          beforeButton={() => setCurrentStep(1)}
         />
       )}
 
@@ -75,7 +78,12 @@ const Review = () => {
         />
       )}
 
-      {currentStep === 3 && <ReviewComplete />}
+      {currentStep === 3 && (
+        <ReviewComplete
+          anotherButton={() => setCurrentStep(1)}
+          postReview={postReview}
+        />
+      )}
     </Container>
   );
 };

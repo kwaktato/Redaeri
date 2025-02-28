@@ -152,7 +152,7 @@ const Container = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 70px 35px 48px 35px;
+  padding: 40px 28px 48px 35px;
 `;
 
 const Title = styled.section`
@@ -163,7 +163,7 @@ const Title = styled.section`
   strong {
     color: ${({ theme }) => theme.colors['primary-500']};
     font-family: 'GmarketSansBold';
-    font-weight: 700;
+    font-weight: 599;
   }
   .info {
     margin-top: 12px;
@@ -225,7 +225,7 @@ const Content = styled.section`
 
   div {
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 599;
     color: ${({ theme }) => theme.colors['gray-900']};
   }
 `;

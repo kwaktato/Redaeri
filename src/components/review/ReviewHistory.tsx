@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 import ArrowLeft from '@/assets/images/arrow-left.svg?react';
+import { useNavigate } from 'react-router';
 
 // 5.5 리뷰 히스토리
 const ReviewHistory = () => {
+  const navigate = useNavigate();
+
   return (
     // review.length===0? <ReviewHistoryNone/>
     <Container>
       <Navbar>
-        <NavLeft />
+        <NavLeft onClick={() => navigate(-1)} />
         <NavCenter>리뷰 히스토리</NavCenter>
       </Navbar>
 
@@ -171,7 +174,7 @@ const TextLabel = styled.label`
   font-weight: 500;
   line-height: 162.5%;
   height: 52px;
-  overflow: scroll;
+  overflow: hidden;
 `;
 
 const TimeWrapper = styled.div`

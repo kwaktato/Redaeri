@@ -26,7 +26,7 @@ export default function Home() {
 const Container = styled.div`
   background: ${({ theme }) => theme.colors['primary-500']};
   height: 100vh;
-  padding: 90px 35px 48px 35px;
+  padding: 90px 28px 48px 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -64,7 +64,7 @@ const Link = styled(RouterLink)`
   display: block;
   text-align: center;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 599;
   border-radius: 12px;
   padding: 14px 0;
 `;

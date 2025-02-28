@@ -21,7 +21,7 @@ const StyledButton = styled.button<ButtonProps>`
   color: ${({ theme, colorScheme }) =>
     colorScheme === 'white' ? theme.colors['gray-900'] : theme.colors['white']};
   width: 100%;
-  font-weight: bold;
+  font-weight: 599;
 
   &:disabled {
     background: ${({ theme }) => theme.colors['gray-200']};

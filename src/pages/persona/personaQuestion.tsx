@@ -146,6 +146,7 @@ const QuestionTitle = styled.div`
   strong {
     font-family: 'GmarketSansBold';
     color: ${({ theme }) => theme.colors['primary-500']};
+    font-weight: 599;
   }
 `;
 
@@ -186,7 +187,7 @@ const BackButton = styled.button`
   margin-bottom: 8px;
   color: ${({ theme }) => theme.colors['gray-700']};
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 599;
   line-height: 0;
   svg {
     width: 14px;

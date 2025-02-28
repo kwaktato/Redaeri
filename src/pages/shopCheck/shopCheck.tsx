@@ -55,7 +55,7 @@ const Title = styled.section`
   strong {
     color: ${({ theme }) => theme.colors['primary-500']};
     font-family: 'GmarketSansBold';
-    font-weight: 700;
+    font-weight: 599;
   }
 `;
 
@@ -91,9 +91,13 @@ const Link = styled(RouterLink)`
     background: ${({ theme }) => theme.colors['primary-500']};
     color: ${({ theme }) => theme.colors['white']};
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 599;
     padding: 12px 0;
     border-radius: 12px;
     text-align: center;
   }
+
+  position: sticky;
+  bottom: 12px;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.4);
 `;

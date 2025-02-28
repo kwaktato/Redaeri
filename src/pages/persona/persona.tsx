@@ -96,7 +96,7 @@ export default function Persona() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 25px 36px 48px 36px;
+  padding: 25px 28px 48px 28px;
   min-height: 100vh;
 `;
 

@@ -91,6 +91,7 @@ const Title = styled.section`
   font-family: GmarketSansMedium;
   strong {
     font-family: GmarketSansBold;
+    font-weight: 599;
   }
   div {
     img {
@@ -123,6 +124,7 @@ const Content = styled.section`
     border-radius: 12px;
     outline: none;
     font-family: 'Pretendard Variable';
+    font-size: 14px;
     border-radius: 12px;
     padding: 12px 16px;
     background: ${({ theme }) => theme.colors['primary-100']};
@@ -136,6 +138,9 @@ const Content = styled.section`
     margin-top: 6px;
     svg {
       border-radius: 6px;
+    }
+    strong {
+      font-weight: 599;
     }
   }
 

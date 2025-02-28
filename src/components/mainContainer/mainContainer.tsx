@@ -12,5 +12,5 @@ export default function MainContainer({
 
 const Container = styled.div`
   height: 100%;
-  padding: 70px 35px 48px 35px;
+  padding: 40px 28px 48px 28px;
 `;

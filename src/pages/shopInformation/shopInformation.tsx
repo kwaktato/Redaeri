@@ -84,7 +84,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 70px 35px 48px 35px;
+  padding: 40px 28px 48px 28px;
 `;
 
 const Greeting = styled.section`
@@ -94,7 +94,7 @@ const Greeting = styled.section`
   strong {
     font-family: 'GmarketSansBold';
     color: ${({ theme }) => theme.colors['primary-500']};
-    font-weight: 700;
+    font-weight: 599;
   }
 `;
 
@@ -114,7 +114,7 @@ const InputContainer = styled.div`
   label {
     color: ${({ theme }) => theme.colors['gray-900']};
     padding-bottom: 8px;
-    font-weight: 700;
+    font-weight: 599;
   }
   input {
     padding: 12px 16px;
@@ -140,7 +140,7 @@ const FoodTypeContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 599;
   color: ${({ theme }) => theme.colors['gray-900']};
   p {
     margin-bottom: 8px;
@@ -187,4 +187,8 @@ const Button = styled.button`
     background: ${({ theme }) => theme.colors['gray-200']};
     color: ${({ theme }) => theme.colors['gray-500']};
   }
+
+  position: sticky;
+  bottom: 12px;
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.4);
 `;

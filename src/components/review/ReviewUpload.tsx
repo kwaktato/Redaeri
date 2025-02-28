@@ -5,12 +5,14 @@ import styled, { keyframes } from 'styled-components';
 import Star from './Star';
 import { useState } from 'react';
 import { Link } from 'react-router';
+import axios from 'axios';
 
 interface ReviewUploadProps {
   handleReviewUpload: (rating: number, review: string) => void;
 }
 
 // 5.1 리뷰 업로드
+/* eslint-disable no-console */
 const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
   const [score, setScore] = useState(0);
   const [review, setReview] = useState(''); // 리대리 호출 시 사용할 리뷰 텍스트
@@ -43,19 +45,37 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
 
       setImage(selectedFile);
       setIsImage(true);
+
+      convert(selectedFile);
     }
   };
 
-  const convert = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleImageChange(e);
+  const baseURL = import.meta.env.VITE_APP_API_URL;
+  const convert = async (selectedFile: File) => {
     setIsLoading(true);
 
+    const formData = new FormData();
+    formData.append('reviewImgFile', selectedFile);
     // api 호출
-    setReview('result');
-
-    setTimeout(() => {
+    try {
+      const result = await axios.post(
+        `${baseURL}/api/v1/image/text/read`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Token:
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6MjUsImV4cCI6MTc0MDgzNTQyNSwiaWF0IjoxNzQwNzQ5MDI1fQ.LLZ4UrDZ27-Kd8RNEfOmGAFjgzyXFA-Jw2ufUSv-3a0',
+          },
+        }
+      );
+      console.log(result.data);
+      setReview(result.data.data.reviewText);
+    } catch (e) {
+      console.log('리뷰 사진 에러: ', e);
+    } finally {
       setIsLoading(false);
-    }, 2000);
+    }
   };
 
   return (
@@ -98,7 +118,7 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
             type='file'
             accept='image/*'
             style={{ display: 'none' }}
-            onChange={convert}
+            onChange={handleImageChange}
           />
           {!isImage && !isText && (
             <>
