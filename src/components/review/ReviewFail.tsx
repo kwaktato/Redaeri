@@ -1,4 +1,4 @@
-import Warning from '@/assets/images/warning.svg?react';
+import WarningIcon from '@/assets/images/warning.svg?react';
 import { Link } from 'react-router';
 import styled from 'styled-components';
 
@@ -9,7 +9,7 @@ const ReviewFail = () => {
       <Wrapper>
         <Warning />
         <Label>
-          리대리가 답변 작성을 어려워하고 있어요.
+          리대리 답변 생성이 중단되었어요.
           <br />
           잠시 후 다시 시도해 주세요.
         </Label>
@@ -34,7 +34,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
+`;
+
+const Warning = styled(WarningIcon)`
+  width: 48px;
 `;
 
 const Label = styled.div`
@@ -62,6 +66,5 @@ const Button = styled(Link)`
   color: ${({ theme }) => theme.colors.white};
   font-family: 'Pretendard Variable';
   font-size: 18px;
-  font-weight: 700;
-  line-height: 30px;
+  font-weight: 599;
 `;
