@@ -6,6 +6,8 @@ import GlobalStyle from '@/style/GlobalStyle.tsx';
 import RootLayout from '@/components/layout/rootLayout.tsx';
 import { ThemeProvider } from 'styled-components';
 import Home from '@/pages/home/home.tsx';
+import Review from './pages/review/Review.tsx';
+import ReviewHistory from './components/review/ReviewHistory.tsx';
 
 async function init() {
   if (process.env.NODE_ENV === 'development') {
@@ -55,7 +57,7 @@ const theme = {
     'neutral-500': '#4D5155',
     'neutral-600': '#26282A',
 
-    'point-100': '#D5E4F1',
+    'point-100': '#FF8539',
     'point-200': '#AACAE6',
     'point-300': '#FFF495',
     'point-400': '#FFE351',
@@ -76,6 +78,8 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route element={<RootLayout />}>
             <Route path='/' element={<Home />} />
+            <Route path='/review' element={<Review />} />
+            <Route path='/review-history' element={<ReviewHistory />} />
           </Route>
         </Routes>
       </ThemeProvider>
