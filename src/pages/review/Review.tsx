@@ -10,7 +10,7 @@ const Review = () => {
   const [score, setScore] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [includeText, setIncludeText] = useState('');
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleReviewUpload = (rating: number, review: string) => {

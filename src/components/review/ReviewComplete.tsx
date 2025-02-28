@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import MyInfo from '@/assets/images/myInfo.svg?react';
 import ArrowDown from '@/assets/images/arrowDown.svg?react';
 import CopyIcon from '@/assets/images/copy.svg?react';
+import Tooltip from '@/assets/images/tooltip.png';
 import Star from './Star';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
@@ -86,6 +87,7 @@ const ReviewComplete = () => {
       <BottomWrapper>
         <Border />
         <ButtonWrapper>
+          <img src={Tooltip} alt='tooltip' />
           <Button state='' to='upload-review'>
             스타일 수정하기
           </Button>
@@ -264,6 +266,15 @@ const ButtonWrapper = styled.div`
   display: flex;
   gap: 8px;
   justify-content: space-between;
+  position: relative;
+
+  img {
+    width: 200px;
+    position: absolute;
+    top: -40px;
+    transform: translateX(-50%);
+    left: 100px;
+  }
 `;
 
 const Button = styled(Link)<{ state: string }>`
