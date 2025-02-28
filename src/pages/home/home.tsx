@@ -25,7 +25,7 @@ export default function Home() {
 
 const Container = styled.div`
   background: ${({ theme }) => theme.colors['primary-500']};
-  height: 100%;
+  height: 100vh;
   padding: 90px 35px 48px 35px;
   display: flex;
   flex-direction: column;

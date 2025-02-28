@@ -47,7 +47,14 @@ const theme = {
     'gray-800': '#4D5155',
     'gray-900': '#26282A',
 
-    'point-100': '#D5E4F1',
+    'neutral-100': '#F3F7FA',
+    'neutral-200': '#D9DFE5',
+    'neutral-300': '#BFC9D4',
+    'neutral-400': '#73797F',
+    'neutral-500': '#4D5155',
+    'neutral-600': '#26282A',
+
+    'point-100': '#FF8539',
     'point-200': '#AACAE6',
     'point-300': '#FFF495',
     'point-400': '#FFE351',

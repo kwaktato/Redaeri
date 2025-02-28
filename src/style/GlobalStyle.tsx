@@ -72,7 +72,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     background: ${({ theme }) => theme.colors['gray-100']};
     width: 100%;
-    min-height: 100vh;
   }
 `;
 
