@@ -1,4 +1,5 @@
 import ReviewNoneIcon from '@/assets/images/reviewHistory.svg?react';
+import ArrowLeft from '@/assets/images/arrow-left.svg?react';
 import { Link } from 'react-router';
 import styled from 'styled-components';
 
@@ -40,10 +41,13 @@ const Navbar = styled.div`
   position: relative;
 `;
 
-const NavLeft = styled.div`
+const NavLeft = styled(ArrowLeft)`
   cursor: pointer;
   position: absolute;
   left: 0px;
+  path {
+    stroke: ${({ theme }) => theme.colors['neutral-300']};
+  }
 `;
 
 const NavCenter = styled.div`

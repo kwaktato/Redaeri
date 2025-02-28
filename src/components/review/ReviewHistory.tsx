@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ArrowLeft from '@/assets/images/arrow-left.svg?react';
 
 // 5.5 리뷰 히스토리
 const ReviewHistory = () => {
@@ -6,7 +7,7 @@ const ReviewHistory = () => {
     // review.length===0? <ReviewHistoryNone/>
     <Container>
       <Navbar>
-        <NavLeft>{'<'}</NavLeft>
+        <NavLeft />
         <NavCenter>리뷰 히스토리</NavCenter>
       </Navbar>
 
@@ -62,10 +63,13 @@ const Navbar = styled.div`
   position: relative;
 `;
 
-const NavLeft = styled.div`
+const NavLeft = styled(ArrowLeft)`
   cursor: pointer;
   position: absolute;
   left: 0px;
+  path {
+    stroke: ${({ theme }) => theme.colors['neutral-300']};
+  }
 `;
 
 const NavCenter = styled.div`
