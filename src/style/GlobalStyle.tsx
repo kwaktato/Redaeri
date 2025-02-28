@@ -56,6 +56,11 @@ const GlobalStyle = createGlobalStyle`
     background: none;
     padding: 0;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    &:focus {
+      outline: none;
+    }
   }
 
   img {

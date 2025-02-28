@@ -1,13 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter } from 'react-router';
+import { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from '@/style/GlobalStyle.tsx';
-import RootLayout from '@/components/layout/rootLayout.tsx';
-import { ThemeProvider } from 'styled-components';
-import Home from '@/pages/home/home.tsx';
-import Review from './pages/review/Review.tsx';
-import ReviewHistory from './components/review/ReviewHistory.tsx';
+import CustomRoute from '@/components/route/route.tsx';
 
 async function init() {
   if (process.env.NODE_ENV === 'development') {
@@ -40,7 +37,7 @@ const theme = {
     'secondary-800': '#665000',
     'secondary-900': '#332800',
 
-    'gray-100': '#F2F4F6',
+    'gray-100': '#F3F7FA',
     'gray-200': '#E6EAEE',
     'gray-300': '#D9DFE5',
     'gray-400': '#CCD4DD',
@@ -75,13 +72,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Routes>
-          <Route element={<RootLayout />}>
-            <Route path='/' element={<Home />} />
-            <Route path='/review' element={<Review />} />
-            <Route path='/review-history' element={<ReviewHistory />} />
-          </Route>
-        </Routes>
+        <CustomRoute />
       </ThemeProvider>
     </BrowserRouter>
   </StrictMode>
