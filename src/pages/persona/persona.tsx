@@ -9,7 +9,7 @@ import {
   PERSONA_EMOTION_QUESTION,
   PersonaInsertType,
 } from '@/types/persona';
-// import { createPersona } from '@/services/persona';
+import { createPersona } from '@/services/persona';
 
 // TODO: UI 완성 후 주석 삭제 예정
 export default function Persona() {
@@ -37,19 +37,15 @@ export default function Persona() {
     const isLastPage = currentPage === 2;
     if (isLastPage) {
       setIsLoading(true);
-      // const { data } = await createPersona({
-      //   ...currentPersona,
-      //   lengthSelect: question,
-      // });
-
-      // navigate('/persona-success', {
-      //   state: {
-      //     ...data,
-      //   },
-      // });
-      setTimeout(() => {
-        navigate('/persona-success');
-      }, 1000);
+      const { data } = await createPersona({
+        ...currentPersona,
+        lengthSelect: question,
+      });
+      navigate('/persona-success', {
+        state: {
+          ...data,
+        },
+      });
     }
   };
 

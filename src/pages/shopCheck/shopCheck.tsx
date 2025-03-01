@@ -1,23 +1,35 @@
 import { useLocation, useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import MainContainer from '@/components/mainContainer/mainContainer';
 import Button from '@/components/button/Button';
-// import { createStore } from '@/services/store';
+import { createStore, updateStore } from '@/services/store';
+import { User } from '@/types/user';
+import { getUser } from '@/services/user';
 
 export default function ShopCheck() {
+  const [user, setUser] = useState<User>();
+
   const navigate = useNavigate();
   const { state } = useLocation();
-  const shopName = state?.shopName;
+  const storeName = state?.storeName || '';
   const selectedFoodType = state?.selectedFoodType;
 
   const onClickCompleteBtn = async () => {
     try {
-      // await createStore({
-      //   shopName,
-      //   storeType: selectedFoodType?.name,
-      // });
+      if (user?.storeName || user?.storeType) {
+        await updateStore({
+          storeName: storeName,
+          storeType: selectedFoodType?.name,
+        });
+        navigate('/persona');
+        return;
+      }
+      await createStore({
+        storeName,
+        storeType: selectedFoodType?.name,
+      });
       navigate('/persona');
     } catch {
       // TODO: 에러 추가
@@ -26,19 +38,26 @@ export default function ShopCheck() {
   };
 
   useEffect(() => {
-    if (!shopName || !selectedFoodType) {
+    if (!storeName || !selectedFoodType) {
       navigate('/shop-information');
     }
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const user = await getUser();
+      setUser(user);
+    })();
   }, []);
 
   return (
     <Container>
       <Title>
         <p>
-          <strong>{selectedFoodType?.name || ''}</strong>를(을) 판매하는
+          <strong>{selectedFoodType?.name}</strong>를(을) 판매하는
         </p>
         <p>
-          <strong>{shopName || ''}</strong> 사장님이시군요!
+          <strong>{storeName}</strong> 사장님이시군요!
         </p>
         <p>이렇게 정보 설정을 완료할까요?</p>
       </Title>

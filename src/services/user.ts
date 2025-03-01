@@ -1,3 +1,4 @@
+import { User } from '@/types/user';
 import { fetcher } from './request';
 
 export const getNaverUser = async (code: string, state: string) => {
@@ -12,6 +13,6 @@ export const getNaverUser = async (code: string, state: string) => {
 };
 
 export const getUser = async () => {
-  const { data } = await fetcher('/user/get');
+  const { data } = await fetcher<User>('/user/get');
   return data;
 };

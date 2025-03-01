@@ -5,16 +5,14 @@ import { Link, useNavigate } from 'react-router';
 import Button from '@/components/button/Button';
 import CloseIcon from '@/assets/images/close.svg?react';
 import Loading from '@/components/loading/Loading';
-// import { createPersonaByUpload } from '@/services/persona';
+import { createPersonaByUpload } from '@/services/persona';
 import Toast from '@/components/toast/toast';
-// import { getUser } from '@/services/user';
+import { getUser } from '@/services/user';
 
-// TODO: API 연결, 이미지 3개이상 첨부 문구 및 toast
-// TODO: textarea 띄어쓰기 하지 않을 경우 줄바꿈 이슈 확인
 export default function UploadReview() {
   const [isOpenTextArea, setIsOpenTextarea] = useState(false);
   const [textareaValue, setTextareaValue] = useState('');
-  // const [fileList, setFileList] = useState<File[]>([]);
+  const [fileList, setFileList] = useState<File[]>([]);
   const [uploadedText, setUploadedText] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadedList, setUploadedList] = useState<string[]>([]);
@@ -29,21 +27,16 @@ export default function UploadReview() {
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    // console.log(fileList);
-    // await createPersonaByUpload({
-    //   files: fileList,
-    //   answers: uploadedText,
-    // });
-    // TODO: API
-    // const data = await createPersonaByUpload({
-    //   files: fileList,
-    //   answers: uploadedText,
-    // });
-    // navigate('/persona-success', { state: { data } });
+    await createPersonaByUpload({
+      files: fileList,
+      answers: uploadedText,
+    });
 
-    setTimeout(() => {
-      navigate('/persona-success');
-    }, 1000);
+    const data = await createPersonaByUpload({
+      files: fileList,
+      answers: uploadedText,
+    });
+    navigate('/persona-success', { state: { data } });
   };
 
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +54,7 @@ export default function UploadReview() {
       return;
     }
 
-    // setFileList(Array.from(files));
+    setFileList(Array.from(files));
     setUploadedList([...uploadedList, ...fileNames]);
   };
 
@@ -91,8 +84,11 @@ export default function UploadReview() {
 
   useEffect(() => {
     (async () => {
-      // const { data } = await getUser();
-      // console.log(data);
+      const data = await getUser();
+      if (!data) {
+        navigate('/login');
+        return;
+      }
     })();
   }, []);
 
@@ -106,15 +102,18 @@ export default function UploadReview() {
     <Container onSubmit={onSubmitForm}>
       <div>
         <Title>
-          <strong>웨일즈 베이커리</strong>
-          <p>사장님, 반갑습니다!</p>
+          <p className='greeting'>사장님 반갑습니다!</p>
+
+          <p>
+            지금부터 <strong>말투분석</strong>을
+          </p>
+          <p>시작하겠습니다.</p>
 
           <div className='info'>
             <p>
               <strong>안성맞춤, 찰떡콩떡</strong>한 리뷰 생성을 위해
             </p>
-            <p>사장님의 말투를 먼저 분석합니다.</p>
-            <p>직접 장성하신 답변의 사진이나 텍스트를 업로드해주세요.</p>
+            <p>직접 작성하신 답변의 사진이나 텍스트를 업로드해주세요.</p>
             <span>*최대 3개의 답변까지 가능합니다.</span>
           </div>
         </Title>
@@ -212,18 +211,22 @@ const Container = styled.form`
 
 const Title = styled.section`
   font-family: 'GmarketSansMedium';
-  font-size: 18px;
+  font-size: 22px;
   color: ${({ theme }) => theme.colors['gray-800']};
   margin-bottom: 10px;
+  .greeting {
+    font-size: 15px;
+    color: ${({ theme }) => theme.colors['gray-700']};
+  }
   strong {
     color: ${({ theme }) => theme.colors['primary-500']};
     font-family: 'GmarketSansBold';
     font-weight: 599;
   }
   .info {
-    margin-top: 12px;
+    margin-top: 8px;
     font-family: 'Pretendard Variable';
-    font-size: 15px;
+    font-size: 13px;
     color: ${({ theme }) => theme.colors['gray-700']};
     strong {
       font-weight: 300;
@@ -234,8 +237,8 @@ const Title = styled.section`
         position: absolute;
         color: ${({ theme }) => theme.colors['primary-500']};
         top: -20px;
-        right: -4px;
-        letter-spacing: 9px;
+        right: -3px;
+        letter-spacing: 7px;
         font-size: 17px;
       }
     }

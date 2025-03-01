@@ -1,12 +1,20 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-export const requestURL = 'http://api.redaeri.kro.kr/api/v1';
+export const requestURL = 'https://api.redaeri.kro.kr/api/v1';
 
-// TODO: 테스트용
-const TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6MjMsImV4cCI6MTc0MDgyNjY2NCwiaWF0IjoxNzQwNzQwMjY0fQ.OcliMHTt-PxzMUIdu2f0kBtHQV_XjHgFPLGNhbmVrXk';
+function extractUserToken(cookieStr: string) {
+  const userRegex = /token=([^;]*)/;
+  const match = cookieStr.match(userRegex);
 
-axios.defaults.headers.common['Token'] = `${TOKEN}`;
+  if (match && match[1]) {
+    return match[1];
+  }
+
+  return null;
+}
+const userToken = extractUserToken(document.cookie);
+
+axios.defaults.headers.common['Token'] = `${userToken}`;
 
 export const fetcher = async <T>(
   queryKey: string,

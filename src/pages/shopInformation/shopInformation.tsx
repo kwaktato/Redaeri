@@ -7,7 +7,7 @@ import { FOOD_TYPE } from '@/types/food';
 import Button from '@/components/button/Button';
 
 export default function ShopInformation() {
-  const [shopName, setShopName] = useState('');
+  const [storeName, setStoreName] = useState('');
   const [selectedFoodType, setSelectedFoodType] = useState<{
     name: string;
     image: string;
@@ -18,7 +18,7 @@ export default function ShopInformation() {
   const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate('/shop-check', {
-      state: { selectedFoodType, shopName },
+      state: { selectedFoodType, storeName },
     });
   };
 
@@ -42,11 +42,11 @@ export default function ShopInformation() {
               id='shopName'
               placeholder='상호명을 입력해주세요.'
               maxLength={25}
-              value={shopName}
-              onChange={(e) => setShopName(e.target.value)}
+              value={storeName}
+              onChange={(e) => setStoreName(e.target.value)}
             />
-            {shopName && (
-              <button onClick={() => setShopName('')}>
+            {storeName && (
+              <button onClick={() => setStoreName('')}>
                 <CloseIcon />
               </button>
             )}
@@ -73,7 +73,7 @@ export default function ShopInformation() {
         </FoodTypeContainer>
       </ContentContainer>
 
-      <SubmitButton type='submit' disabled={!shopName || !selectedFoodType}>
+      <SubmitButton type='submit' disabled={!storeName || !selectedFoodType}>
         확인
       </SubmitButton>
     </Form>
