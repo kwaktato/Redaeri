@@ -51,7 +51,7 @@ export default function Persona() {
           type='boss'
         >
           <p>
-            <strong>어떤 사장님</strong>처럼
+            <strong>어떤 말투</strong>로
           </p>
           <p>답변하고 싶으세요?</p>
         </PersonaQuestion>
