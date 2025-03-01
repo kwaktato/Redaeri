@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules';
 
 import WhiteLogo from '@/assets/images/blue-logo.svg?react';
 import NaverLogo from '@/assets/images/naver-logo.svg?react';
@@ -20,25 +20,25 @@ export default function Login() {
   const onClickNaverBtn = () => {
     if (!window.naver || !naverLoginBtnRef.current) return;
     navigate('/shop-information');
-    // (naverLoginBtnRef.current.children[0] as HTMLAnchorElement).click();
+    (naverLoginBtnRef.current.children[0] as HTMLAnchorElement).click();
   };
 
   useEffect(() => {
     if (!window.naver) return;
 
-    // const naverLogin = new window.naver.LoginWithNaverId({
-    //   clientId: import.meta.env.VITE_NAVER_CLIENT_ID,
-    //   callbackUrl: import.meta.env.VITE_NAVER_CALLBACK_URL,
-    //   isPopup: false,
-    //   loginButton: {
-    //     color: 'green',
-    //     type: 3,
-    //     height: 50,
-    //   },
-    // });
+    const naverLogin = new window.naver.LoginWithNaverId({
+      clientId: import.meta.env.VITE_NAVER_CLIENT_ID,
+      callbackUrl: import.meta.env.VITE_NAVER_CALLBACK_URL,
+      isPopup: false,
+      loginButton: {
+        color: 'green',
+        type: 3,
+        height: 50,
+      },
+    });
 
-    // if (!naverLogin) return;
-    // naverLogin.init();
+    if (!naverLogin) return;
+    naverLogin.init();
   }, []);
 
   return (
@@ -59,7 +59,12 @@ export default function Login() {
         slidesPerView={1}
         pagination={true}
         height={200}
-        modules={[Pagination]}
+        modules={[Pagination, Autoplay]}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        loop={true}
       >
         <SwiperContent>
           <img src={SlideImageOne} alt='login-slide-1' />
@@ -76,11 +81,11 @@ export default function Login() {
         <p>
           리대리 서비스를 이용하려면 <strong>로그인</strong>이 필요해요!
         </p>
-        {/* <a
+        <a
           href={`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${import.meta.env.VITE_NAVER_CLIENT_ID}&state=false&redirect_uri=${import.meta.env.VITE_NAVER_CALLBACK_URL}`}
         >
           네이버 로그인 테스트
-        </a> */}
+        </a>
         <Button onClick={onClickNaverBtn}>
           <div id='naverIdLogin' className='hidden' ref={naverLoginBtnRef} />
           <NaverLogo />
