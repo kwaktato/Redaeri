@@ -29,7 +29,7 @@ export default function ShopInformation() {
           <p>사장님, 안녕하세요!</p>
           <p>안성맞춤 답변 생성을 위해</p>
           <p>
-            <strong>가게 이름</strong>과 <strong>음식 종류 정보</strong>가
+            <strong>가게 이름</strong>과 <strong>음식 종류 </strong>정보가
             필요해요.
           </p>
         </Greeting>

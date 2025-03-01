@@ -12,9 +12,13 @@ function extractUserToken(cookieStr: string) {
 
   return null;
 }
-const userToken = extractUserToken(document.cookie);
 
-axios.defaults.headers.common['Token'] = `${userToken}`;
+axios.interceptors.request.use((config) => {
+  const userToken = extractUserToken(document.cookie);
+
+  config.headers['Token'] = `${userToken}`;
+  return config;
+});
 
 export const fetcher = async <T>(
   queryKey: string,
