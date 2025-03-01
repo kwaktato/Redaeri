@@ -9,6 +9,7 @@ import NaverLogo from '@/assets/images/naver-logo.svg?react';
 import SlideImageOne from '@/assets/images/login-slide-1.png';
 import SlideImageTwo from '@/assets/images/login-slide-2.png';
 import SlideImageThree from '@/assets/images/login-slide-3.png';
+import KakaoLogo from '@/assets/images/kakao-logo.svg?react';
 import { getNaverUser } from '@/services/user';
 
 import 'swiper/css';
@@ -21,6 +22,11 @@ export default function Login() {
   const onClickNaverBtn = () => {
     if (!naverLoginLinkRef.current) return;
     naverLoginLinkRef.current.click();
+  };
+
+  const onClickKakaoBtn = () => {
+    document.cookie = `token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDAsImV4cCI6MTc0MTcwOTE5MiwiaWF0IjoxNzQwODQ1MTkyfQ.0BD8XXVou_oPhXX9-pbNglpMzcJBRj5lro8YUx1OXvg`;
+    navigate('/shop-information');
   };
 
   const getUser = async (code: string, state: string) => {
@@ -94,10 +100,10 @@ export default function Login() {
           <NaverLogo />
           네이버로 로그인하기
         </Button>
-        {/* <Button>
+        <Button onClick={onClickKakaoBtn}>
           <KakaoLogo />
-          카카오로 로그인하기
-        </Button> */}
+          테스트용 로그인하기
+        </Button>
       </LoginContainer>
     </Container>
   );
@@ -191,6 +197,12 @@ const Button = styled.button`
     width: 15px;
     height: 15px;
     margin-right: 4px;
+  }
+
+  &:last-child {
+    margin-top: 10px;
+    background: #f7e600;
+    color: ${({ theme }) => theme.colors['black']};
   }
 `;
 
