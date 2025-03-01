@@ -26,6 +26,7 @@ export default function ShopCheck() {
           storeType: selectedFoodType?.name,
         });
         navigate('/upload-answer');
+        window.scrollTo(0, 0);
         setIsLoading(false);
         return;
       }
@@ -35,6 +36,7 @@ export default function ShopCheck() {
       });
       setIsLoading(false);
       navigate('/upload-answer');
+      window.scrollTo(0, 0);
     } catch {
       // TODO: 에러 추가
       alert('에러 발생');
@@ -44,6 +46,7 @@ export default function ShopCheck() {
   useEffect(() => {
     if (!storeName || !selectedFoodType) {
       navigate('/shop-information');
+      window.scrollTo(0, 0);
     }
   }, []);
 
@@ -69,7 +72,12 @@ export default function ShopCheck() {
         <img src={selectedFoodType?.selectedImage} alt='' />
       </Content>
       <LinkContainer>
-        <BackButton onClick={() => navigate(-1)}>
+        <BackButton
+          onClick={() => {
+            navigate(-1);
+            window.scrollTo(0, 0);
+          }}
+        >
           아니요, 다시 입력할래요
         </BackButton>
         <Button isLoading={isLoading} onClick={onClickCompleteBtn}>

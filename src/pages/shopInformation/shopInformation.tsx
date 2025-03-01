@@ -20,6 +20,7 @@ export default function ShopInformation() {
     navigate('/shop-check', {
       state: { selectedFoodType, storeName },
     });
+    window.scrollTo(0, 0);
   };
 
   return (

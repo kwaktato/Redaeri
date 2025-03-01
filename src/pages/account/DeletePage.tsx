@@ -29,8 +29,20 @@ const DeletePage = () => {
       </Guide>
       <StickyBottomContainer>
         <ButtonWrapper>
-          <ButtonBlue onClick={() => navigate(-1)}>취소하기</ButtonBlue>
-          <ButtonWhite onClick={() => navigate('/delete-complete')}>
+          <ButtonBlue
+            onClick={() => {
+              navigate(-1);
+              window.scrollTo(0, 0);
+            }}
+          >
+            취소하기
+          </ButtonBlue>
+          <ButtonWhite
+            onClick={() => {
+              navigate('/delete-complete');
+              window.scrollTo(0, 0);
+            }}
+          >
             탈퇴하기
           </ButtonWhite>
         </ButtonWrapper>

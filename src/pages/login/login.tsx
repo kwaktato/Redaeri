@@ -27,6 +27,7 @@ export default function Login() {
   const onClickKakaoBtn = () => {
     document.cookie = `token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDAsImV4cCI6MTc0MTcwOTE5MiwiaWF0IjoxNzQwODQ1MTkyfQ.0BD8XXVou_oPhXX9-pbNglpMzcJBRj5lro8YUx1OXvg`;
     navigate('/shop-information');
+    window.scrollTo(0, 0);
   };
 
   const getUser = async (code: string, state: string) => {
@@ -34,6 +35,7 @@ export default function Login() {
       const user = await getNaverUser(code, state);
       document.cookie = `token=${user.token}`;
       navigate('/shop-information');
+      window.scrollTo(0, 0);
     } catch {
       alert('에러 발생');
     }
@@ -47,6 +49,8 @@ export default function Login() {
     if (code && state) {
       getUser(code, state);
     }
+
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -142,7 +146,7 @@ const SwiperContent = styled(SwiperSlide)`
 
 const Title = styled.section`
   padding: 0 35px;
-  padding-top: 70px;
+  padding-top: 20px;
   color: ${({ theme }) => theme.colors['primary-500']};
   font-size: 19px;
   h1 {

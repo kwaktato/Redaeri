@@ -48,6 +48,7 @@ const ReviewHistory = () => {
 
   useEffect(() => {
     getData();
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -55,7 +56,12 @@ const ReviewHistory = () => {
       {datas.length > 0 ? (
         <Container>
           <Navbar>
-            <NavLeft onClick={() => navigate(-1)} />
+            <NavLeft
+              onClick={() => {
+                navigate(-1);
+                window.scrollTo(0, 0);
+              }}
+            />
             <NavCenter>리뷰 히스토리</NavCenter>
           </Navbar>
 

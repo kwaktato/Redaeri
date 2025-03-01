@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
@@ -42,8 +42,13 @@ export default function Persona() {
         lengthSelect: question,
       });
       navigate('/persona-success');
+      window.scrollTo(0, 0);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return !isLoading ? (
     <Container>

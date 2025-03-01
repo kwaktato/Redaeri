@@ -2,8 +2,13 @@ import ReviewNoneIcon from '@/assets/images/reviewHistory.svg?react';
 import ArrowLeft from '@/assets/images/arrow-left.svg?react';
 import styled from 'styled-components';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
+import { useEffect } from 'react';
 
 const ReviewHistoryNone = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Container>
       <Navbar>

@@ -61,7 +61,12 @@ const Account = ({ close }: AccountClose) => {
       </Wrapper>
       <Wrapper>
         <Title>페르소나</Title>
-        <Info onClick={() => (window.location.href = '/persona-success')}>
+        <Info
+          onClick={() => {
+            navigate('/persona-success');
+            window.scrollTo(0, 0);
+          }}
+        >
           <label>{data?.personaSelect}</label>
           <ArrowNext />
         </Info>
@@ -69,7 +74,14 @@ const Account = ({ close }: AccountClose) => {
       <DeleteWrapper>
         {/* <label>로그아웃</label>
         <Border /> */}
-        <label onClick={() => navigate('/account-delete')}>회원탈퇴</label>
+        <label
+          onClick={() => {
+            navigate('/account-delete');
+            window.scrollTo(0, 0);
+          }}
+        >
+          회원탈퇴
+        </label>
       </DeleteWrapper>
     </Container>
   );

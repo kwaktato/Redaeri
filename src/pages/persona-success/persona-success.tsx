@@ -69,6 +69,8 @@ export default function PersonaSuccess() {
       const persona = await getPersona();
       if (!user || !persona) {
         navigate('/login');
+        window.scrollTo(0, 0);
+
         return;
       }
 
@@ -133,12 +135,21 @@ export default function PersonaSuccess() {
         <img src={Tooltip} alt='tooltip' />
         <WhiteButton
           colorScheme='white'
-          onClick={() => navigate('/persona')}
+          onClick={() => {
+            navigate('/persona');
+            window.scrollTo(0, 0);
+          }}
           role='link'
         >
           스타일 수정하기
         </WhiteButton>
-        <BlackButton onClick={() => navigate('/review')} role='link'>
+        <BlackButton
+          onClick={() => {
+            navigate('/review');
+            window.scrollTo(0, 0);
+          }}
+          role='link'
+        >
           리뷰에 답하러 가기
         </BlackButton>
       </ButtonContainer>

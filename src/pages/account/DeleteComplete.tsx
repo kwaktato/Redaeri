@@ -1,7 +1,10 @@
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 const DeleteComplete = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Container>
@@ -10,7 +13,14 @@ const DeleteComplete = () => {
       <StickyBottomContainer
         style={{ width: '100%', paddingLeft: '28px', paddingRight: '28px' }}
       >
-        <Button onClick={() => (window.location.href = '/')}>확인</Button>
+        <Button
+          onClick={() => {
+            navigate('/');
+            window.scrollTo(0, 0);
+          }}
+        >
+          확인
+        </Button>
       </StickyBottomContainer>
     </>
   );

@@ -6,6 +6,7 @@ import Account from '@/pages/account/Account';
 
 interface ReviewIncludeProps {
   includeText: string;
+  beforeButton: () => void;
   handleIncludeText: (text: string) => void;
   handlePostAnswer: () => void;
 }
@@ -13,6 +14,7 @@ interface ReviewIncludeProps {
 // 5.2 포함 문구 입력
 const ReviewInclude = ({
   includeText,
+  beforeButton,
   handleIncludeText,
   handlePostAnswer,
 }: ReviewIncludeProps) => {
@@ -73,7 +75,7 @@ const ReviewInclude = ({
           </ExamWrapper>
 
           <StickyBottomContainer>
-            <Before onClick={() => (window.location.href = '/review')}>
+            <Before onClick={beforeButton}>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='11'

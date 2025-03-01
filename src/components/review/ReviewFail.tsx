@@ -1,6 +1,7 @@
 import WarningIcon from '@/assets/images/warning.svg?react';
 import styled from 'styled-components';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
+import { useEffect } from 'react';
 
 interface ReviewFailProps {
   toReview: () => void;
@@ -8,6 +9,10 @@ interface ReviewFailProps {
 
 // 5.4 답변 작성 실패 시
 const ReviewFail = ({ toReview }: ReviewFailProps) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Container>

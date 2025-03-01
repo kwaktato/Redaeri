@@ -1,5 +1,5 @@
 import LoadingChat from '@/assets/images/loading.svg?react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 interface LoadingProps {
@@ -20,6 +20,10 @@ const Loading = ({ first, second, details }: LoadingProps) => {
     }
     setCurrentDetail(details[index]);
   }, 3000);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Container>

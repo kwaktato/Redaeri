@@ -37,6 +37,7 @@ export default function UploadReview() {
       answers: uploadedText,
     });
     navigate('/persona-success', { state: { data } });
+    window.scrollTo(0, 0);
   };
 
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,6 +88,7 @@ export default function UploadReview() {
       const data = await getUser();
       if (!data) {
         navigate('/login');
+        window.scrollTo(0, 0);
         return;
       }
     })();

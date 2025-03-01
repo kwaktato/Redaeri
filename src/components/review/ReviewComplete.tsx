@@ -67,6 +67,7 @@ const ReviewComplete = ({
 
   useEffect(() => {
     getName();
+    window.scrollTo(0, 0);
   }, []);
 
   const [infoOpen, setInfoOpen] = useState(false);
@@ -119,7 +120,13 @@ const ReviewComplete = ({
             <Border />
             <ButtonWrapper>
               <img src={Tooltip} alt='tooltip' />
-              <Button state='' onClick={() => navigate('/upload-answer')}>
+              <Button
+                state=''
+                onClick={() => {
+                  navigate('/upload-answer');
+                  window.scrollTo(0, 0);
+                }}
+              >
                 스타일 수정하기
               </Button>
               <Button

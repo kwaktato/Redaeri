@@ -27,10 +27,16 @@ const Review = () => {
     setScore(rating);
     setReviewText(review);
     setCurrentStep(2);
+    window.scrollTo(0, 0);
   };
 
   const handleIncludeText = (include: string) => {
     setIncludeText(include);
+  };
+
+  const beforeButton = () => {
+    setCurrentStep(1);
+    window.scrollTo(0, 0);
   };
 
   const [data, setData] = useState<Answer>();
@@ -67,9 +73,11 @@ const Review = () => {
       console.log(result.data);
       setData(result.data.data);
       setCurrentStep(3);
+      window.scrollTo(0, 0);
     } catch (e) {
       console.log('리뷰 생성 에러: ', e);
       setCurrentStep(4);
+      window.scrollTo(0, 0);
     } finally {
       setIsLoading(false);
     }
@@ -97,9 +105,11 @@ const Review = () => {
       console.log(result.data);
       setData(result.data.data);
       setCurrentStep(3);
+      window.scrollTo(0, 0);
     } catch (e) {
       console.log('리뷰 생성 에러: ', e);
       setCurrentStep(4);
+      window.scrollTo(0, 0);
     } finally {
       setIsLoading(false);
     }
@@ -114,6 +124,7 @@ const Review = () => {
       {currentStep === 2 && (
         <ReviewInclude
           includeText={includeText}
+          beforeButton={beforeButton}
           handleIncludeText={handleIncludeText}
           handlePostAnswer={postReview}
         />
@@ -144,7 +155,14 @@ const Review = () => {
         />
       )}
 
-      {currentStep === 4 && <ReviewFail toReview={() => setCurrentStep(1)} />}
+      {currentStep === 4 && (
+        <ReviewFail
+          toReview={() => {
+            setCurrentStep(1);
+            window.scrollTo(0, 0);
+          }}
+        />
+      )}
     </Container>
   );
 };
