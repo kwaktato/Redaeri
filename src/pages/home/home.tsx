@@ -2,7 +2,7 @@ import { Link as RouterLink } from 'react-router';
 import styled from 'styled-components';
 
 import Logo from '@/assets/images/logo.svg?react';
-// import GreetingImg from '@/assets/images/greeting.png';
+import GreetingImg from '@/assets/images/greeting.png';
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
           <Logo />
           <h1>리대리</h1>
         </div>
-        {/* <MainImg src={GreetingImg} alt='greeting' /> */}
+        <MainImg src={GreetingImg} alt='greeting' />
       </Title>
 
       <ActionContainer>
@@ -28,25 +28,23 @@ export default function Home() {
 
 const Container = styled.div`
   background: ${({ theme }) => theme.colors['primary-500']};
-  height: 100vh;
   padding: 90px 28px 48px 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
   overflow: hidden;
   position: relative;
+  min-height: 100vh;
 `;
 
-// const MainImg = styled.img`
-//   position: absolute;
-//   right: -60px;
-// `;
+const MainImg = styled.img`
+  width: 100%;
+  position: relative;
+  right: -100px;
+`;
 
 const Title = styled.div`
   color: ${({ theme }) => theme.colors['primary-200']};
   font-family: 'GmarketSansLight';
-  font-size: 16px;
   div {
     display: flex;
     color: ${({ theme }) => theme.colors['white']};
