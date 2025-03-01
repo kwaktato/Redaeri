@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import MainContainer from '@/components/mainContainer/mainContainer';
 import PersonaSuccessImg from '@/assets/images/persona-type-1.png';
@@ -15,7 +15,6 @@ import { User } from '@/types/user';
 // TODO: UI 점검 및 navigate 추가
 export default function PersonaSuccess() {
   const navigate = useNavigate();
-  const { state } = useLocation();
 
   const [user, setUser] = useState<User>();
   const [updatedAllAnswer, setUpdatedAllAnswer] = useState('');
@@ -58,13 +57,6 @@ export default function PersonaSuccess() {
       alert('에러 발생!');
     }
   };
-
-  useEffect(() => {
-    if (!state) {
-      navigate('/persona');
-      return;
-    }
-  }, []);
 
   useEffect(() => {
     (async () => {

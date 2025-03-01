@@ -37,15 +37,11 @@ export default function Persona() {
     const isLastPage = currentPage === 2;
     if (isLastPage) {
       setIsLoading(true);
-      const { data } = await createPersona({
+      await createPersona({
         ...currentPersona,
         lengthSelect: question,
       });
-      navigate('/persona-success', {
-        state: {
-          ...data,
-        },
-      });
+      navigate('/persona-success');
     }
   };
 
