@@ -20,7 +20,7 @@ export default function CustomRoute() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/login-callback' element={<LoginCallback />} />
-        <Route path='/account-delete' element={<DeletePage />} />
+        <Route path='/delete' element={<DeletePage />} />
         <Route path='/delete-complete' element={<DeleteComplete />} />
         <Route path='/persona' element={<Persona />} />
         <Route path='/shop-information' element={<ShopInformation />} />

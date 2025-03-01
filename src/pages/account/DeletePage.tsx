@@ -1,10 +1,39 @@
 import DeleteIcon from '@/assets/images/delete.svg?react';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
+/* eslint-disable no-console */
 const DeletePage = () => {
   const navigate = useNavigate();
+
+  const [reviewCount, setReviewCount] = useState(0);
+
+  const baseURL = import.meta.env.VITE_APP_API_URL;
+  const getReviewCount = async () => {
+    // const token = localStorage.getItem('token');
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDIsImV4cCI6MTc0MTcwNzIwMywiaWF0IjoxNzQwODQzMjAzfQ.JWHbxheQDgu4U1BhJWALFw7ANgp6iWVxtrtbREW6bCg';
+
+    try {
+      const result = await axios.get(`${baseURL}/api/v1/user/answer/count`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Token: token,
+        },
+      });
+      console.log(result.data);
+      setReviewCount(result.data.data.answerCount);
+    } catch (e) {
+      console.log('리뷰 개수 조회 에러: ', e);
+    }
+  };
+
+  useEffect(() => {
+    getReviewCount();
+  }, []);
 
   return (
     <Container>
@@ -19,7 +48,7 @@ const DeletePage = () => {
         <Delete />
       </DeleteWrapper>
       <Detail>
-        사장님과 함께한 <span>리뷰 325개...</span>
+        사장님과 함께한 <span>리뷰 {reviewCount}개...</span>
         <br />
         <span>리대리</span>는 아직 사장님께 도움이 되고 싶어요.
       </Detail>

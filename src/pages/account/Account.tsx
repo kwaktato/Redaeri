@@ -76,7 +76,7 @@ const Account = ({ close }: AccountClose) => {
         <Border /> */}
         <label
           onClick={() => {
-            navigate('/account-delete');
+            navigate('/delete');
             window.scrollTo(0, 0);
           }}
         >
