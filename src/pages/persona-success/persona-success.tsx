@@ -49,6 +49,11 @@ export default function PersonaSuccess() {
         allAnswer: updatedAllAnswer,
         personaIdx: user?.userIdx,
       });
+
+      setToastStatus({
+        isOpen: true,
+        message: '만능 답변이 수정되었어요.',
+      });
     } catch {
       alert('에러 발생!');
     }
