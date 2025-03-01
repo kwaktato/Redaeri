@@ -1,10 +1,19 @@
 import Loading from '@/components/loading/Loading';
 import ReviewComplete from '@/components/review/ReviewComplete';
+import ReviewFail from '@/components/review/ReviewFail';
 import ReviewInclude from '@/components/review/ReviewInclude';
 import ReviewUpload from '@/components/review/ReviewUpload';
 import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
+
+interface Answer {
+  logIdx: number;
+  score: number;
+  generateAnswer: string;
+  reviewType: string;
+  reviewText: string;
+}
 
 /* eslint-disable no-console */
 const Review = () => {
@@ -24,6 +33,9 @@ const Review = () => {
     setIncludeText(include);
   };
 
+  const [data, setData] = useState<Answer>();
+
+  const baseURL = import.meta.env.VITE_APP_API_URL;
   const postReview = async () => {
     setCurrentStep(0);
     setIsLoading(true);
@@ -36,17 +48,61 @@ const Review = () => {
       includeText: includeText,
     };
     console.log(data);
+
+    // const token = localStorage.getItem('token');
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDIsImV4cCI6MTc0MTcwNzIwMywiaWF0IjoxNzQwODQzMjAzfQ.JWHbxheQDgu4U1BhJWALFw7ANgp6iWVxtrtbREW6bCg';
+
     try {
-      const result = await axios.post('', data);
-      console.log(result);
+      const result = await axios.post(
+        `${baseURL}/api/v1/answer/generate`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Token: token,
+          },
+        }
+      );
+      console.log(result.data);
+      setData(result.data.data);
+      setCurrentStep(3);
     } catch (e) {
       console.log('리뷰 생성 에러: ', e);
-    }
-
-    setTimeout(() => {
+      setCurrentStep(4);
+    } finally {
       setIsLoading(false);
+    }
+  };
+
+  const patchReview = async (logIdx: number) => {
+    setCurrentStep(0);
+    setIsLoading(true);
+
+    // const token = localStorage.getItem('token');
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDIsImV4cCI6MTc0MTcwNzIwMywiaWF0IjoxNzQwODQzMjAzfQ.JWHbxheQDgu4U1BhJWALFw7ANgp6iWVxtrtbREW6bCg';
+
+    try {
+      const result = await axios.patch(
+        `${baseURL}/api/v1/answer/generate/retry`,
+        { logIdx: logIdx },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Token: token,
+          },
+        }
+      );
+      console.log(result.data);
+      setData(result.data.data);
       setCurrentStep(3);
-    }, 2000);
+    } catch (e) {
+      console.log('리뷰 생성 에러: ', e);
+      setCurrentStep(4);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -60,7 +116,6 @@ const Review = () => {
           includeText={includeText}
           handleIncludeText={handleIncludeText}
           handlePostAnswer={postReview}
-          beforeButton={() => setCurrentStep(1)}
         />
       )}
 
@@ -80,10 +135,16 @@ const Review = () => {
 
       {currentStep === 3 && (
         <ReviewComplete
-          anotherButton={() => setCurrentStep(1)}
-          postReview={postReview}
+          patchReview={patchReview}
+          logIdx={data?.logIdx}
+          score={data?.score}
+          generateAnswer={data?.generateAnswer}
+          reviewType={data?.reviewType}
+          reviewText={data?.reviewText}
         />
       )}
+
+      {currentStep === 4 && <ReviewFail toReview={() => setCurrentStep(1)} />}
     </Container>
   );
 };

@@ -6,6 +6,8 @@ import Star from './Star';
 import { useState } from 'react';
 import { Link } from 'react-router';
 import axios from 'axios';
+import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
+import Account from '@/pages/account/Account';
 
 interface ReviewUploadProps {
   handleReviewUpload: (rating: number, review: string) => void;
@@ -73,6 +75,10 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
       setReview(
         result.data.data.reviewText.replace(/[\r\n]+/g, '').replace(/↵/g, '')
       );
+      setTextCount(
+        result.data.data.reviewText.replace(/[\r\n]+/g, '').replace(/↵/g, '')
+          .length
+      );
     } catch (e) {
       console.log('리뷰 사진 에러: ', e);
     } finally {
@@ -80,132 +86,141 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
     }
   };
 
+  const [infoOpen, setInfoOpen] = useState(false);
+
   return (
-    <Container>
-      <My>
-        <MyInfo />
-      </My>
+    <>
+      {infoOpen && <Account close={() => setInfoOpen(false)} />}
+      {!infoOpen && (
+        <Container>
+          <Navbar>
+            <NavRight onClick={() => setInfoOpen(true)} />
+          </Navbar>
+          <TitleWrapper>
+            <Title>고객 리뷰를 분석할게요</Title>
+            <TitleDetail>
+              ⚡️<span>신경 쓰이는 컴플레인</span>부터 💬
+              <span>간단한 문의글</span>
+              까지,
+              <br />
+              리대리가 빠르게 분석해 마음에 쏙 드는 답변을 만들어드려요!
+            </TitleDetail>
+          </TitleWrapper>
 
-      <TitleWrapper>
-        <Title>고객 리뷰를 분석할게요</Title>
-        <TitleDetail>
-          ⚡️<span>신경 쓰이는 컴플레인</span>부터 💬<span>간단한 문의글</span>
-          까지,
-          <br />
-          리대리가 빠르게 분석해 마음에 쏙 드는 답변을 만들어드려요!
-        </TitleDetail>
-      </TitleWrapper>
+          <ScoreWrapper>
+            <SubTitle>고객이 남긴 별점을 알려주세요.</SubTitle>
+            <Scores>
+              {[...Array(5)].map((_, index) => (
+                <Score key={index} onClick={() => rating(index)}>
+                  <Star filled={index < score} />
+                </Score>
+              ))}
+            </Scores>
+          </ScoreWrapper>
 
-      <ScoreWrapper>
-        <SubTitle>고객이 남긴 별점을 알려주세요.</SubTitle>
-        <Scores>
-          {[...Array(5)].map((_, index) => (
-            <Score key={index} onClick={() => rating(index)}>
-              <Star filled={index < score} />
-            </Score>
-          ))}
-        </Scores>
-      </ScoreWrapper>
+          <ReviewWrapper>
+            <SubTitle>리뷰 캡처 이미지 혹은 텍스트를 업로드해주세요.</SubTitle>
+            <ReviewButtonWrapper margin={!isImage && !isText}>
+              <Button
+                onClick={() => document.getElementById('imageInput')?.click()}
+              >
+                {isImage ? '리뷰 이미지 변경하기' : '리뷰 이미지 첨부하기'}
+              </Button>
+              <input
+                id='imageInput'
+                type='file'
+                accept='image/*'
+                style={{ display: 'none' }}
+                onChange={handleImageChange}
+              />
+              {!isImage && !isText && (
+                <>
+                  <Button onClick={() => setIsText(true)}>
+                    텍스트로 입력하기
+                  </Button>
+                </>
+              )}
+              {isImage && isLoading && (
+                <LoadingScreen>
+                  <LoadingWrapper>
+                    <LoadingChat />
+                    <Circle />
+                  </LoadingWrapper>
+                  <LoadingLabel>
+                    리뷰 이미지를 텍스트로 변환 중입니다.
+                    <br />
+                    잠시만 기다려주세요.
+                  </LoadingLabel>
+                </LoadingScreen>
+              )}
+              {isImage && !isLoading && (
+                <>
+                  <Guide>리대리가 오해한 내용은 없는지 잘 확인해주세요!</Guide>
+                  <TextAreaWrapper>
+                    <X
+                      onClick={() => {
+                        setReview('');
+                        setTextCount(0);
+                      }}
+                    >
+                      <Erase />
+                    </X>
+                    <TextArea
+                      placeholder='고객이 남긴 리뷰를 입력해주세요.'
+                      value={review}
+                      maxLength={1000}
+                      onChange={(e) => {
+                        setTextCount(e.target.value.length);
+                        setReview(e.target.value);
+                      }}
+                    />
+                    <TextCount>{textCount}/1000</TextCount>
+                  </TextAreaWrapper>
+                </>
+              )}
+              {isText && (
+                <>
+                  <TextAreaWrapper>
+                    <X
+                      onClick={() => {
+                        setReview('');
+                        setTextCount(0);
+                      }}
+                    >
+                      <Erase />
+                    </X>
+                    <TextArea
+                      placeholder='고객이 남긴 리뷰를 입력해주세요.'
+                      value={review}
+                      maxLength={1000}
+                      onChange={(e) => {
+                        setTextCount(e.target.value.length);
+                        setReview(e.target.value);
+                      }}
+                    />
+                    <TextCount>{textCount}/1000</TextCount>
+                  </TextAreaWrapper>
+                </>
+              )}
+              <ToHistory to='/review-history'>
+                이전에 생성한 AI답변을 보고 싶어요
+              </ToHistory>
+            </ReviewButtonWrapper>
+          </ReviewWrapper>
 
-      <ReviewWrapper>
-        <SubTitle>리뷰 캡처 이미지 혹은 텍스트를 업로드해주세요.</SubTitle>
-        <ReviewButtonWrapper margin={!isImage && !isText}>
-          <Button
-            onClick={() => document.getElementById('imageInput')?.click()}
-          >
-            {isImage ? '이미지 변경하기' : '리뷰 이미지 첨부하기'}
-          </Button>
-          <input
-            id='imageInput'
-            type='file'
-            accept='image/*'
-            style={{ display: 'none' }}
-            onChange={handleImageChange}
-          />
-          {!isImage && !isText && (
-            <>
-              <Button onClick={() => setIsText(true)}>텍스트로 입력하기</Button>
-            </>
-          )}
-          {isImage && isLoading && (
-            <LoadingScreen>
-              <LoadingWrapper>
-                <LoadingChat />
-                <Circle />
-              </LoadingWrapper>
-              <LoadingLabel>
-                리뷰 이미지를 텍스트로 변환 중입니다.
-                <br />
-                잠시만 기다려주세요.
-              </LoadingLabel>
-            </LoadingScreen>
-          )}
-          {isImage && !isLoading && (
-            <>
-              <Guide>리대리가 오해한 내용은 없는지 잘 확인해주세요!</Guide>
-              <TextAreaWrapper>
-                <X
-                  onClick={() => {
-                    setReview('');
-                    setTextCount(0);
-                  }}
-                >
-                  <Erase />
-                </X>
-                <TextArea
-                  placeholder='고객이 남긴 리뷰를 입력해주세요.'
-                  value={review}
-                  maxLength={1000}
-                  onChange={(e) => {
-                    setTextCount(e.target.value.length);
-                    setReview(e.target.value);
-                  }}
-                />
-                <TextCount>{textCount}/1000</TextCount>
-              </TextAreaWrapper>
-            </>
-          )}
-          {isText && (
-            <>
-              <TextAreaWrapper>
-                <X
-                  onClick={() => {
-                    setReview('');
-                    setTextCount(0);
-                  }}
-                >
-                  <Erase />
-                </X>
-                <TextArea
-                  placeholder='고객이 남긴 리뷰를 입력해주세요.'
-                  value={review}
-                  maxLength={1000}
-                  onChange={(e) => {
-                    setTextCount(e.target.value.length);
-                    setReview(e.target.value);
-                  }}
-                />
-                <TextCount>{textCount}/1000</TextCount>
-              </TextAreaWrapper>
-            </>
-          )}
-          <ToHistory to='/review-history'>
-            이전에 생성한 AI답변을 보고 싶어요
-          </ToHistory>
-        </ReviewButtonWrapper>
-      </ReviewWrapper>
-
-      <BottomWrapper>
-        <Border />
-        <NextButton
-          onClick={() => handleReviewUpload(score, review)}
-          disabled={!isEnable}
-          state={isEnable}
-        >
-          다음
-        </NextButton>
-      </BottomWrapper>
-    </Container>
+          <StickyBottomContainer>
+            <Border />
+            <NextButton
+              onClick={() => handleReviewUpload(score, review)}
+              disabled={!isEnable}
+              state={isEnable}
+            >
+              다음
+            </NextButton>
+          </StickyBottomContainer>
+        </Container>
+      )}
+    </>
   );
 };
 
@@ -213,19 +228,28 @@ export default ReviewUpload;
 
 const Container = styled.div`
   position: relative;
-  padding: 68px 28px 48px 28px;
+  padding: 0px 28px 48px 28px;
   min-height: 100vh;
 `;
 
-const My = styled.div`
+const Navbar = styled.div`
+  width: 100%;
+  height: 64px;
   display: flex;
-  width: 40px;
-  height: 40px;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  position: relative;
+`;
+
+const NavRight = styled(MyInfo)`
+  cursor: pointer;
   position: absolute;
-  right: 25px;
-  top: 25px;
+  width: 36px;
+  height: 36px;
+  right: 0px;
+  path {
+    stroke: ${({ theme }) => theme.colors['neutral-300']};
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -440,25 +464,16 @@ const ToHistory = styled(Link)`
   text-decoration-line: underline;
 `;
 
-const BottomWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  position: sticky;
-  bottom: 0px;
-  margin: 0px -28px;
-  padding-bottom: 12px;
-  background: ${({ theme }) => theme.colors['gray-100']};
-`;
-
 const Border = styled.div`
   height: 1px;
   background: ${({ theme }) => theme.colors['gray-200']};
+  margin: 0 -28px;
+  margin-bottom: 12px;
 `;
 
 const NextButton = styled.button<{ state: boolean }>`
   display: flex;
+  width: 100%;
   height: 52px;
   justify-content: center;
   align-items: center;
@@ -470,6 +485,4 @@ const NextButton = styled.button<{ state: boolean }>`
   font-family: 'Pretendard Variable';
   font-size: 15px;
   font-weight: 599;
-
-  margin: 0px 28px;
 `;

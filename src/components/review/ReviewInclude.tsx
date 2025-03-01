@@ -1,12 +1,13 @@
 import MyInfo from '@/assets/images/myInfo.svg?react';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
+import Account from '@/pages/account/Account';
 
 interface ReviewIncludeProps {
   includeText: string;
   handleIncludeText: (text: string) => void;
   handlePostAnswer: () => void;
-  beforeButton: () => void;
 }
 
 // 5.2 포함 문구 입력
@@ -14,7 +15,6 @@ const ReviewInclude = ({
   includeText,
   handleIncludeText,
   handlePostAnswer,
-  beforeButton,
 }: ReviewIncludeProps) => {
   const [textCount, setTextCount] = useState(0);
 
@@ -24,89 +24,107 @@ const ReviewInclude = ({
     handlePostAnswer();
   };
 
+  const [infoOpen, setInfoOpen] = useState(false);
+
   return (
-    <Container>
-      <My>
-        <MyInfo />
-      </My>
+    <>
+      {infoOpen && <Account close={() => setInfoOpen(false)} />}
+      {!infoOpen && (
+        <Container>
+          <Navbar>
+            <NavRight onClick={() => setInfoOpen(true)} />
+          </Navbar>
 
-      <TitleWrapper>
-        <Title>
-          꼭 넣고 싶은
-          <br />
-          내용이 있나요?
-        </Title>
-        <TitleDetail>(선택사항)</TitleDetail>
-      </TitleWrapper>
+          <TitleWrapper>
+            <Title>
+              꼭 넣고 싶은
+              <br />
+              내용이 있나요?
+            </Title>
+            <TitleDetail>(선택사항)</TitleDetail>
+          </TitleWrapper>
 
-      <IncludeWrapper>
-        <Include
-          placeholder='포함하고 싶은 내용을 이모티콘 없이 작성해주세요.'
-          maxLength={100}
-          onChange={(e) => {
-            handleIncludeText(e.target.value);
-            setTextCount(e.target.value.length);
-          }}
-        />
-        <IncludeCount>{textCount}/100</IncludeCount>
-      </IncludeWrapper>
-
-      <ExamWrapper>
-        <ExamTitle>예시 문구</ExamTitle>
-        <Exam>
-          “요즘 날씨가 춥고 길이 미끄러워서 배달이 어려울 때가 많은데, 무사히 잘
-          도착했다니 다행입니다.”
-        </Exam>
-        <Exam>
-          “저희는 당뇨식은 맛이 없다는 편견을 깨고 싶었어요! 건강도 챙기면서
-          맛있게 드셨다면 정말 뿌듯합니다! "
-        </Exam>
-        <Exam>
-          “저희 가게 모든 메뉴는 제 손을 거쳐 갑니다. 한 그릇 한 그릇 정성 들여
-          만들고 있으니, 자주 찾아주세요!”
-        </Exam>
-      </ExamWrapper>
-
-      <BottomWrapper>
-        <Before onClick={beforeButton}>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='11'
-            height='19'
-            viewBox='0 0 11 19'
-            fill='none'
-          >
-            <path
-              d='M10.3 1L2 9.3L10.3 17.6'
-              stroke='#73797F'
-              stroke-width='2'
+          <IncludeWrapper>
+            <Include
+              placeholder='포함하고 싶은 내용을 이모티콘 없이 작성해주세요.'
+              maxLength={100}
+              onChange={(e) => {
+                handleIncludeText(e.target.value);
+                setTextCount(e.target.value.length);
+              }}
             />
-          </svg>
-          <div>이전으로</div>
-        </Before>
+            <IncludeCount>{textCount}/100</IncludeCount>
+          </IncludeWrapper>
 
-        <ButtonBottom onClick={handleAnswer}>리대리 답변 확인하기</ButtonBottom>
-      </BottomWrapper>
-    </Container>
+          <ExamWrapper>
+            <ExamTitle>예시 문구</ExamTitle>
+            <Exam>
+              “요즘 날씨가 춥고 길이 미끄러워서 배달이 어려울 때가 많은데,
+              무사히 잘 도착했다니 다행입니다.”
+            </Exam>
+            <Exam>
+              “저희는 당뇨식은 맛이 없다는 편견을 깨고 싶었어요! 건강도 챙기면서
+              맛있게 드셨다면 정말 뿌듯합니다! "
+            </Exam>
+            <Exam>
+              “저희 가게 모든 메뉴는 제 손을 거쳐 갑니다. 한 그릇 한 그릇 정성
+              들여 만들고 있으니, 자주 찾아주세요!”
+            </Exam>
+          </ExamWrapper>
+
+          <StickyBottomContainer>
+            <Before onClick={() => (window.location.href = '/review')}>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='11'
+                height='19'
+                viewBox='0 0 11 19'
+                fill='none'
+              >
+                <path
+                  d='M10.3 1L2 9.3L10.3 17.6'
+                  stroke='#73797F'
+                  stroke-width='2'
+                />
+              </svg>
+              <div>이전으로</div>
+            </Before>
+            <ButtonBottom onClick={handleAnswer}>
+              리대리 답변 확인하기
+            </ButtonBottom>
+          </StickyBottomContainer>
+        </Container>
+      )}
+    </>
   );
 };
 
 export default ReviewInclude;
 
 const Container = styled.div`
-  padding: 68px 28px 48px 28px;
+  padding: 0px 28px 48px 28px;
   min-height: 100vh;
+  position: relative;
 `;
 
-const My = styled.div`
+const Navbar = styled.div`
+  width: 100%;
+  height: 64px;
   display: flex;
-  width: 40px;
-  height: 40px;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  position: relative;
+`;
+
+const NavRight = styled(MyInfo)`
+  cursor: pointer;
   position: absolute;
-  right: 25px;
-  top: 25px;
+  width: 36px;
+  height: 36px;
+  right: 0px;
+  path {
+    stroke: ${({ theme }) => theme.colors['neutral-300']};
+  }
 `;
 
 const TitleWrapper = styled.label`
@@ -203,13 +221,6 @@ const Exam = styled.label`
   font-size: 13px;
   font-weight: 500;
   line-height: 22px;
-`;
-
-const BottomWrapper = styled.div`
-  position: sticky;
-  bottom: 0px;
-  padding: 12px 0px;
-  background: ${({ theme }) => theme.colors['gray-100']};
 `;
 
 const Before = styled.div`

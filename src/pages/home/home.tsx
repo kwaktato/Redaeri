@@ -1,8 +1,8 @@
 import { Link as RouterLink } from 'react-router';
 import styled from 'styled-components';
 
-import Logo from '@/assets/images/logo.svg?react';
-import GreetingImg from '@/assets/images/greeting.png';
+import LogoIcon from '@/assets/images/logo.svg?react';
+import GreetingImg from '@/assets/images/greeting.svg?react';
 
 export default function Home() {
   return (
@@ -14,7 +14,9 @@ export default function Home() {
           <Logo />
           <h1>리대리</h1>
         </div>
-        <MainImg src={GreetingImg} alt='greeting' />
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Greeting />
+        </div>
       </Title>
 
       <ActionContainer>
@@ -28,7 +30,7 @@ export default function Home() {
 
 const Container = styled.div`
   background: ${({ theme }) => theme.colors['primary-500']};
-  padding: 90px 28px 48px 28px;
+  padding: 40px 28px 48px 28px;
   display: grid;
   grid-template-rows: 1fr auto;
   overflow: hidden;
@@ -36,20 +38,26 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
-const MainImg = styled.img`
-  width: 100%;
-  position: relative;
-  right: -100px;
+const Greeting = styled(GreetingImg)`
+  width: 280px;
+  height: 360px;
+`;
+
+const Logo = styled(LogoIcon)`
+  width: 56px;
+  height: 100%;
 `;
 
 const Title = styled.div`
   color: ${({ theme }) => theme.colors['primary-200']};
   font-family: 'GmarketSansLight';
+  font-size: 12px;
   div {
     display: flex;
     color: ${({ theme }) => theme.colors['white']};
-    font-size: 26px;
+    font-size: 28px;
     align-items: center;
+    font-family: 'GmarketSansMedium';
   }
 `;
 

@@ -138,7 +138,7 @@ export default function PersonaSuccess() {
         >
           스타일 수정하기
         </WhiteButton>
-        <BlackButton onClick={() => navigate('/upload-review')} role='link'>
+        <BlackButton onClick={() => navigate('/review')} role='link'>
           리뷰에 답하러 가기
         </BlackButton>
       </ButtonContainer>

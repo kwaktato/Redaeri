@@ -25,7 +25,7 @@ export default function ShopCheck() {
           storeName: storeName,
           storeType: selectedFoodType?.name,
         });
-        navigate('/persona');
+        navigate('/upload-answer');
         setIsLoading(false);
         return;
       }
@@ -34,7 +34,7 @@ export default function ShopCheck() {
         storeType: selectedFoodType?.name,
       });
       setIsLoading(false);
-      navigate('/persona');
+      navigate('/upload-answer');
     } catch {
       // TODO: 에러 추가
       alert('에러 발생');
@@ -63,7 +63,7 @@ export default function ShopCheck() {
         <p>
           <strong>{storeName}</strong> 사장님이시군요!
         </p>
-        <p>이렇게 정보 설정을 완료할까요?</p>
+        <p>가게 정보 설정을 완료할까요?</p>
       </Title>
       <Content>
         <img src={selectedFoodType?.selectedImage} alt='' />

@@ -1,13 +1,13 @@
 import ReviewNoneIcon from '@/assets/images/reviewHistory.svg?react';
 import ArrowLeft from '@/assets/images/arrow-left.svg?react';
-import { Link } from 'react-router';
 import styled from 'styled-components';
+import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
 
 const ReviewHistoryNone = () => {
   return (
     <Container>
       <Navbar>
-        <NavLeft>{'<'}</NavLeft>
+        <NavLeft />
         <NavCenter>리뷰 히스토리</NavCenter>
       </Navbar>
       <Icon />
@@ -16,7 +16,10 @@ const ReviewHistoryNone = () => {
         <br />
         지금 리뷰 대리 작성 서비스를 이용해 보세요!
       </Label>
-      <Button to='/review'>확인</Button>
+
+      <StickyBottomContainer style={{ width: '100%' }}>
+        <Button onClick={() => (window.location.href = '/review')}>확인</Button>
+      </StickyBottomContainer>
     </Container>
   );
 };
@@ -24,7 +27,6 @@ const ReviewHistoryNone = () => {
 export default ReviewHistoryNone;
 
 const Container = styled.div`
-  position: relative;
   padding: 0px 28px 48px 28px;
   min-height: 100vh;
   display: flex;
@@ -73,22 +75,18 @@ const Label = styled.div`
   line-height: 150%;
 `;
 
-const Button = styled(Link)`
-  position: absolute;
-  left: 32px;
-  right: 32px;
-  bottom: 48px;
-
+const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 58px;
+  width: 100%;
+  height: 47px;
   border-radius: 12px;
-  background: ${({ theme }) => theme.colors['neutral-600']};
+  background: ${({ theme }) => theme.colors.black};
   cursor: pointer;
 
   color: ${({ theme }) => theme.colors.white};
   font-family: 'Pretendard Variable';
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 599;
 `;

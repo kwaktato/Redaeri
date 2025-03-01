@@ -1,52 +1,38 @@
-import WarningIcon from '@/assets/images/warning.svg?react';
-import styled from 'styled-components';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
+import styled from 'styled-components';
 
-interface ReviewFailProps {
-  toReview: () => void;
-}
-
-// 5.4 답변 작성 실패 시
-const ReviewFail = ({ toReview }: ReviewFailProps) => {
+const DeleteComplete = () => {
   return (
     <>
       <Container>
-        <Warning />
-        <Label>
-          리대리 답변 생성이 중단되었어요.
-          <br />
-          잠시 후 다시 시도해 주세요.
-        </Label>
+        <Label>탈퇴가 완료되었습니다.</Label>
       </Container>
       <StickyBottomContainer
         style={{ width: '100%', paddingLeft: '28px', paddingRight: '28px' }}
       >
-        <Button onClick={toReview}>확인</Button>
+        <Button onClick={() => (window.location.href = '/')}>확인</Button>
       </StickyBottomContainer>
     </>
   );
 };
 
-export default ReviewFail;
+export default DeleteComplete;
 
 const Container = styled.div`
-  padding: 0px 28px 48px 28px;
   min-height: 100vh;
+  padding: 0px 28px 48px 28px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-const Warning = styled(WarningIcon)`
-  width: 48px;
-`;
-
 const Label = styled.div`
   color: ${({ theme }) => theme.colors['neutral-600']};
   text-align: center;
   font-family: 'GmarketSansMedium';
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: 400;
   line-height: 136%;
 `;
 
