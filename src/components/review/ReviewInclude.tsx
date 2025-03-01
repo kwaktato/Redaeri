@@ -67,20 +67,26 @@ const ReviewInclude = ({
         </Exam>
       </ExamWrapper>
 
-      <Before onClick={beforeButton}>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          width='11'
-          height='19'
-          viewBox='0 0 11 19'
-          fill='none'
-        >
-          <path d='M10.3 1L2 9.3L10.3 17.6' stroke='#73797F' stroke-width='2' />
-        </svg>
-        <div>이전으로</div>
-      </Before>
+      <BottomWrapper>
+        <Before onClick={beforeButton}>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='11'
+            height='19'
+            viewBox='0 0 11 19'
+            fill='none'
+          >
+            <path
+              d='M10.3 1L2 9.3L10.3 17.6'
+              stroke='#73797F'
+              stroke-width='2'
+            />
+          </svg>
+          <div>이전으로</div>
+        </Before>
 
-      <ButtonBottom onClick={handleAnswer}>리대리 답변 확인하기</ButtonBottom>
+        <ButtonBottom onClick={handleAnswer}>리대리 답변 확인하기</ButtonBottom>
+      </BottomWrapper>
     </Container>
   );
 };
@@ -88,8 +94,7 @@ const ReviewInclude = ({
 export default ReviewInclude;
 
 const Container = styled.div`
-  position: relative;
-  padding: 68px 28px 0px 28px;
+  padding: 68px 28px 48px 28px;
   min-height: 100vh;
 `;
 
@@ -200,6 +205,13 @@ const Exam = styled.label`
   line-height: 22px;
 `;
 
+const BottomWrapper = styled.div`
+  position: sticky;
+  bottom: 0px;
+  padding: 12px 0px;
+  background: ${({ theme }) => theme.colors['gray-100']};
+`;
+
 const Before = styled.div`
   display: flex;
   gap: 10px;
@@ -217,7 +229,6 @@ const Before = styled.div`
 
 const ButtonBottom = styled.button`
   margin-top: 8px;
-  margin-bottom: 52px;
 
   display: flex;
   width: 100%;

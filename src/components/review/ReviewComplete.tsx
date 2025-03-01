@@ -24,7 +24,7 @@ const ReviewComplete = ({ anotherButton, postReview }: ReviewCompleteProps) => {
 
   const navigate = useNavigate();
 
-  // const [name, setName] = useState('');
+  const [name, setName] = useState('');
 
   // 답변 복사하기
   const copy = async () => {
@@ -51,8 +51,8 @@ const ReviewComplete = ({ anotherButton, postReview }: ReviewCompleteProps) => {
           Token: token,
         },
       });
-      // setName(result.data.storeName);
       console.log(result.data);
+      setName(result.data.data.storeName);
     } catch (e) {
       console.log('가게 이름 가져오기 에러: ', e);
     }
@@ -71,8 +71,7 @@ const ReviewComplete = ({ anotherButton, postReview }: ReviewCompleteProps) => {
 
       <TitleWrapper>
         <TitleDetail>
-          {/* <span>{name}</span>에 대한 */}
-          <span>웨일즈 베이커리</span>에 대한
+          <span>{name}</span>에 대한
         </TitleDetail>
         <Title>
           <span>긍정</span>리뷰가 달렸어요
@@ -297,6 +296,11 @@ const BottomWrapper = styled.div`
   flex-direction: column;
   gap: 12px;
   padding-bottom: 48px;
+
+  position: sticky;
+  bottom: 0px;
+  padding-bottom: 12px;
+  background: ${({ theme }) => theme.colors['primary-500']};
 `;
 
 const Border = styled.div`

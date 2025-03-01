@@ -70,7 +70,9 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
         }
       );
       console.log(result.data);
-      setReview(result.data.data.reviewText);
+      setReview(
+        result.data.data.reviewText.replace(/[\r\n]+/g, '').replace(/↵/g, '')
+      );
     } catch (e) {
       console.log('리뷰 사진 에러: ', e);
     } finally {
@@ -396,7 +398,7 @@ const TextArea = styled.textarea`
   display: flex;
   height: 200px;
   width: 100%;
-  padding: 12px 16px;
+  padding: 12px 40px 12px 16px;
   resize: none;
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors['neutral-300']};
@@ -442,12 +444,17 @@ const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  position: sticky;
+  bottom: 0px;
+  margin: 0px -28px;
+  padding-bottom: 12px;
+  background: ${({ theme }) => theme.colors['gray-100']};
 `;
 
 const Border = styled.div`
   height: 1px;
   background: ${({ theme }) => theme.colors['gray-200']};
-  margin: 0px -28px;
 `;
 
 const NextButton = styled.button<{ state: boolean }>`
@@ -463,4 +470,6 @@ const NextButton = styled.button<{ state: boolean }>`
   font-family: 'Pretendard Variable';
   font-size: 15px;
   font-weight: 599;
+
+  margin: 0px 28px;
 `;
