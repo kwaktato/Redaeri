@@ -9,6 +9,7 @@ import Persona from '@/pages/persona/persona';
 import PersonaSuccess from '@/pages/persona-success/persona-success';
 import Review from '@/pages/review/Review';
 import ReviewHistory from '@/components/review/ReviewHistory';
+import LoginCallback from '@/pages/login/login-callback';
 
 export default function CustomRoute() {
   return (
@@ -16,6 +17,8 @@ export default function CustomRoute() {
       <Route element={<RootLayout />}>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/login-callback' element={<LoginCallback />} />
+        <Route path='/persona' element={<Persona />} />
         <Route path='/shop-information' element={<ShopInformation />} />
         <Route path='/shop-check' element={<ShopCheck />} />
         <Route path='/upload-review' element={<UploadReview />} />

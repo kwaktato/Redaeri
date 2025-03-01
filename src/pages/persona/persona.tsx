@@ -5,14 +5,21 @@ import styled from 'styled-components';
 import Loading from '@/components/loading/Loading';
 import PersonaQuestion from '@/pages/persona/personaQuestion';
 import {
-  PERSONA_BOSS_QUESTION,
+  PERSONA_REVIEW_QUESTION,
   PERSONA_EMOTION_QUESTION,
+  PersonaInsertType,
 } from '@/types/persona';
+// import { createPersona } from '@/services/persona';
 
 // TODO: UI 완성 후 주석 삭제 예정
 export default function Persona() {
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPersona, setCurrentPersona] = useState<PersonaInsertType>({
+    personaSelect: '',
+    emotionSelect: '',
+    lengthSelect: '',
+  });
 
   const navigate = useNavigate();
 
@@ -20,18 +27,30 @@ export default function Persona() {
     setCurrentPage(currentPage - 1);
   };
 
-  const onClickNextBtn = () => {
-    // TODO: props question: string, type: string 추가
-    // TODO: 마지막 페이지일 때 서버에 요청 및 navigate
-    if (currentPage === 2) {
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        navigate('/persona-success');
-      }, 3000);
-      return;
-    }
+  const onClickNextBtn = async (
+    question: string,
+    type: keyof PersonaInsertType
+  ) => {
+    setCurrentPersona({ ...currentPersona, [type]: question });
     setCurrentPage(currentPage + 1);
+
+    const isLastPage = currentPage === 2;
+    if (isLastPage) {
+      setIsLoading(true);
+      // const { data } = await createPersona({
+      //   ...currentPersona,
+      //   lengthSelect: question,
+      // });
+
+      // navigate('/persona-success', {
+      //   state: {
+      //     ...data,
+      //   },
+      // });
+      setTimeout(() => {
+        navigate('/persona-success');
+      }, 1000);
+    }
   };
 
   return !isLoading ? (
@@ -46,9 +65,9 @@ export default function Persona() {
         <PersonaQuestion
           isFirstPage
           onClickBackBtn={onClickBackBtn}
-          questions={PERSONA_BOSS_QUESTION}
+          questions={PERSONA_REVIEW_QUESTION}
           onClickNextBtn={onClickNextBtn}
-          type='boss'
+          type='personaSelect'
         >
           <p>
             <strong>어떤 말투</strong>로
@@ -61,7 +80,7 @@ export default function Persona() {
           onClickBackBtn={onClickBackBtn}
           questions={PERSONA_EMOTION_QUESTION}
           onClickNextBtn={onClickNextBtn}
-          type='emotion'
+          type='emotionSelect'
         >
           <p>답변을 작성할 때</p>
           <p>
@@ -74,7 +93,7 @@ export default function Persona() {
           onClickBackBtn={onClickBackBtn}
           questions={[]}
           onClickNextBtn={onClickNextBtn}
-          type='review'
+          type='lengthSelect'
           isLastPage
         >
           <p>
@@ -96,13 +115,13 @@ export default function Persona() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 25px 28px 48px 28px;
+  padding: 25px 28px 0 28px;
   min-height: 100vh;
 `;
 
 const ProgressBarContainer = styled.div`
   display: flex;
-  gap: 12px;
+  gap: 8px;
   justify-content: center;
 `;
 

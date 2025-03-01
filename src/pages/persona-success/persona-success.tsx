@@ -1,27 +1,62 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 
 import MainContainer from '@/components/mainContainer/mainContainer';
 import PersonaSuccessImg from '@/assets/images/persona-type-1.png';
 import CopyIcon from '@/assets/images/copy.svg?react';
 import Button from '@/components/button/Button';
 import Tooltip from '@/assets/images/tooltip.png';
+import { updateAllAnswer } from '@/services/persona';
+import Toast from '@/components/toast/toast';
 
 // TODO: UI 점검 및 navigate 추가
 // TODO: API 연동 추가
 export default function PersonaSuccess() {
-  const [answer, setAnswer] = useState(
-    '저희 가게 음식을 좋아해주셔서 감사합니다.'
-  );
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const [updatedAllAnswer, setUpdatedAllAnswer] = useState('');
+  const [toastStatus, setToastStatus] = useState({
+    isOpen: false,
+    message: '',
+  });
+
   const onClickCopyAnswerBtn = async () => {
     try {
-      await navigator.clipboard.writeText(answer);
-      alert('복사되었습니다.');
-      // TODO 토스트 추가 예정
+      await navigator.clipboard.writeText(updatedAllAnswer);
+      setToastStatus({
+        isOpen: true,
+        message: '복사되었습니다.',
+      });
     } catch {
-      alert('복사를 실패했습니다.');
+      setToastStatus({
+        isOpen: true,
+        message: '복사를 실패했습니다.',
+      });
     }
   };
+
+  const onClickUpdateAllAnswer = async () => {
+    try {
+      await updateAllAnswer({
+        allAnswer: updatedAllAnswer,
+        personaIdx: 0,
+      });
+      // console.log(response);
+    } catch {
+      // TODO: 변경 예정
+      // console.error(err)
+      alert('에러 발생!');
+    }
+  };
+
+  useEffect(() => {
+    if (!state) {
+      // navigate('/persona');
+      return;
+    }
+  }, []);
+
   return (
     <Container>
       <Title>
@@ -32,10 +67,10 @@ export default function PersonaSuccess() {
         <div>
           <img src={PersonaSuccessImg} alt='persona-success' />
           <p>
-            당신은 <strong>따뜻한 한마디에 감사하고,</strong>
+            당신은 <strong>따뜻한 한마디에 감사하고</strong>
           </p>
           <p>
-            <strong>정성이 담긴 장문의 답변</strong>을 선호하는
+            <strong>정성이 담긴 장문의 답변</strong>
           </p>
           <p>
             <strong>열정 넘치는 2030 청년 사장님</strong> 스타일이군요!
@@ -59,29 +94,49 @@ export default function PersonaSuccess() {
 
         <div className='copy-answer'>
           <textarea
-            defaultValue={answer}
-            onChange={(e) => setAnswer(e.target.value)}
+            defaultValue={
+              '따뜻한 한마디에 감사하고 정성이 담긴 장문의 답변 열정 넘치는 2030 청년 사장님 스타일이군요!'
+            }
+            onChange={(e) => setUpdatedAllAnswer(e.target.value)}
           />
         </div>
 
         <div className='save-answer'>
           <span>만능 답변을 수정해서 알맞게 만들어보세요!</span>
-          {/* TODO: 실제 데이터를 받아오면 데이터와 비교해서 저장 버튼 활성화 */}
-          <SaveButton>만능답변 저장하기</SaveButton>
+          {updatedAllAnswer !== '' && (
+            <SaveButton onClick={onClickUpdateAllAnswer}>
+              만능답변 저장하기
+            </SaveButton>
+          )}
         </div>
       </Content>
 
       <ButtonContainer>
         <img src={Tooltip} alt='tooltip' />
-        <WhiteButton colorScheme='white'>스타일 수정하기</WhiteButton>
-        <BlackButton>리뷰에 답하러 가기</BlackButton>
+        <WhiteButton
+          colorScheme='white'
+          onClick={() => navigate('/persona')}
+          role='link'
+        >
+          스타일 수정하기
+        </WhiteButton>
+        <BlackButton onClick={() => navigate('/upload-review')} role='link'>
+          리뷰에 답하러 가기
+        </BlackButton>
       </ButtonContainer>
+
+      <Toast
+        isOpen={toastStatus.isOpen}
+        onClose={() => setToastStatus({ isOpen: false, message: '' })}
+        message={toastStatus.message}
+      />
     </Container>
   );
 }
 
 const Container = styled(MainContainer)`
   background: ${({ theme }) => theme.colors['primary-500']};
+  padding: 40px 28px 0 28px;
   min-height: 100vh;
 `;
 
@@ -121,10 +176,9 @@ const Content = styled.section`
     height: 200px;
     border: none;
     width: 100%;
-    border-radius: 12px;
     outline: none;
     font-family: 'Pretendard Variable';
-    font-size: 14px;
+    font-size: 15px;
     border-radius: 12px;
     padding: 12px 16px;
     background: ${({ theme }) => theme.colors['primary-100']};
@@ -168,7 +222,9 @@ const ButtonContainer = styled.section`
   justify-content: center;
   margin-top: 60px;
   gap: 12px;
-  position: relative;
+  position: sticky;
+  bottom: 12px;
+
   img {
     width: 200px;
     position: absolute;
@@ -180,11 +236,16 @@ const ButtonContainer = styled.section`
 
 const WhiteButton = styled(Button)`
   color: ${({ theme }) => theme.colors['primary-500']};
+  position: sticky;
+  bottom: 12px;
 `;
 
 const BlackButton = styled(Button)`
   background: ${({ theme }) => theme.colors['gray-900']};
   color: ${({ theme }) => theme.colors['white']};
+
+  position: sticky;
+  bottom: 12px;
 `;
 
 const SaveButton = styled.button`

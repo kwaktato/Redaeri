@@ -1,42 +1,85 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router';
 
 import Button from '@/components/button/Button';
 import CloseIcon from '@/assets/images/close.svg?react';
-import { Link, useNavigate } from 'react-router';
 import Loading from '@/components/loading/Loading';
+// import { createPersonaByUpload } from '@/services/persona';
+import Toast from '@/components/toast/toast';
+// import { getUser } from '@/services/user';
 
 // TODO: API 연결, 이미지 3개이상 첨부 문구 및 toast
 // TODO: textarea 띄어쓰기 하지 않을 경우 줄바꿈 이슈 확인
 export default function UploadReview() {
   const [isOpenTextArea, setIsOpenTextarea] = useState(false);
   const [textareaValue, setTextareaValue] = useState('');
-  const [fileList, setFileList] = useState<File[]>([]);
+  // const [fileList, setFileList] = useState<File[]>([]);
+  const [uploadedText, setUploadedText] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [activatedTextareaValue, setActivatedTextareaValue] = useState('');
+  const [uploadedList, setUploadedList] = useState<string[]>([]);
+  const [toastStatus, setToastStatus] = useState({
+    isOpen: false,
+    message: '',
+  });
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
 
-  const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    // console.log(fileList);
+    // await createPersonaByUpload({
+    //   files: fileList,
+    //   answers: uploadedText,
+    // });
+    // TODO: API
+    // const data = await createPersonaByUpload({
+    //   files: fileList,
+    //   answers: uploadedText,
+    // });
+    // navigate('/persona-success', { state: { data } });
+
     setTimeout(() => {
-      setIsLoading(false);
-      navigate('/');
-    }, 2000);
+      navigate('/persona-success');
+    }, 1000);
   };
 
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files) {
-      if (files.length >= 3) {
-        alert('최대 3개까지 업로드 가능합니다.');
-        return;
-      }
+    if (!files) return;
 
-      setFileList(Array.from(files));
+    const fileList = Array.from(files);
+    const fileNames = fileList.map((file) => file.name);
+
+    if (uploadedList.length + fileNames.length > 3) {
+      setToastStatus({
+        isOpen: true,
+        message: '답변은 최대 3개까지 업로드 가능합니다.',
+      });
+      return;
     }
+
+    // setFileList(Array.from(files));
+    setUploadedList([...uploadedList, ...fileNames]);
+  };
+
+  const onClickTextareaCompleteBtn = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    if (textareaValue.length < 20) {
+      setToastStatus({
+        isOpen: true,
+        message: '최소 20자 이상 입력해주세요.',
+      });
+      return;
+    }
+    setUploadedList([...uploadedList, textareaValue]);
+    setUploadedText([...uploadedText, textareaValue]);
+    setIsOpenTextarea(false);
+    setTextareaValue('');
   };
 
   useEffect(() => {
@@ -45,6 +88,13 @@ export default function UploadReview() {
         '다음 3가지 리뷰 답변 업로드를 추천드려요.\n1. 고객의 칭찬에 대한 답변\n2. 부정적인 코멘트에 대처하는 답변\n3. 고객의 문의 리뷰에 응답하는 답변';
     }
   }, [isOpenTextArea]);
+
+  useEffect(() => {
+    (async () => {
+      // const { data } = await getUser();
+      // console.log(data);
+    })();
+  }, []);
 
   return isLoading ? (
     <Loading
@@ -91,12 +141,7 @@ export default function UploadReview() {
                 <span className={textareaValue.length === 500 ? 'error' : ''}>
                   {textareaValue.length} / 500
                 </span>
-                <BlackButton
-                  onClick={() => {
-                    setActivatedTextareaValue(textareaValue);
-                    setIsOpenTextarea(false);
-                  }}
-                >
+                <BlackButton onClick={onClickTextareaCompleteBtn}>
                   완료
                 </BlackButton>
               </div>
@@ -104,42 +149,52 @@ export default function UploadReview() {
           ) : (
             <CustomButton
               colorScheme='white'
-              onClick={() => setIsOpenTextarea(true)}
+              onClick={(event) => {
+                event.preventDefault();
+                if (uploadedList.length >= 3) {
+                  setToastStatus({
+                    isOpen: true,
+                    message: '답변은 최대 3개까지 업로드 가능합니다.',
+                  });
+                  return;
+                }
+                setIsOpenTextarea(true);
+              }}
             >
               텍스트로 입력하기
             </CustomButton>
           )}
 
-          <UploadContainer>
-            <p>업로드한 사장님 답변</p>
-            <div className='upload-file'>
-              <p>{fileList.map((file) => file.name).join(' / ')}</p>
-              {fileList.length > 0 && (
-                <CloseIcon role='button' onClick={() => setFileList([])} />
-              )}
-            </div>
-            <div className='upload-textarea'>
-              <p>{isOpenTextArea ? '' : activatedTextareaValue}</p>
-              {!isOpenTextArea && activatedTextareaValue && (
-                <CloseIcon
-                  role='button'
-                  onClick={() => {
-                    setActivatedTextareaValue('');
-                    setTextareaValue('');
-                  }}
-                />
-              )}
-            </div>
-          </UploadContainer>
+          {uploadedList.length > 0 && (
+            <UploadContainer>
+              <p>업로드한 사장님 답변</p>
+              {uploadedList.map((uploadedText, index) => (
+                <div className='upload-file' key={index}>
+                  <pre>{uploadedText}</pre>
+                  <CloseIcon
+                    role='button'
+                    onClick={() => {
+                      setUploadedList(
+                        uploadedList.filter((_, i) => i !== index)
+                      );
+                    }}
+                  />
+                </div>
+              ))}
+            </UploadContainer>
+          )}
         </Content>
       </div>
 
+      <Toast
+        isOpen={toastStatus.isOpen}
+        onClose={() => setToastStatus({ isOpen: false, message: '' })}
+        message={toastStatus.message}
+      />
+
       <ButtonContainer>
         <Link to='/persona'>답변 업로드 건너뛰기</Link>
-        <Button
-          type='submit'
-          disabled={!fileList.length && !activatedTextareaValue}
-        >
+        <Button type='submit' disabled={!uploadedList.length}>
           설정 완료
         </Button>
       </ButtonContainer>
@@ -152,7 +207,7 @@ const Container = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 40px 28px 48px 35px;
+  padding: 40px 28px 48px 28px;
 `;
 
 const Title = styled.section`
@@ -302,21 +357,13 @@ const UploadContainer = styled.div`
     border-radius: 12px;
   }
 
-  .upload-textarea p {
+  .upload-file pre {
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* 표시할 줄 수 */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  .upload-file p {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: ${({ theme }) => theme.colors['gray-600']};
-    font-size: 12px;
-    overflow: hidden;
-    line-height: 28px;
+    white-space: pre-wrap;
   }
 `;
 

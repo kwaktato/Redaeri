@@ -1,6 +1,8 @@
-import styled from 'styled-components';
-import Logo from '@/assets/images/logo.svg?react';
 import { Link as RouterLink } from 'react-router';
+import styled from 'styled-components';
+
+import Logo from '@/assets/images/logo.svg?react';
+// import GreetingImg from '@/assets/images/greeting.png';
 
 export default function Home() {
   return (
@@ -12,6 +14,7 @@ export default function Home() {
           <Logo />
           <h1>리대리</h1>
         </div>
+        {/* <MainImg src={GreetingImg} alt='greeting' /> */}
       </Title>
 
       <ActionContainer>
@@ -31,7 +34,14 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
+  overflow: hidden;
+  position: relative;
 `;
+
+// const MainImg = styled.img`
+//   position: absolute;
+//   right: -60px;
+// `;
 
 const Title = styled.div`
   color: ${({ theme }) => theme.colors['primary-200']};

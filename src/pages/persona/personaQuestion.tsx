@@ -2,18 +2,21 @@ import { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/button/Button';
-import ReviewLong from '@/assets/images/review-long.jpg';
-import ReviewShort from '@/assets/images/review-short.jpg';
-import ReviewMeddle from '@/assets/images/review-middle.jpg';
+import ReviewLong from '@/assets/images/review-long.png';
+import ReviewShort from '@/assets/images/review-short.png';
+import ReviewMeddle from '@/assets/images/review-middle.png';
 import ArrowLeft from '@/assets/images/arrow-left.svg?react';
-import { PERSONA_REVIEW_QUESTION } from '@/types/persona';
+import { PERSONA_LENGTH_QUESTION, PersonaInsertType } from '@/types/persona';
+import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
+
+const PERSONA_LENGTH_QUESTION_IMG = [ReviewLong, ReviewMeddle, ReviewShort];
 
 interface PersonaQuestionProps {
   children: ReactNode;
   questions: string[];
-  onClickNextBtn: (question: string, type: string) => void;
+  onClickNextBtn: (question: string, type: keyof PersonaInsertType) => void;
   onClickBackBtn: () => void;
-  type: string;
+  type: keyof PersonaInsertType;
   isFirstPage?: boolean;
   isLastPage?: boolean;
 }
@@ -30,69 +33,45 @@ export default function PersonaQuestion({
   const [selectedQuestion, setSelectedQuestion] = useState('');
 
   return (
-    <Container>
-      <div>
-        <QuestionTitle>{children}</QuestionTitle>
-        {
-          <QuestionContainer>
-            {isLastPage ? (
-              <>
-                <ImageQuestionButton
-                  className={
-                    selectedQuestion === PERSONA_REVIEW_QUESTION[0]
-                      ? 'selected'
-                      : ''
-                  }
-                  onClick={() =>
-                    setSelectedQuestion(PERSONA_REVIEW_QUESTION[0])
-                  }
-                >
-                  <p>정성이 최고 긴~ 답변</p>
-                  <img src={ReviewLong} alt='review-long' />
-                </ImageQuestionButton>
-                <ImageQuestionButton
-                  className={
-                    selectedQuestion === PERSONA_REVIEW_QUESTION[1]
-                      ? 'selected'
-                      : ''
-                  }
-                  onClick={() =>
-                    setSelectedQuestion(PERSONA_REVIEW_QUESTION[1])
-                  }
-                >
-                  <p>길지도 짧지도 않게 알잘딱깔센</p>
-                  <img src={ReviewMeddle} alt='review-middle' />
-                </ImageQuestionButton>
-                <ImageQuestionButton
-                  className={
-                    selectedQuestion === PERSONA_REVIEW_QUESTION[2]
-                      ? 'selected'
-                      : ''
-                  }
-                  onClick={() =>
-                    setSelectedQuestion(PERSONA_REVIEW_QUESTION[2])
-                  }
-                >
-                  <p>정성이 최고 짧은~ 답변</p>
-                  <img src={ReviewShort} alt='review-short' />
-                </ImageQuestionButton>
-              </>
-            ) : (
-              questions.map((question) => (
-                <QuestionButton
-                  key={question}
-                  className={selectedQuestion === question ? 'selected' : ''}
-                  onClick={() => setSelectedQuestion(question)}
-                >
-                  {question}
-                </QuestionButton>
-              ))
-            )}
-          </QuestionContainer>
-        }
-      </div>
+    <>
+      <Container>
+        <div>
+          <QuestionTitle>{children}</QuestionTitle>
+          {
+            <QuestionContainer>
+              {isLastPage
+                ? PERSONA_LENGTH_QUESTION.map((question, index) => (
+                    <ImageQuestionButton
+                      key={index}
+                      className={
+                        selectedQuestion === question ? 'selected' : ''
+                      }
+                      onClick={() => setSelectedQuestion(question)}
+                    >
+                      <p>{question}</p>
+                      <img
+                        src={PERSONA_LENGTH_QUESTION_IMG[index] || ''}
+                        alt='review-long'
+                      />
+                    </ImageQuestionButton>
+                  ))
+                : questions.map((question) => (
+                    <QuestionButton
+                      key={question}
+                      className={
+                        selectedQuestion === question ? 'selected' : ''
+                      }
+                      onClick={() => setSelectedQuestion(question)}
+                    >
+                      {question}
+                    </QuestionButton>
+                  ))}
+            </QuestionContainer>
+          }
+        </div>
+      </Container>
 
-      <ButtonContainer>
+      <StickyBottomContainer>
         {!isFirstPage && (
           <BackButton onClick={onClickBackBtn}>
             <ArrowLeft />
@@ -105,8 +84,8 @@ export default function PersonaQuestion({
         >
           {isLastPage ? '사장님의 답변 스타일은?' : '다음'}
         </Button>
-      </ButtonContainer>
-    </Container>
+      </StickyBottomContainer>
+    </>
   );
 }
 
@@ -131,10 +110,6 @@ const ImageQuestionButton = styled.button`
   }
 `;
 
-const ButtonContainer = styled.div`
-  padding-top: 80px;
-`;
-
 const QuestionTitle = styled.div`
   display: flex;
   flex-direction: column;
@@ -154,6 +129,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
+  margin-bottom: 20px;
 `;
 
 const QuestionContainer = styled.div`
@@ -184,7 +161,7 @@ const BackButton = styled.button`
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: ${({ theme }) => theme.colors['gray-700']};
   font-size: 14px;
   font-weight: 599;
