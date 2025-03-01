@@ -1,8 +1,9 @@
 import { fetcher } from './request';
-import { PersonaSuccess } from '@/types/persona';
+import { GetPersonaType } from '@/types/persona';
 
 export const getPersona = async () => {
-  return fetcher('/persona/get');
+  const { data } = await fetcher<GetPersonaType>('/persona/get');
+  return data;
 };
 
 export const createPersona = async ({
@@ -14,7 +15,7 @@ export const createPersona = async ({
   lengthSelect: string;
   personaSelect: string;
 }) => {
-  return fetcher<PersonaSuccess>('/persona/insert', {
+  return fetcher<GetPersonaType>('/persona/insert', {
     method: 'POST',
     data: {
       emotionSelect,

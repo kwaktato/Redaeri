@@ -10,6 +10,7 @@ import { getUser } from '@/services/user';
 
 export default function ShopCheck() {
   const [user, setUser] = useState<User>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -18,18 +19,21 @@ export default function ShopCheck() {
 
   const onClickCompleteBtn = async () => {
     try {
+      setIsLoading(true);
       if (user?.storeName || user?.storeType) {
         await updateStore({
           storeName: storeName,
           storeType: selectedFoodType?.name,
         });
         navigate('/persona');
+        setIsLoading(false);
         return;
       }
       await createStore({
         storeName,
         storeType: selectedFoodType?.name,
       });
+      setIsLoading(false);
       navigate('/persona');
     } catch {
       // TODO: 에러 추가
@@ -68,7 +72,9 @@ export default function ShopCheck() {
         <BackButton onClick={() => navigate(-1)}>
           아니요, 다시 입력할래요
         </BackButton>
-        <Button onClick={onClickCompleteBtn}>설정 완료</Button>
+        <Button isLoading={isLoading} onClick={onClickCompleteBtn}>
+          설정 완료
+        </Button>
       </LinkContainer>
     </Container>
   );
