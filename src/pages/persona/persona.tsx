@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import Loading from '@/components/loading/Loading';
 import PersonaQuestion from '@/pages/persona/personaQuestion';
 import {
-  PERSONA_REVIEW_QUESTION,
+  PERSONA_SELECT_PERSONA_KEY,
+  PERSONA_SELECT_QUESTION_VALUE,
   PERSONA_EMOTION_QUESTION,
   PersonaInsertType,
   GetPersonaType,
@@ -33,7 +34,14 @@ export default function Persona() {
     question: string,
     type: keyof PersonaInsertType
   ) => {
-    setCurrentPersona({ ...currentPersona, [type]: question });
+    const currentQuestion =
+      currentPage === 0
+        ? PERSONA_SELECT_PERSONA_KEY[
+            PERSONA_SELECT_QUESTION_VALUE.indexOf(question)
+          ]
+        : question;
+
+    setCurrentPersona({ ...currentPersona, [type]: currentQuestion });
     setCurrentPage(currentPage + 1);
 
     const isLastPage = currentPage === 2;
@@ -91,7 +99,7 @@ export default function Persona() {
         <PersonaQuestion
           isFirstPage
           onClickBackBtn={onClickBackBtn}
-          questions={PERSONA_REVIEW_QUESTION}
+          questions={PERSONA_SELECT_QUESTION_VALUE}
           onClickNextBtn={onClickNextBtn}
           type='personaSelect'
         >
