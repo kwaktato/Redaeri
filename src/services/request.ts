@@ -2,19 +2,20 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 export const requestURL = 'https://api.redaeri.kro.kr/api/v1';
 
-function extractUserToken(cookieStr: string) {
-  const userRegex = /token=([^;]*)/;
-  const match = cookieStr.match(userRegex);
+// function extractUserToken(cookieStr: string) {
+//   const userRegex = /token=([^;]*)/;
+//   const match = cookieStr.match(userRegex);
 
-  if (match && match[1]) {
-    return match[1];
-  }
+//   if (match && match[1]) {
+//     return match[1];
+//   }
 
-  return null;
-}
+//   return null;
+// }
 
 axios.interceptors.request.use((config) => {
-  const userToken = extractUserToken(document.cookie);
+  // const userToken = extractUserToken(document.cookie);
+  const userToken = localStorage.getItem('token');
 
   config.headers['Token'] = `${userToken}`;
   return config;

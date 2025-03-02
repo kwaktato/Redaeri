@@ -22,7 +22,8 @@ export default function Login() {
     // if (!naverLoginLinkRef.current) return;
     // naverLoginLinkRef.current.click();
     const { data } = await getTestToken();
-    document.cookie = `token=${data.token}`;
+    localStorage.setItem('token', data.token);
+    // document.cookie = `token=${data.token}`;
     navigate('/shop-information');
   };
 
