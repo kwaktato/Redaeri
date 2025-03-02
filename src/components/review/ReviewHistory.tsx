@@ -2,44 +2,14 @@ import styled from 'styled-components';
 import ArrowLeft from '@/assets/images/arrow-left.svg?react';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import ReviewHistoryNone from './ReviewHistoryNone';
-
-interface History {
-  rownum: number;
-  logIdx: number;
-  score: number;
-  generateAnswer: string;
-  reviewType: string;
-  reviewText: string;
-  insertDate: string;
-  insertTime: string;
-}
+import { getHistory } from '@/services/review';
+import { History } from '@/types/review';
 
 // 5.5 리뷰 히스토리
-/* eslint-disable no-console */
 const ReviewHistory = () => {
   const navigate = useNavigate();
   const [datas, setDatas] = useState<History[]>([]);
-
-  const baseURL = import.meta.env.VITE_APP_API_URL;
-  const getData = async () => {
-    // const token = localStorage.getItem('token');
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDIsImV4cCI6MTc0MTcwNzIwMywiaWF0IjoxNzQwODQzMjAzfQ.JWHbxheQDgu4U1BhJWALFw7ANgp6iWVxtrtbREW6bCg';
-    try {
-      const result = await axios.get(`${baseURL}/api/v1/answer/log/get`, {
-        headers: {
-          'Content-Type': 'applicatoin/json',
-          Token: token,
-        },
-      });
-      console.log(result.data);
-      setDatas(result.data.data);
-    } catch (e) {
-      console.log('리뷰히스토리 가져오기 에러: ', e);
-    }
-  };
 
   const [isCardClicked, setIsCardClicked] = useState(false);
   const handleCardClick = () => {
@@ -47,7 +17,11 @@ const ReviewHistory = () => {
   };
 
   useEffect(() => {
-    getData();
+    (async () => {
+      const historys = await getHistory();
+      setDatas(historys.data);
+    })();
+
     window.scrollTo(0, 0);
   }, []);
 
@@ -78,7 +52,7 @@ const ReviewHistory = () => {
                   <State type={data.reviewType}>{data.reviewType}</State>
                 </IdWrapper>
                 <TextWrapper>
-                  <TextLabel>{data.generateAnswer}</TextLabel>
+                  <TextLabel>{data.reviewText}</TextLabel>
                   <TimeWrapper>
                     <TimeLabelWrapper>
                       <TimeLabel state='bold'>날짜</TimeLabel>

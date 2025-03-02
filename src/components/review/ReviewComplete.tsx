@@ -5,10 +5,11 @@ import CopyIcon from '@/assets/images/copy.svg?react';
 import Tooltip from '@/assets/images/tooltip.png';
 import Star from './Star';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
 import Account from '@/pages/account/Account';
+import { getUser } from '@/services/user';
+import { User } from '@/types/user';
 
 interface ReviewCompleteProps {
   patchReview: (logIdx: number) => void;
@@ -31,7 +32,7 @@ const ReviewComplete = ({
 }: ReviewCompleteProps) => {
   const navigate = useNavigate();
 
-  const [name, setName] = useState('');
+  const [user, setUser] = useState<User>();
 
   // 답변 복사하기
   const [copyText, setCopyText] = useState(generateAnswer);
@@ -45,28 +46,11 @@ const ReviewComplete = ({
     }
   };
 
-  // api 연결 - 베이커리 이름 가져오기
-  const baseURL = import.meta.env.VITE_APP_API_URL;
-  const getName = async () => {
-    // const token = localStorage.getItem('token');
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDIsImV4cCI6MTc0MTcwNzIwMywiaWF0IjoxNzQwODQzMjAzfQ.JWHbxheQDgu4U1BhJWALFw7ANgp6iWVxtrtbREW6bCg';
-    try {
-      const result = await axios.get(`${baseURL}/api/v1/user/get`, {
-        headers: {
-          'Content-Type': 'applicatoin/json',
-          Token: token,
-        },
-      });
-      console.log(result.data);
-      setName(result.data.data.storeName);
-    } catch (e) {
-      console.log('가게 이름 가져오기 에러: ', e);
-    }
-  };
-
   useEffect(() => {
-    getName();
+    (async () => {
+      const user = await getUser();
+      setUser(user);
+    })();
     window.scrollTo(0, 0);
   }, []);
 
@@ -83,7 +67,7 @@ const ReviewComplete = ({
 
           <TitleWrapper>
             <TitleDetail>
-              <span>{name}</span>에 대한
+              <span>{user?.storeName}</span>에 대한
             </TitleDetail>
             <Title>
               <span>{reviewType}</span>리뷰가 달렸어요
@@ -131,9 +115,7 @@ const ReviewComplete = ({
               </Button>
               <Button
                 state='black'
-                onClick={() => {
-                  window.location.href = '/review';
-                }}
+                onClick={() => (window.location.href = '/review')}
               >
                 다른 리뷰도 답변하기
               </Button>

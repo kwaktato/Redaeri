@@ -3,8 +3,11 @@ import ArrowLeft from '@/assets/images/arrow-left.svg?react';
 import styled from 'styled-components';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 const ReviewHistoryNone = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -12,7 +15,12 @@ const ReviewHistoryNone = () => {
   return (
     <Container>
       <Navbar>
-        <NavLeft />
+        <NavLeft
+          onClick={() => {
+            navigate('/review');
+            window.scrollTo(0, 0);
+          }}
+        />
         <NavCenter>리뷰 히스토리</NavCenter>
       </Navbar>
       <Icon />
@@ -23,7 +31,14 @@ const ReviewHistoryNone = () => {
       </Label>
 
       <StickyBottomContainer style={{ width: '100%' }}>
-        <Button onClick={() => (window.location.href = '/review')}>확인</Button>
+        <Button
+          onClick={() => {
+            navigate('/review');
+            window.scrollTo(0, 0);
+          }}
+        >
+          확인
+        </Button>
       </StickyBottomContainer>
     </Container>
   );

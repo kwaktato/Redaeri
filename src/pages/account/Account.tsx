@@ -57,6 +57,14 @@ const Account = ({ close }: AccountClose) => {
         <Title>가게 정보</Title>
         <Info>
           <label>{data?.storeName}</label>
+          <button
+            onClick={() => {
+              navigate('/shop-check');
+              window.scrollTo(0, 0);
+            }}
+          >
+            변경
+          </button>
         </Info>
       </Wrapper>
       <Wrapper>
@@ -72,8 +80,15 @@ const Account = ({ close }: AccountClose) => {
         </Info>
       </Wrapper>
       <DeleteWrapper>
-        {/* <label>로그아웃</label>
-        <Border /> */}
+        <label
+          onClick={() => {
+            navigate('/');
+            window.scrollTo(0, 0);
+          }}
+        >
+          로그아웃
+        </label>
+        <Border />
         <label
           onClick={() => {
             navigate('/delete');
@@ -156,6 +171,20 @@ const Info = styled.div`
     font-weight: 500;
     line-height: 150%;
   }
+
+  button {
+    display: flex;
+    padding: 4px 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: ${({ theme }) => theme.colors['neutral-600']};
+    color: ${({ theme }) => theme.colors.white};
+    font-family: 'Pretendard Variable';
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 162.5%;
+  }
 `;
 
 const ArrowNext = styled(Arrow)`
@@ -187,8 +216,8 @@ const DeleteWrapper = styled.div`
   }
 `;
 
-// const Border = styled.div`
-//   width: 1px;
-//   height: 12px;
-//   background: ${({ theme }) => theme.colors['gray-500']};
-// `;
+const Border = styled.div`
+  width: 1px;
+  height: 12px;
+  background: ${({ theme }) => theme.colors['gray-500']};
+`;
