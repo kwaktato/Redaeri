@@ -1,5 +1,5 @@
 import LoadingChat from '@/assets/images/loading.svg?react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 interface LoadingProps {
@@ -10,19 +10,24 @@ interface LoadingProps {
 
 const Loading = ({ first, second, details }: LoadingProps) => {
   const [currentDetail, setCurrentDetail] = useState(details[0]);
-  const [index, setIndex] = useState(1);
 
-  setInterval(() => {
-    if (index >= details.length - 1) {
-      setIndex(0);
-    } else {
-      setIndex(index + 1);
-    }
-    setCurrentDetail(details[index]);
-  }, 3000);
+  const indexRef = useRef(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (indexRef.current >= details.length - 1) {
+        indexRef.current = 0;
+      } else {
+        indexRef.current = indexRef.current + 1;
+      }
+      setCurrentDetail(details[indexRef.current]);
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (

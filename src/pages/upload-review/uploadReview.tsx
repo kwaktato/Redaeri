@@ -101,11 +101,16 @@ export default function UploadReview() {
     })();
   }, []);
 
-  return isLoading ? (
+  return !isLoading ? (
     <Loading
       first='사장님의 답변 스타일을'
       second='분석하고 있어요'
-      details={['리대리가 사장님의 답변을 수신했어요...']}
+      details={[
+        '리대리가 사장님의 답변을 수신했어요...',
+        '리대리가 사장님의 답변을 읽고 있어요...',
+        '답변을 열심히 공부하고 있어요...',
+        '사장님의 답변 스타일을 분석하고 있어요...',
+      ]}
     />
   ) : (
     <Container onSubmit={onSubmitForm}>
