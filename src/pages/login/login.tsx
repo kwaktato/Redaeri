@@ -128,21 +128,18 @@ const SwiperContainer = styled(Swiper)`
   padding: 27px 28px;
   .swiper-pagination-bullets {
     position: relative;
-    margin-top: 13px;
   }
 `;
 
 const SwiperContent = styled(SwiperSlide)`
-  width: 300px;
-  background: ${({ theme }) => theme.colors['white']};
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+  width: auto;
+  background: transparent;
+  border-radius: 12px;
   img {
+    border-radius: 20px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
     width: 100%;
-    height: 100%;
+    height: auto;
   }
 `;
 
