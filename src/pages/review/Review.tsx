@@ -87,9 +87,7 @@ const Review = () => {
     setCurrentStep(0);
     setIsLoading(true);
 
-    // const token = localStorage.getItem('token');
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDIsImV4cCI6MTc0MTcwNzIwMywiaWF0IjoxNzQwODQzMjAzfQ.JWHbxheQDgu4U1BhJWALFw7ANgp6iWVxtrtbREW6bCg';
+    const token = localStorage.getItem('token');
 
     try {
       const result = await axios.patch(

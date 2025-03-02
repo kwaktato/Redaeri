@@ -13,9 +13,7 @@ const DeletePage = () => {
 
   const baseURL = import.meta.env.VITE_APP_API_URL;
   const getReviewCount = async () => {
-    // const token = localStorage.getItem('token');
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDIsImV4cCI6MTc0MTcwNzIwMywiaWF0IjoxNzQwODQzMjAzfQ.JWHbxheQDgu4U1BhJWALFw7ANgp6iWVxtrtbREW6bCg';
+    const token = localStorage.getItem('token');
 
     try {
       const result = await axios.get(`${baseURL}/api/v1/user/answer/count`, {

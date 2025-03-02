@@ -58,6 +58,9 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
 
     const formData = new FormData();
     formData.append('reviewImgFile', selectedFile);
+
+    const token = localStorage.getItem('token');
+
     // api 호출
     try {
       const result = await axios.post(
@@ -66,8 +69,7 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Token:
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6MjUsImV4cCI6MTc0MDgzNTQyNSwiaWF0IjoxNzQwNzQ5MDI1fQ.LLZ4UrDZ27-Kd8RNEfOmGAFjgzyXFA-Jw2ufUSv-3a0',
+            Token: token,
           },
         }
       );
