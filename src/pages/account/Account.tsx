@@ -2,49 +2,29 @@ import styled from 'styled-components';
 import XICon from '@/assets/images/X.svg?react';
 import Arrow from '@/assets/images/arrow-left.svg?react';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router';
-
-interface User {
-  userIdx: number;
-  storeIdx: number;
-  storeName: string;
-  storeType: string;
-  personaSelect: string;
-  personaIdx: number;
-}
+import { User } from '@/types/user';
+import { getUser } from '@/services/user';
+import { FOOD_TYPE } from '@/types/food';
 
 interface AccountClose {
   close: () => void;
 }
 
-/* eslint-disable no-console */
 const Account = ({ close }: AccountClose) => {
   const navigate = useNavigate();
 
-  const [data, setData] = useState<User>();
+  const [user, setUser] = useState<User>();
 
-  const baseURL = import.meta.env.VITE_APP_API_URL;
-  const getData = async () => {
-    // const token = localStorage.getItem('token');
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDIsImV4cCI6MTc0MTcwNzIwMywiaWF0IjoxNzQwODQzMjAzfQ.JWHbxheQDgu4U1BhJWALFw7ANgp6iWVxtrtbREW6bCg';
-    try {
-      const result = await axios.get(`${baseURL}/api/v1/user/get`, {
-        headers: {
-          'Content-Type': 'applicatoin/json',
-          Token: token,
-        },
-      });
-      console.log(result.data);
-      setData(result.data.data);
-    } catch (e) {
-      console.log('내정보 가져오기 에러: ', e);
-    }
-  };
+  const foodItem = FOOD_TYPE.find((item) => item.name === user?.storeType);
+  const selectedImage = foodItem?.image;
 
   useEffect(() => {
-    getData();
+    (async () => {
+      const user = await getUser();
+      setUser(user);
+    })();
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -56,15 +36,18 @@ const Account = ({ close }: AccountClose) => {
       <Wrapper>
         <Title>가게 정보</Title>
         <Info>
-          <label>{data?.storeName}</label>
-          <button
+          <div>
+            <img src={selectedImage} alt='가게 타입 이미지' />
+            <label>{user?.storeName}</label>
+          </div>
+          {/* <button
             onClick={() => {
               navigate('/shop-check');
               window.scrollTo(0, 0);
             }}
           >
             변경
-          </button>
+          </button> */}
         </Info>
       </Wrapper>
       <Wrapper>
@@ -75,7 +58,7 @@ const Account = ({ close }: AccountClose) => {
             window.scrollTo(0, 0);
           }}
         >
-          <label>{data?.personaSelect}</label>
+          <label>{user?.personaSelect}</label>
           <ArrowNext />
         </Info>
       </Wrapper>
@@ -164,10 +147,20 @@ const Info = styled.div`
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors['gray-200']};
 
+  div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  img {
+    width: 36px;
+  }
+
   label {
     color: ${({ theme }) => theme.colors['neutral-600']};
     font-family: 'Pretendard Variable';
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 150%;
   }
