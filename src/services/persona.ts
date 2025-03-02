@@ -56,7 +56,7 @@ export const createPersonaByUpload = async ({
         : 'uploadTextThird';
 
   answers.forEach((answer, index) => {
-    formData.append(`uploadText${handleIndexText(index)}`, answer);
+    formData.append(`${handleIndexText(index)}`, answer);
   });
 
   files.forEach((file) => {
