@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import { useNavigate } from 'react-router';
 
 import WhiteLogo from '@/assets/images/blue-logo.svg?react';
@@ -13,7 +13,6 @@ import SlideImageThree from '@/assets/images/login-slide-3.png';
 import { getNaverUser, getTestToken } from '@/services/user';
 
 import 'swiper/css';
-import 'swiper/css/pagination';
 
 export default function Login() {
   const naverLoginLinkRef = useRef<HTMLAnchorElement>(null);
@@ -73,7 +72,7 @@ export default function Login() {
         slidesPerView={1}
         pagination={true}
         height={200}
-        modules={[Pagination, Autoplay]}
+        modules={[Autoplay]}
         autoplay={{
           delay: 4000,
           disableOnInteraction: false,
