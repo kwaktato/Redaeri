@@ -30,12 +30,11 @@ export default function Home() {
 
 const Container = styled.div`
   background: ${({ theme }) => theme.colors['primary-500']};
-  padding: 40px 28px 48px 28px;
+  padding: 40px 28px 0 28px;
   display: grid;
   grid-template-rows: 1fr auto;
-  overflow: hidden;
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
 `;
 
 const Greeting = styled(GreetingImg)`
@@ -67,6 +66,10 @@ const ActionContainer = styled.div`
   flex-direction: column;
   align-items: center;
   font-size: 14px;
+  position: sticky;
+  bottom: 18px;
+  background: ${({ theme }) => theme.colors['primary-500']};
+
   color: ${({ theme }) => theme.colors['primary-100']};
   a {
     margin-top: 16px;

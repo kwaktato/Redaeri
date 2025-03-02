@@ -120,7 +120,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 48px;
 `;
 
 const SwiperContainer = styled(Swiper)`
@@ -173,6 +172,11 @@ const LoginContainer = styled.section`
   align-self: end;
   text-align: center;
   margin-top: 20px;
+  position: sticky;
+  bottom: 18px;
+  z-index: 100;
+  background: ${({ theme }) => theme.colors['gray-100']};
+
   p {
     color: ${({ theme }) => theme.colors['gray-700']};
     font-size: 12px;
