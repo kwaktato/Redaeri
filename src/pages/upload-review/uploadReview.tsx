@@ -5,11 +5,13 @@ import { Link, useNavigate } from 'react-router';
 import Button from '@/components/button/Button';
 import CloseIcon from '@/assets/images/close.svg?react';
 import Loading from '@/components/loading/Loading';
-import { createPersonaByUpload } from '@/services/persona';
+import { createPersonaByUpload, getPersona } from '@/services/persona';
 import Toast from '@/components/toast/toast';
 import { getUser } from '@/services/user';
+import { GetPersonaType } from '@/types/persona';
 
 export default function UploadReview() {
+  const [persona, setPersona] = useState<GetPersonaType>();
   const [isOpenTextArea, setIsOpenTextarea] = useState(false);
   const [textareaValue, setTextareaValue] = useState('');
   const [fileList, setFileList] = useState<File[]>([]);
@@ -27,16 +29,14 @@ export default function UploadReview() {
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+
     await createPersonaByUpload({
       files: fileList,
       answers: uploadedText,
+      personaIdx: persona?.personaIdx,
     });
 
-    const data = await createPersonaByUpload({
-      files: fileList,
-      answers: uploadedText,
-    });
-    navigate('/persona-success', { state: { data } });
+    navigate('/persona-success');
     window.scrollTo(0, 0);
   };
 
@@ -91,6 +91,13 @@ export default function UploadReview() {
         window.scrollTo(0, 0);
         return;
       }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const persona = await getPersona();
+      setPersona(persona);
     })();
   }, []);
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import MainContainer from '@/components/mainContainer/mainContainer';
 import PersonaSuccessImg from '@/assets/images/persona-1.png';
@@ -15,10 +15,6 @@ import { GetPersonaType, PERSONA_IMG_TYPE } from '@/types/persona';
 
 export default function PersonaSuccess() {
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const personaImgType = state?.personaImgType
-    ? PERSONA_IMG_TYPE[state.personaImgType]
-    : PersonaSuccessImg;
 
   const [persona, setPersona] = useState<GetPersonaType>();
   const [user, setUser] = useState<User>();
@@ -27,6 +23,10 @@ export default function PersonaSuccess() {
     isOpen: false,
     message: '',
   });
+
+  const personaImgType = persona?.personaImgType
+    ? PERSONA_IMG_TYPE[persona.personaImgType - 1]
+    : PersonaSuccessImg;
 
   const onClickCopyAnswerBtn = async () => {
     if (!persona?.allAnswer) return;
