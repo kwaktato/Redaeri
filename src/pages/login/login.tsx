@@ -9,8 +9,8 @@ import NaverLogo from '@/assets/images/naver-logo.svg?react';
 import SlideImageOne from '@/assets/images/login-slide-1.png';
 import SlideImageTwo from '@/assets/images/login-slide-2.png';
 import SlideImageThree from '@/assets/images/login-slide-3.png';
-import KakaoLogo from '@/assets/images/kakao-logo.svg?react';
-import { getNaverUser } from '@/services/user';
+// import KakaoLogo from '@/assets/images/kakao-logo.svg?react';
+import { getNaverUser, getTestToken } from '@/services/user';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -19,23 +19,25 @@ export default function Login() {
   const naverLoginLinkRef = useRef<HTMLAnchorElement>(null);
   const navigate = useNavigate();
 
-  const onClickNaverBtn = () => {
-    if (!naverLoginLinkRef.current) return;
-    naverLoginLinkRef.current.click();
+  const onClickNaverBtn = async () => {
+    // if (!naverLoginLinkRef.current) return;
+    // naverLoginLinkRef.current.click();
+    const { data } = await getTestToken();
+    document.cookie = `token=${data.token}`;
+    navigate('/shop-information');
   };
 
-  const onClickKakaoBtn = () => {
-    document.cookie = `token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDAsImV4cCI6MTc0MTcwOTE5MiwiaWF0IjoxNzQwODQ1MTkyfQ.0BD8XXVou_oPhXX9-pbNglpMzcJBRj5lro8YUx1OXvg`;
-    navigate('/shop-information');
-    window.scrollTo(0, 0);
-  };
+  // const onClickKakaoBtn = () => {
+  //   document.cookie = `token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDAsImV4cCI6MTc0MTcwOTE5MiwiaWF0IjoxNzQwODQ1MTkyfQ.0BD8XXVou_oPhXX9-pbNglpMzcJBRj5lro8YUx1OXvg`;
+  //   navigate('/shop-information');
+  //   window.scrollTo(0, 0);
+  // };
 
   const getUser = async (code: string, state: string) => {
     try {
       const user = await getNaverUser(code, state);
       document.cookie = `token=${user.token}`;
       navigate('/shop-information');
-      window.scrollTo(0, 0);
     } catch {
       alert('에러 발생');
     }
@@ -73,7 +75,7 @@ export default function Login() {
         height={200}
         modules={[Pagination, Autoplay]}
         autoplay={{
-          delay: 2500,
+          delay: 4000,
           disableOnInteraction: false,
         }}
         loop={true}
@@ -104,10 +106,10 @@ export default function Login() {
           <NaverLogo />
           네이버로 로그인하기
         </Button>
-        <Button onClick={onClickKakaoBtn}>
+        {/* <Button onClick={onClickKakaoBtn}>
           <KakaoLogo />
           테스트용 로그인하기
-        </Button>
+        </Button> */}
       </LoginContainer>
     </Container>
   );
@@ -202,13 +204,13 @@ const Button = styled.button`
     height: 15px;
     margin-right: 4px;
   }
-
-  &:last-child {
-    margin-top: 10px;
-    background: #f7e600;
-    color: ${({ theme }) => theme.colors['black']};
-  }
 `;
+
+// &:last-child {
+//   margin-top: 10px;
+//   background: #f7e600;
+//   color: ${({ theme }) => theme.colors['black']};
+// }
 
 const NaverLoginLink = styled.a`
   display: none;

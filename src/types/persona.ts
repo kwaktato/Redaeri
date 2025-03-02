@@ -4,7 +4,7 @@ import PersonaType3 from '@/assets/images/persona-3.png';
 import PersonaType4 from '@/assets/images/persona-4.png';
 import PersonaType5 from '@/assets/images/persona-5.png';
 
-export const PERSONA_TYPE_IMG = [
+export const PERSONA_IMG_TYPE = [
   PersonaType1,
   PersonaType2,
   PersonaType3,

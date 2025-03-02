@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import MainContainer from '@/components/mainContainer/mainContainer';
 import PersonaSuccessImg from '@/assets/images/persona-1.png';
@@ -11,11 +11,14 @@ import { getPersona, updateAllAnswer } from '@/services/persona';
 import Toast from '@/components/toast/toast';
 import { getUser } from '@/services/user';
 import { User } from '@/types/user';
-import { GetPersonaType } from '@/types/persona';
+import { GetPersonaType, PERSONA_IMG_TYPE } from '@/types/persona';
 
-// TODO: UI 점검 및 navigate 추가
 export default function PersonaSuccess() {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const personaImgType = state?.personaImgType
+    ? PERSONA_IMG_TYPE[state.personaImgType]
+    : PersonaSuccessImg;
 
   const [persona, setPersona] = useState<GetPersonaType>();
   const [user, setUser] = useState<User>();
@@ -87,7 +90,7 @@ export default function PersonaSuccess() {
           사장님은
         </p>
         <div>
-          <img src={PersonaSuccessImg} alt='persona-success' />
+          <img src={personaImgType} alt='persona-success' />
           <p>
             당신은 <strong>{user?.emotionSelect}</strong>
           </p>

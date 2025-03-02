@@ -1,5 +1,6 @@
 import { User } from '@/types/user';
-import { fetcher } from './request';
+import { fetcher, requestURL } from './request';
+import axios from 'axios';
 
 export const getNaverUser = async (code: string, state: string) => {
   const { data } = await fetcher<{ token: string }>(`/naver/callback`, {
@@ -14,5 +15,13 @@ export const getNaverUser = async (code: string, state: string) => {
 
 export const getUser = async () => {
   const { data } = await fetcher<User>('/user/get');
+  return data;
+};
+
+export const getTestToken = async () => {
+  const data = await axios.get<{ token: string; loginIdx: number }>(
+    `${requestURL}/user/test/token`
+  );
+
   return data;
 };

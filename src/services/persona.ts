@@ -69,3 +69,25 @@ export const createPersonaByUpload = async ({
     data: formData,
   });
 };
+
+export const updatePersona = async ({
+  personaIdx,
+  emotionSelect,
+  lengthSelect,
+  personaSelect,
+}: {
+  personaIdx: number;
+  emotionSelect: string;
+  lengthSelect: string;
+  personaSelect: string;
+}) => {
+  return fetcher<GetPersonaType>('/persona/update', {
+    method: 'PATCH',
+    data: {
+      personaIdx,
+      emotionSelect,
+      lengthSelect,
+      personaSelect,
+    },
+  });
+};

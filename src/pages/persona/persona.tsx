@@ -8,11 +8,13 @@ import {
   PERSONA_REVIEW_QUESTION,
   PERSONA_EMOTION_QUESTION,
   PersonaInsertType,
+  GetPersonaType,
 } from '@/types/persona';
-import { createPersona } from '@/services/persona';
+import { createPersona, getPersona, updatePersona } from '@/services/persona';
 
 // TODO: UI 완성 후 주석 삭제 예정
 export default function Persona() {
+  const [persona, setPersona] = useState<GetPersonaType | null>();
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPersona, setCurrentPersona] = useState<PersonaInsertType>({
@@ -35,16 +37,43 @@ export default function Persona() {
     setCurrentPage(currentPage + 1);
 
     const isLastPage = currentPage === 2;
-    if (isLastPage) {
-      setIsLoading(true);
-      await createPersona({
+    if (!isLastPage) return;
+
+    setIsLoading(true);
+
+    if (persona) {
+      const { data } = await updatePersona({
         ...currentPersona,
+        personaIdx: persona.personaIdx,
         lengthSelect: question,
       });
-      navigate('/persona-success');
+
+      // TODO: APi 수정이 필요해 임시 방편으로 state사용
+      navigate('/persona-success', {
+        state: { personaImgType: data.personaImgType },
+      });
       window.scrollTo(0, 0);
+
+      return;
     }
+
+    const { data } = await createPersona({
+      ...currentPersona,
+      lengthSelect: question,
+    });
+    // TODO: APi 수정이 필요해 임시 방편으로 state사용
+    navigate('/persona-success', {
+      state: { personaImgType: data.personaImgType },
+    });
+    window.scrollTo(0, 0);
   };
+
+  useEffect(() => {
+    (async () => {
+      const data = await getPersona();
+      setPersona(data);
+    })();
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
