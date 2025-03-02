@@ -5,15 +5,25 @@ import { useEffect, useState } from 'react';
 import ReviewHistoryNone from './ReviewHistoryNone';
 import { getHistory } from '@/services/review';
 import { History } from '@/types/review';
+import ReviewCompleteClick from './ReviewHistoryClick';
 
 // 5.5 리뷰 히스토리
 const ReviewHistory = () => {
   const navigate = useNavigate();
   const [datas, setDatas] = useState<History[]>([]);
+  const [clickData, setClickData] = useState<History>();
 
   const [isCardClicked, setIsCardClicked] = useState(false);
-  const handleCardClick = () => {
+  const handleCardClick = (data: History) => {
+    setClickData(data);
     setIsCardClicked(true);
+  };
+
+  const reviewForamt = (text: string) => {
+    if (text.length > 45) {
+      return text.slice(0, 45) + '...';
+    }
+    return text;
   };
 
   useEffect(() => {
@@ -28,48 +38,63 @@ const ReviewHistory = () => {
   return (
     <>
       {datas.length > 0 ? (
-        <Container>
-          <Navbar>
-            <NavLeft
-              onClick={() => {
-                navigate(-1);
-                window.scrollTo(0, 0);
-              }}
+        <>
+          {!isCardClicked && (
+            <Container>
+              <Navbar>
+                <NavLeft
+                  onClick={() => {
+                    navigate(-1);
+                    window.scrollTo(0, 0);
+                  }}
+                />
+                <NavCenter>리뷰 히스토리</NavCenter>
+              </Navbar>
+
+              <LabelWrapper>
+                <Label state='bold'>최신순</Label>
+                <Label state=''>최대 20개의 리뷰를 확인할 수 있어요</Label>
+              </LabelWrapper>
+
+              <CardsWrapper>
+                {datas.map((data) => (
+                  <CardWrapper
+                    key={data.logIdx}
+                    onClick={() => handleCardClick(data)}
+                  >
+                    <IdWrapper>
+                      <IdLabel>{data.rownum}</IdLabel>
+                      <State type={data.reviewType}>{data.reviewType}</State>
+                    </IdWrapper>
+                    <TextWrapper>
+                      <TextLabel>{reviewForamt(data.reviewText)}</TextLabel>
+                      <TimeWrapper>
+                        <TimeLabelWrapper>
+                          <TimeLabel state='bold'>날짜</TimeLabel>
+                          <TimeLabel state=''>{data.insertDate}</TimeLabel>
+                        </TimeLabelWrapper>
+                        <Border />
+                        <TimeLabelWrapper>
+                          <TimeLabel state='bold'>시간</TimeLabel>
+                          <TimeLabel state=''>{data.insertTime}</TimeLabel>
+                        </TimeLabelWrapper>
+                      </TimeWrapper>
+                    </TextWrapper>
+                  </CardWrapper>
+                ))}
+              </CardsWrapper>
+            </Container>
+          )}
+          {isCardClicked && clickData && (
+            <ReviewCompleteClick
+              logIdx={clickData.logIdx}
+              score={clickData.score}
+              generateAnswer={clickData.generateAnswer}
+              reviewType={clickData.reviewType}
+              reviewText={clickData.reviewText}
             />
-            <NavCenter>리뷰 히스토리</NavCenter>
-          </Navbar>
-
-          <LabelWrapper>
-            <Label state='bold'>최신순</Label>
-            <Label state=''>최대 20개의 리뷰를 확인할 수 있어요</Label>
-          </LabelWrapper>
-
-          <CardsWrapper>
-            {datas.map((data) => (
-              <CardWrapper key={data.logIdx} onClick={handleCardClick}>
-                <IdWrapper>
-                  <IdLabel>{data.rownum}</IdLabel>
-                  <State type={data.reviewType}>{data.reviewType}</State>
-                </IdWrapper>
-                <TextWrapper>
-                  <TextLabel>{data.reviewText}</TextLabel>
-                  <TimeWrapper>
-                    <TimeLabelWrapper>
-                      <TimeLabel state='bold'>날짜</TimeLabel>
-                      <TimeLabel state=''>{data.insertDate}</TimeLabel>
-                    </TimeLabelWrapper>
-                    <Border />
-                    <TimeLabelWrapper>
-                      <TimeLabel state='bold'>시간</TimeLabel>
-                      <TimeLabel state=''>{data.insertTime}</TimeLabel>
-                    </TimeLabelWrapper>
-                  </TimeWrapper>
-                </TextWrapper>
-              </CardWrapper>
-            ))}
-            {isCardClicked && <></>}
-          </CardsWrapper>
-        </Container>
+          )}
+        </>
       ) : (
         <ReviewHistoryNone />
       )}
