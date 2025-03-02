@@ -101,7 +101,7 @@ export default function UploadReview() {
     })();
   }, []);
 
-  return !isLoading ? (
+  return isLoading ? (
     <Loading
       first='사장님의 답변 스타일을'
       second='분석하고 있어요'
