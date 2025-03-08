@@ -1,13 +1,28 @@
-import { getNaverUser } from '@/services/user';
+import { getNaverUser, getUser } from '@/services/user';
+
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 export default function LoginCallback() {
-  const getUser = async (code: string, state: string) => {
+  const navigate = useNavigate();
+
+  const getUserNaver = async (code: string, state: string) => {
     try {
-      //   await getNaverUser(code, state);
-      const user = await getNaverUser(code, state);
-      // console.log(user);
-      return user;
+      const userNaver = await getNaverUser(code, state);
+
+      // 토큰 처리
+      localStorage.setItem('token', userNaver.token);
+
+      // 가입 여부에 따른 화면 이동
+      const user = await getUser();
+      const nextPage =
+        user.storeIdx === null
+          ? '/shop-information'
+          : user.personaIdx === null
+            ? '/upload-answer'
+            : '/review';
+      navigate(nextPage);
+      window.scrollTo(0, 0);
     } catch {
       // TODO: 에러 추가
       alert('에러 발생');
@@ -21,7 +36,7 @@ export default function LoginCallback() {
     const state = naverHash.get('state');
 
     if (code && state) {
-      getUser(code, state);
+      getUserNaver(code, state);
     }
   }, []);
 

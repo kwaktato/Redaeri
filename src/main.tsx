@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from '@/style/GlobalStyle.tsx';
 import CustomRoute from '@/components/route/route.tsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 async function init() {
   if (process.env.NODE_ENV === 'development') {
@@ -67,12 +68,16 @@ const theme = {
   },
 };
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <CustomRoute />
+        <QueryClientProvider client={queryClient}>
+          <CustomRoute />
+        </QueryClientProvider>
       </ThemeProvider>
     </BrowserRouter>
   </StrictMode>

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { User } from '@/types/user';
 import { getUser } from '@/services/user';
 import { FOOD_TYPE } from '@/types/food';
+import { personaMapping } from '@/types/persona';
 
 interface AccountClose {
   close: () => void;
@@ -18,6 +19,19 @@ const Account = ({ close }: AccountClose) => {
 
   const foodItem = FOOD_TYPE.find((item) => item.name === user?.storeType);
   const selectedImage = foodItem?.image;
+
+  const convert = (
+    object: Record<string, string>,
+    value: string | undefined
+  ) => {
+    return Object.keys(object).find((key) => object[key] === value);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+    window.scrollTo(0, 0);
+  };
 
   useEffect(() => {
     (async () => {
@@ -58,19 +72,12 @@ const Account = ({ close }: AccountClose) => {
             window.scrollTo(0, 0);
           }}
         >
-          <label>{user?.personaSelect}</label>
+          <label>{convert(personaMapping, user?.personaSelect)}</label>
           <ArrowNext />
         </Info>
       </Wrapper>
       <DeleteWrapper>
-        <label
-          onClick={() => {
-            navigate('/');
-            window.scrollTo(0, 0);
-          }}
-        >
-          로그아웃
-        </label>
+        <label onClick={logout}>로그아웃</label>
         <Border />
         <label
           onClick={() => {

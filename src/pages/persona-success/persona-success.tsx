@@ -11,7 +11,13 @@ import { getPersona, updateAllAnswer } from '@/services/persona';
 import Toast from '@/components/toast/toast';
 import { getUser } from '@/services/user';
 import { User } from '@/types/user';
-import { GetPersonaType, PERSONA_IMG_TYPE } from '@/types/persona';
+import {
+  emotionMappingSuccess,
+  GetPersonaType,
+  lengthMappingSuccess,
+  PERSONA_IMG_TYPE,
+  personaMapping,
+} from '@/types/persona';
 
 export default function PersonaSuccess() {
   const navigate = useNavigate();
@@ -27,6 +33,13 @@ export default function PersonaSuccess() {
   const personaImgType = persona?.personaImgType
     ? PERSONA_IMG_TYPE[persona.personaImgType - 1]
     : PersonaSuccessImg;
+
+  const convert = (
+    object: Record<string, string>,
+    value: string | undefined
+  ) => {
+    return Object.keys(object).find((key) => object[key] === value);
+  };
 
   const onClickCopyAnswerBtn = async () => {
     if (!persona?.allAnswer) return;
@@ -92,13 +105,20 @@ export default function PersonaSuccess() {
         <div>
           <img src={personaImgType} alt='persona-success' />
           <p>
-            당신은 <strong>{user?.emotionSelect}</strong>
+            당신은{' '}
+            <strong>
+              {emotionMappingSuccess[user?.emotionSelect || 'thank']}
+            </strong>
           </p>
           <p>
-            <strong>{user?.lengthSelect}</strong>을 선호하는
+            <strong>
+              {lengthMappingSuccess[user?.lengthSelect || 'long']}
+            </strong>
+            을 선호하는
           </p>
           <p>
-            <strong>{user?.personaSelect}</strong> 스타일이군요!
+            <strong>{convert(personaMapping, user?.personaSelect)}</strong>{' '}
+            스타일이군요!
           </p>
         </div>
       </Title>

@@ -5,23 +5,23 @@ import styled, { keyframes } from 'styled-components';
 import Star from './Star';
 import { useState } from 'react';
 import { Link } from 'react-router';
-import axios from 'axios';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
 import Account from '@/pages/account/Account';
+import { useMutation } from '@tanstack/react-query';
+import { getImageText } from '@/services/review';
 
 interface ReviewUploadProps {
   handleReviewUpload: (rating: number, review: string) => void;
 }
 
 // 5.1 리뷰 업로드
-/* eslint-disable no-console */
 const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
   const [score, setScore] = useState(0);
   const [review, setReview] = useState(''); // 리대리 호출 시 사용할 리뷰 텍스트
   const [textCount, setTextCount] = useState(0); // 텍스트 카운트
   const [isImage, setIsImage] = useState(false); // 이미지 업로드인지
   const [isText, setIsText] = useState(false); // 텍스트 업로드인지
-  const [isLoading, setIsLoading] = useState(false); // 텍스트 변환 로딩 중인지
+  const [isloading, setIsloading] = useState(false); // 텍스트 변환 로딩 중인지
   const isEnable = score > 0 && review.length > 0;
 
   // 별점 매기기
@@ -52,40 +52,26 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
     }
   };
 
-  const baseURL = import.meta.env.VITE_APP_API_URL;
-  const convert = async (selectedFile: File) => {
-    setIsLoading(true);
-
-    const formData = new FormData();
-    formData.append('reviewImgFile', selectedFile);
-
-    const token = localStorage.getItem('token');
-
-    // api 호출
-    try {
-      const result = await axios.post(
-        `${baseURL}/api/v1/image/text/read`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Token: token,
-          },
-        }
-      );
-      console.log(result.data);
+  const mutation = useMutation({
+    mutationFn: (data: File) => getImageText(data),
+    onMutate: () => {
+      setIsloading(true);
+    },
+    onSuccess: (result) => {
       setReview(
-        result.data.data.reviewText.replace(/[\r\n]+/g, '').replace(/↵/g, '')
+        result.data.reviewText.replace(/[\r\n]+/g, '').replace(/↵/g, '')
       );
       setTextCount(
-        result.data.data.reviewText.replace(/[\r\n]+/g, '').replace(/↵/g, '')
-          .length
+        result.data.reviewText.replace(/[\r\n]+/g, '').replace(/↵/g, '').length
       );
-    } catch (e) {
-      console.log('리뷰 사진 에러: ', e);
-    } finally {
-      setIsLoading(false);
-    }
+    },
+    onSettled: () => {
+      setIsloading(false);
+    },
+  });
+
+  const convert = async (selectedFile: File) => {
+    mutation.mutate(selectedFile);
   };
 
   const [infoOpen, setInfoOpen] = useState(false);
@@ -142,7 +128,7 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
                   </Button>
                 </>
               )}
-              {isImage && isLoading && (
+              {isImage && isloading && (
                 <LoadingScreen>
                   <LoadingWrapper>
                     <LoadingChat />
@@ -155,7 +141,7 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
                   </LoadingLabel>
                 </LoadingScreen>
               )}
-              {isImage && !isLoading && (
+              {isImage && !isloading && (
                 <>
                   <Guide>리대리가 오해한 내용은 없는지 잘 확인해주세요!</Guide>
                   <TextAreaWrapper>

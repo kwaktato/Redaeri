@@ -1,10 +1,30 @@
-import { Link as RouterLink } from 'react-router';
 import styled from 'styled-components';
 
 import LogoIcon from '@/assets/images/logo.svg?react';
 import GreetingImg from '@/assets/images/greeting.svg?react';
+import { useNavigate } from 'react-router';
+import { getUser } from '@/services/user';
 
 export default function Home() {
+  const navigate = useNavigate();
+
+  const onClickStartBtn = async () => {
+    if (localStorage.getItem('token')) {
+      const user = await getUser();
+      const nextPage =
+        user.storeIdx === null
+          ? '/shop-information'
+          : user.personaIdx === null
+            ? '/upload-answer'
+            : '/review';
+      navigate(nextPage);
+    } else {
+      navigate('/login');
+    }
+
+    window.scrollTo(0, 0);
+  };
+
   return (
     <Container>
       <Title>
@@ -20,9 +40,12 @@ export default function Home() {
       </Title>
 
       <ActionContainer>
-        <p>요식업 사장님들의 말투와 브랜드 아이덴티티를</p>
-        <p>반영한 맞춤형 리뷰 답변 자동 생성 서비스</p>
-        <Link to='/login'>시작하기</Link>
+        <p>
+          요식업 사장님들의 말투와 브랜드 아이덴티티를
+          <br />
+          반영한 맞춤형 리뷰 답변 자동 생성 서비스
+        </p>
+        <Link onClick={onClickStartBtn}>시작하기</Link>
       </ActionContainer>
     </Container>
   );
@@ -38,8 +61,10 @@ const Container = styled.div`
 `;
 
 const Greeting = styled(GreetingImg)`
+  position: absolute;
   width: 280px;
   height: 360px;
+  top: 25%;
 `;
 
 const Logo = styled(LogoIcon)`
@@ -66,9 +91,11 @@ const ActionContainer = styled.div`
   flex-direction: column;
   align-items: center;
   font-size: 14px;
+  text-align: center;
   position: sticky;
   bottom: 18px;
   background: ${({ theme }) => theme.colors['primary-500']};
+  gap: 8px;
 
   color: ${({ theme }) => theme.colors['primary-100']};
   a {
@@ -76,7 +103,7 @@ const ActionContainer = styled.div`
   }
 `;
 
-const Link = styled(RouterLink)`
+const Link = styled.button`
   background: ${({ theme }) => theme.colors['black']};
   color: ${({ theme }) => theme.colors['white']};
   width: 100%;

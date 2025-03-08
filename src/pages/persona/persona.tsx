@@ -10,6 +10,9 @@ import {
   PERSONA_EMOTION_QUESTION,
   PersonaInsertType,
   GetPersonaType,
+  personaMapping,
+  emotionMapping,
+  lengthMapping,
 } from '@/types/persona';
 import { createPersona, getPersona, updatePersona } from '@/services/persona';
 
@@ -17,7 +20,7 @@ import { createPersona, getPersona, updatePersona } from '@/services/persona';
 export default function Persona() {
   const [persona, setPersona] = useState<GetPersonaType | null>();
   const [currentPage, setCurrentPage] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isloading, setIsloading] = useState(false);
   const [currentPersona, setCurrentPersona] = useState<PersonaInsertType>({
     personaSelect: '',
     emotionSelect: '',
@@ -47,13 +50,18 @@ export default function Persona() {
     const isLastPage = currentPage === 2;
     if (!isLastPage) return;
 
-    setIsLoading(true);
+    setIsloading(true);
+
+    const personaSelect = personaMapping[currentPersona.personaSelect];
+    const emotionSelect = emotionMapping[currentPersona.emotionSelect];
+    const lengthSelect = lengthMapping[question];
 
     if (persona) {
       const { data } = await updatePersona({
-        ...currentPersona,
         personaIdx: persona.personaIdx,
-        lengthSelect: question,
+        emotionSelect: emotionSelect,
+        lengthSelect: lengthSelect,
+        personaSelect: personaSelect,
       });
 
       // TODO: APi 수정이 필요해 임시 방편으로 state사용
@@ -66,8 +74,9 @@ export default function Persona() {
     }
 
     const { data } = await createPersona({
-      ...currentPersona,
-      lengthSelect: question,
+      emotionSelect: emotionSelect,
+      lengthSelect: lengthSelect,
+      personaSelect: personaSelect,
     });
     // TODO: APi 수정이 필요해 임시 방편으로 state사용
     navigate('/persona-success', {
@@ -87,7 +96,7 @@ export default function Persona() {
     window.scrollTo(0, 0);
   }, []);
 
-  return !isLoading ? (
+  return !isloading ? (
     <Container>
       <ProgressBarContainer>
         <ProgressBar className={currentPage >= 0 ? 'active' : ''} />

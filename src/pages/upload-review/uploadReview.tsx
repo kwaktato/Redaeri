@@ -16,7 +16,7 @@ export default function UploadReview() {
   const [textareaValue, setTextareaValue] = useState('');
   const [fileList, setFileList] = useState<File[]>([]);
   const [uploadedText, setUploadedText] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isloading, setIsloading] = useState(false);
   const [uploadedList, setUploadedList] = useState<string[]>([]);
   const [toastStatus, setToastStatus] = useState({
     isOpen: false,
@@ -28,7 +28,7 @@ export default function UploadReview() {
 
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
+    setIsloading(true);
 
     await createPersonaByUpload({
       files: fileList,
@@ -101,7 +101,7 @@ export default function UploadReview() {
     })();
   }, []);
 
-  return isLoading ? (
+  return isloading ? (
     <Loading
       first='사장님의 답변 스타일을'
       second='분석하고 있어요'

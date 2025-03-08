@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-import { useNavigate } from 'react-router';
 
 import WhiteLogo from '@/assets/images/blue-logo.svg?react';
 import NaverLogo from '@/assets/images/naver-logo.svg?react';
@@ -10,48 +9,52 @@ import SlideImageOne from '@/assets/images/login-slide-1.png';
 import SlideImageTwo from '@/assets/images/login-slide-2.png';
 import SlideImageThree from '@/assets/images/login-slide-3.png';
 // import KakaoLogo from '@/assets/images/kakao-logo.svg?react';
-import { getNaverUser, getTestToken } from '@/services/user';
+import Warning from '@/assets/images/warning.svg?react';
 
 import 'swiper/css';
+import { getTestToken } from '@/services/user';
+import { useNavigate } from 'react-router';
 
 export default function Login() {
-  const naverLoginLinkRef = useRef<HTMLAnchorElement>(null);
   const navigate = useNavigate();
 
+  const naverLoginLinkRef = useRef<HTMLAnchorElement>(null);
   const onClickNaverBtn = async () => {
-    // if (!naverLoginLinkRef.current) return;
-    // naverLoginLinkRef.current.click();
+    if (!naverLoginLinkRef.current) return;
+    naverLoginLinkRef.current.click();
+    //   const { data } = await getTestToken();
+    //   localStorage.setItem('token', data.token);
+    //   // document.cookie = `token=${data.token}`;
+    //   navigate('/shop-information');
+  };
+
+  const onClickTestBtn = async () => {
     const { data } = await getTestToken();
     localStorage.setItem('token', data.token);
-    // document.cookie = `token=${data.token}`;
     navigate('/shop-information');
   };
 
-  // const onClickKakaoBtn = () => {
-  //   document.cookie = `token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbklkeCI6NDAsImV4cCI6MTc0MTcwOTE5MiwiaWF0IjoxNzQwODQ1MTkyfQ.0BD8XXVou_oPhXX9-pbNglpMzcJBRj5lro8YUx1OXvg`;
-  //   navigate('/shop-information');
-  //   window.scrollTo(0, 0);
+  // const getUser = async (code: string, state: string) => {
+  //   try {
+  //     const user = await getNaverUser(code, state);
+  //     document.cookie = `token=${user.token}`;
+  //     navigate('/shop-information');
+  //   } catch {
+  //     alert('에러 발생');
+  //   }
   // };
 
-  const getUser = async (code: string, state: string) => {
-    try {
-      const user = await getNaverUser(code, state);
-      document.cookie = `token=${user.token}`;
-      navigate('/shop-information');
-    } catch {
-      alert('에러 발생');
-    }
-  };
+  // useEffect(() => {
+  //   const naverHash = new URLSearchParams(window.location.search);
+  //   const code = naverHash.get('code');
+  //   const state = naverHash.get('state');
+
+  //   if (code && state) {
+  //     getUser(code, state);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    const naverHash = new URLSearchParams(window.location.search);
-    const code = naverHash.get('code');
-    const state = naverHash.get('state');
-
-    if (code && state) {
-      getUser(code, state);
-    }
-
     window.scrollTo(0, 0);
   }, []);
 
@@ -98,7 +101,7 @@ export default function Login() {
         <NaverLoginLink
           className='hidden'
           ref={naverLoginLinkRef}
-          href={`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${import.meta.env.VITE_NAVER_CLIENT_ID}&state=false&redirect_uri=${import.meta.env.VITE_NAVER_CALLBACK_URL}`}
+          href={`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${import.meta.env.VITE_APP_NAVER_CLIENT_ID}&state=false&redirect_uri=${import.meta.env.VITE_APP_NAVER_CALLBACK_URI}`}
         >
           네이버 로그인 테스트
         </NaverLoginLink>
@@ -106,10 +109,13 @@ export default function Login() {
           <NaverLogo />
           네이버로 로그인하기
         </Button>
-        {/* <Button onClick={onClickKakaoBtn}>
-          <KakaoLogo />
+        <Button onClick={onClickTestBtn}>
           테스트용 로그인하기
-        </Button> */}
+          <div>
+            <Warning />
+            설정한 말투와 가게 정보가 저장되지 않아요!
+          </div>
+        </Button>
       </LoginContainer>
     </Container>
   );
@@ -124,7 +130,7 @@ const Container = styled.div`
 
 const SwiperContainer = styled(Swiper)`
   width: 100%;
-  padding: 27px 28px;
+  padding: 28px;
   .swiper-pagination-bullets {
     position: relative;
   }
@@ -193,7 +199,7 @@ const LoginContainer = styled.section`
 const Button = styled.button`
   background: #03c75a;
   color: ${({ theme }) => theme.colors['white']};
-  padding: 15px 0;
+  height: 47px;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -205,13 +211,28 @@ const Button = styled.button`
     height: 15px;
     margin-right: 4px;
   }
-`;
 
-// &:last-child {
-//   margin-top: 10px;
-//   background: #f7e600;
-//   color: ${({ theme }) => theme.colors['black']};
-// }
+  &:last-child {
+    flex-direction: column;
+    margin-top: 10px;
+    background: ${({ theme }) => theme.colors['gray-400']};
+    color: ${({ theme }) => theme.colors['neutral-600']};
+    gap: 2px;
+
+    div {
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      color: ${({ theme }) => theme.colors['neutral-400']};
+    }
+
+    svg {
+      width: 8px;
+      height: 8px;
+      margin-right: 4px;
+    }
+  }
+`;
 
 const NaverLoginLink = styled.a`
   display: none;

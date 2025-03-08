@@ -1,4 +1,4 @@
-import { User } from '@/types/user';
+import { User, UserDelete, UserReviewCount } from '@/types/user';
 import { fetcher, requestURL } from './request';
 import axios from 'axios';
 
@@ -24,4 +24,13 @@ export const getTestToken = async () => {
   );
 
   return data;
+};
+
+export const getUserReviewCount = async () => {
+  const { data } = await fetcher<UserReviewCount>('/user/answer/count');
+  return data;
+};
+
+export const deleteUser = async () => {
+  return await fetcher<UserDelete>('/naver/unlink');
 };

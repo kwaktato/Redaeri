@@ -1,36 +1,27 @@
 import DeleteIcon from '@/assets/images/delete.svg?react';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
-import axios from 'axios';
+import { deleteUser, getUserReviewCount } from '@/services/user';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
-/* eslint-disable no-console */
 const DeletePage = () => {
   const navigate = useNavigate();
 
   const [reviewCount, setReviewCount] = useState(0);
 
-  const baseURL = import.meta.env.VITE_APP_API_URL;
-  const getReviewCount = async () => {
-    const token = localStorage.getItem('token');
-
-    try {
-      const result = await axios.get(`${baseURL}/api/v1/user/answer/count`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Token: token,
-        },
-      });
-      console.log(result.data);
-      setReviewCount(result.data.data.answerCount);
-    } catch (e) {
-      console.log('리뷰 개수 조회 에러: ', e);
-    }
+  const handleDelete = () => {
+    deleteUser();
+    localStorage.removeItem('token');
+    navigate('/delete-complete');
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
-    getReviewCount();
+    (async () => {
+      const data = await getUserReviewCount();
+      setReviewCount(data.answerCount);
+    })();
   }, []);
 
   return (
@@ -50,28 +41,17 @@ const DeletePage = () => {
         <br />
         <span>리대리</span>는 아직 사장님께 도움이 되고 싶어요.
       </Detail>
-      <Guide>
-        *계정 정보는 탈퇴 즉시 삭제되며, 탈퇴 시 이에 동의하는 것으로
-        간주합니다.
-      </Guide>
       <StickyBottomContainer>
         <ButtonWrapper>
           <ButtonBlue
             onClick={() => {
-              navigate(-1);
+              navigate('/review');
               window.scrollTo(0, 0);
             }}
           >
             취소하기
           </ButtonBlue>
-          <ButtonWhite
-            onClick={() => {
-              navigate('/delete-complete');
-              window.scrollTo(0, 0);
-            }}
-          >
-            탈퇴하기
-          </ButtonWhite>
+          <ButtonWhite onClick={handleDelete}>탈퇴하기</ButtonWhite>
         </ButtonWrapper>
       </StickyBottomContainer>
     </Container>
@@ -127,17 +107,6 @@ const Detail = styled.label`
   span {
     font-weight: 599;
   }
-`;
-
-const Guide = styled.label`
-  text-align: center;
-  color: ${({ theme }) => theme.colors['gray-600']};
-  text-align: center;
-  font-family: 'Pretendard Variable';
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 154%;
-  margin-top: 4px;
 `;
 
 const ButtonWrapper = styled.div`

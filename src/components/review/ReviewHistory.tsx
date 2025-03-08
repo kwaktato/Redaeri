@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import ReviewHistoryNone from './ReviewHistoryNone';
 import { getHistory } from '@/services/review';
-import { History } from '@/types/review';
+import { History, reviewTypeMapping } from '@/types/review';
 import ReviewCompleteClick from './ReviewHistoryClick';
 
 // 5.5 리뷰 히스토리
@@ -19,11 +19,15 @@ const ReviewHistory = () => {
     setIsCardClicked(true);
   };
 
-  const reviewForamt = (text: string) => {
+  const reviewFormat = (text: string) => {
     if (text.length > 45) {
       return text.slice(0, 45) + '...';
     }
     return text;
+  };
+
+  const reviewTypeFormat = (type: string) => {
+    return reviewTypeMapping[type];
   };
 
   useEffect(() => {
@@ -64,10 +68,12 @@ const ReviewHistory = () => {
                   >
                     <IdWrapper>
                       <IdLabel>{data.rownum}</IdLabel>
-                      <State type={data.reviewType}>{data.reviewType}</State>
+                      <State type={reviewTypeFormat(data.reviewType)}>
+                        {reviewTypeFormat(data.reviewType)}
+                      </State>
                     </IdWrapper>
                     <TextWrapper>
-                      <TextLabel>{reviewForamt(data.reviewText)}</TextLabel>
+                      <TextLabel>{reviewFormat(data.reviewText)}</TextLabel>
                       <TimeWrapper>
                         <TimeLabelWrapper>
                           <TimeLabel state='bold'>날짜</TimeLabel>
@@ -90,7 +96,7 @@ const ReviewHistory = () => {
               logIdx={clickData.logIdx}
               score={clickData.score}
               generateAnswer={clickData.generateAnswer}
-              reviewType={clickData.reviewType}
+              reviewType={reviewTypeFormat(clickData.reviewType)}
               reviewText={clickData.reviewText}
             />
           )}

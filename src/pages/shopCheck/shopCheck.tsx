@@ -10,7 +10,7 @@ import { getUser } from '@/services/user';
 
 export default function ShopCheck() {
   const [user, setUser] = useState<User>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isloading, setIsloading] = useState(false);
 
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -19,7 +19,7 @@ export default function ShopCheck() {
 
   const onClickCompleteBtn = async () => {
     try {
-      setIsLoading(true);
+      setIsloading(true);
       if (user?.storeName || user?.storeType) {
         await updateStore({
           storeName: storeName,
@@ -27,14 +27,14 @@ export default function ShopCheck() {
         });
         navigate('/upload-answer');
         window.scrollTo(0, 0);
-        setIsLoading(false);
+        setIsloading(false);
         return;
       }
       await createStore({
         storeName,
         storeType: selectedFoodType?.name,
       });
-      setIsLoading(false);
+      setIsloading(false);
       navigate('/upload-answer');
       window.scrollTo(0, 0);
     } catch {
@@ -80,7 +80,7 @@ export default function ShopCheck() {
         >
           아니요, 다시 입력할래요
         </BackButton>
-        <Button isLoading={isLoading} onClick={onClickCompleteBtn}>
+        <Button isLoading={isloading} onClick={onClickCompleteBtn}>
           설정 완료
         </Button>
       </LinkContainer>
