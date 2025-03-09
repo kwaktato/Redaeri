@@ -1,3 +1,4 @@
+import Loading from '@/components/loading/Loading';
 import { getNaverUser, getUser } from '@/services/user';
 
 import { useEffect } from 'react';
@@ -40,5 +41,9 @@ export default function LoginCallback() {
     }
   }, []);
 
-  return <div>로그인 중...</div>;
+  return (
+    <>
+      <Loading first='로그인 중' second='' details={[]} />
+    </>
+  );
 }

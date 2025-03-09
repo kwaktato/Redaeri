@@ -32,7 +32,7 @@ export const updateAllAnswer = async ({
   allAnswer: string;
   personaIdx: number;
 }) => {
-  return fetcher('/persona/update', {
+  return fetcher('/persona/answer/update', {
     method: 'PATCH',
     data: { allAnswer, personaIdx },
   });

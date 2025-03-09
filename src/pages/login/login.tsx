@@ -95,9 +95,9 @@ export default function Login() {
       </SwiperContainer>
 
       <LoginContainer>
-        <p>
+        {/* <p>
           리대리 서비스를 이용하려면 <strong>로그인</strong>이 필요해요!
-        </p>
+        </p> */}
         <NaverLoginLink
           className='hidden'
           ref={naverLoginLinkRef}
@@ -177,17 +177,12 @@ const LoginContainer = styled.section`
   padding: 0 35px;
   align-self: end;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 32px;
   position: sticky;
   bottom: 18px;
   z-index: 100;
   background: ${({ theme }) => theme.colors['gray-100']};
 
-  p {
-    color: ${({ theme }) => theme.colors['gray-700']};
-    font-size: 12px;
-    margin-bottom: 12px;
-  }
   .hidden {
     visibility: hidden;
     position: absolute;

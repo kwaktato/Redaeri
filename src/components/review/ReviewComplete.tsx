@@ -69,7 +69,7 @@ const ReviewComplete = ({
             <TitleDetail>
               <span>{user?.storeName}</span>에 대한
             </TitleDetail>
-            <Title>
+            <Title color={reviewType || ''}>
               <span>{reviewType}</span>리뷰가 달렸어요
             </Title>
           </TitleWrapper>
@@ -100,8 +100,8 @@ const ReviewComplete = ({
             </Rewrite>
           </AnswerWrapper>
 
-          <StickyBottomContainer style={{ background: '#2B91FF' }}>
-            <Border />
+          <StickyBottomContainer style={{ background: '#F3F7FA' }}>
+            {/* <Border /> */}
             <ButtonWrapper>
               <img src={Tooltip} alt='tooltip' />
               <Button
@@ -133,7 +133,7 @@ const Container = styled.div`
   position: relative;
   padding: 0px 28px 48px 28px;
   min-height: 100vh;
-  background: ${({ theme }) => theme.colors['primary-500']};
+  background: ${({ theme }) => theme.colors['gray-100']};
 `;
 
 const Navbar = styled.div`
@@ -153,10 +153,10 @@ const NavRight = styled(MyInfo)`
   right: 0px;
 
   path {
-    stroke: ${({ theme }) => theme.colors['primary-200']};
+    stroke: ${({ theme }) => theme.colors['gray-600']};
   }
   circle {
-    stroke: ${({ theme }) => theme.colors['primary-200']};
+    stroke: ${({ theme }) => theme.colors['gray-600']};
   }
 `;
 
@@ -167,28 +167,40 @@ const TitleWrapper = styled.div`
 `;
 
 const TitleDetail = styled.label`
-  color: ${({ theme }) => theme.colors['primary-100']};
+  color: ${({ theme }) => theme.colors['gray-800']};
   font-family: 'GmarketSansMedium';
   font-size: 16px;
   font-weight: 400;
   line-height: 126%;
 
   span {
-    color: ${({ theme }) => theme.colors.white};
     font-family: 'GmarketSansBold';
     font-weight: 500;
   }
 `;
 
-const Title = styled.label`
-  color: ${({ theme }) => theme.colors['primary-100']};
+const Title = styled.label<{ color: string }>`
+  color: ${({ theme }) => theme.colors['gray-800']};
   font-family: 'GmarketSansMedium';
   font-size: 25px;
   font-weight: 400;
   line-height: 126%;
 
   span {
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme, color }) => {
+      switch (color) {
+        case '긍정':
+          return theme.colors['primary-500'];
+        case '부정':
+          return theme.colors['point-100'];
+        case '문의':
+          return theme.colors['secondary-500'];
+        case '중립':
+          return theme.colors['gray-600'];
+        default:
+          return theme.colors.white;
+      }
+    }};
     font-family: 'GmarketSansBold';
     font-weight: 500;
   }
@@ -213,8 +225,9 @@ const Review = styled.label`
   display: flex;
   padding: 12px 16px;
   border-radius: 12px;
-  border: 2px solid ${({ theme }) => theme.colors['primary-300']};
-  color: ${({ theme }) => theme.colors['primary-200']};
+  border: 2px solid ${({ theme }) => theme.colors['gray-300']};
+  color: ${({ theme }) => theme.colors['gray-600']};
+  background: ${({ theme }) => theme.colors.white};
   font-family: 'Pretendard Variable';
   font-size: 16px;
   font-weight: 500;
@@ -227,6 +240,10 @@ const Arrow = styled(ArrowDown)`
   display: flex;
   justify-content: center;
   width: 28px;
+
+  path {
+    stroke: ${({ theme }) => theme.colors['neutral-500']};
+  }
 `;
 
 const AnswerWrapper = styled.div`
@@ -243,7 +260,7 @@ const AnswerTitleWrapper = styled.div`
 `;
 
 const AnswerTitle = styled.label`
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors['primary-700']};
   font-family: 'Pretendard Variable';
   font-size: 16px;
   font-weight: 500;
@@ -273,7 +290,7 @@ const Copy = styled(CopyIcon)`
 `;
 
 const Rewrite = styled.button`
-  color: ${({ theme }) => theme.colors['primary-100']};
+  color: ${({ theme }) => theme.colors['neutral-400']};
   text-align: end;
   font-family: 'Pretendard Variable';
   font-size: 16px;
@@ -286,12 +303,12 @@ const Rewrite = styled.button`
   }
 `;
 
-const Border = styled.div`
-  height: 1px;
-  background: ${({ theme }) => theme.colors['primary-600']};
-  margin: 0px -28px;
-  margin-bottom: 12px;
-`;
+// const Border = styled.div`
+//   height: 1px;
+//   background: ${({ theme }) => theme.colors['primary-600']};
+//   margin: 0px -28px;
+//   margin-bottom: 12px;
+// `;
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -319,7 +336,7 @@ const Button = styled.button<{ state: string }>`
     state === 'black' ? theme.colors.black : theme.colors.white};
 
   color: ${({ theme, state }) =>
-    state === 'black' ? theme.colors.white : theme.colors['primary-500']};
+    state === 'black' ? theme.colors.white : theme.colors['neutral-600']};
   font-family: 'Pretendard Variable';
   font-size: 15px;
   font-weight: 599;

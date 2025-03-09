@@ -10,6 +10,7 @@ interface LoadingProps {
 
 const Loading = ({ first, second, details }: LoadingProps) => {
   const [currentDetail, setCurrentDetail] = useState(details[0]);
+  const [dots, setDots] = useState('');
 
   const indexRef = useRef(0);
 
@@ -25,9 +26,17 @@ const Loading = ({ first, second, details }: LoadingProps) => {
         indexRef.current = indexRef.current + 1;
       }
       setCurrentDetail(details[indexRef.current]);
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const dotInterval = setInterval(() => {
+      setDots((prevDots) => (prevDots.length < 3 ? prevDots + '.' : ''));
+    }, 1000);
+
+    return () => clearInterval(dotInterval);
   }, []);
 
   return (
@@ -42,7 +51,10 @@ const Loading = ({ first, second, details }: LoadingProps) => {
           <br />
           {second}
         </Title>
-        <Detail>{currentDetail}</Detail>
+        <Detail>
+          {currentDetail}
+          {dots}
+        </Detail>
       </LabelWrapper>
     </Container>
   );

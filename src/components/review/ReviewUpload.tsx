@@ -108,6 +108,10 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
 
           <ReviewWrapper>
             <SubTitle>리뷰 캡처 이미지 혹은 텍스트를 업로드해주세요.</SubTitle>
+            <Tip>
+              TIP! 리뷰 영역에 맞춰 이미지를 조정하면 리대리가 더 잘 이해할 수
+              있어요.
+            </Tip>
             <ReviewButtonWrapper margin={!isImage && !isText}>
               <Button
                 onClick={() => document.getElementById('imageInput')?.click()}
@@ -275,6 +279,15 @@ const SubTitle = styled.label`
   line-height: 28px;
 `;
 
+const Tip = styled.div`
+  color: ${({ theme }) => theme.colors['gray-600']};
+  font-family: 'Pretendard Variable';
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 154%;
+  margin-bottom: 8px;
+`;
+
 const ScoreWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -300,7 +313,7 @@ const Score = styled.div`
 const ReviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  // gap: 4px;
 `;
 
 const ReviewButtonWrapper = styled.div<{ margin: boolean }>`

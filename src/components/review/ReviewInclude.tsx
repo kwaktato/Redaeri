@@ -59,18 +59,22 @@ const ReviewInclude = ({
           </IncludeWrapper>
 
           <ExamWrapper>
-            <ExamTitle>예시 문구</ExamTitle>
+            <ExamTitle>이런 내용을 넣으면 좋아요!</ExamTitle>
             <Exam>
-              “요즘 날씨가 춥고 길이 미끄러워서 배달이 어려울 때가 많은데,
-              무사히 잘 도착했다니 다행입니다.”
+              <span>신제품 홍보</span>
+              <label>
+                “이번에 새롭게 출시된 달콤 짭짜롬한 앙버터 소금빵도
+                추천드립니다!”
+              </label>
             </Exam>
             <Exam>
-              “저희는 당뇨식은 맛이 없다는 편견을 깨고 싶었어요! 건강도 챙기면서
-              맛있게 드셨다면 정말 뿌듯합니다! "
+              <span>특이사항 안내</span>
+              “혈당 조절이 어려운 분들을 위해 맛있는 건강식을 제공합니다."
             </Exam>
             <Exam>
-              “저희 가게 모든 메뉴는 제 손을 거쳐 갑니다. 한 그릇 한 그릇 정성
-              들여 만들고 있으니, 자주 찾아주세요!”
+              <span>시즈널 음식 추천</span>
+              “겨울이 제철인 방어회도 요즘 정말 맛있답니다! 다음에
+              도전해보세요.”
             </Exam>
           </ExamWrapper>
 
@@ -208,21 +212,28 @@ const ExamTitle = styled.label`
   font-family: 'Pretendard Variable';
   font-size: 15px;
   font-weight: 599;
-  line-height: 26px;
+  line-height: 157%;
 `;
 
 const Exam = styled.label`
   height: 67px;
-  padding: 12px 16px;
-  align-items: center;
+  padding-left: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors['gray-500']};
 
   color: ${({ theme }) => theme.colors['gray-600']};
   font-family: 'Pretendard Variable';
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
-  line-height: 22px;
+  line-height: 157%;
+
+  span {
+    font-weight: 599;
+  }
 `;
 
 const Before = styled.div`

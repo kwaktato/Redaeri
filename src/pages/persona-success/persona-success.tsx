@@ -18,6 +18,7 @@ import {
   PERSONA_IMG_TYPE,
   personaMapping,
 } from '@/types/persona';
+import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
 
 export default function PersonaSuccess() {
   const navigate = useNavigate();
@@ -145,7 +146,7 @@ export default function PersonaSuccess() {
         </div>
 
         <div className='save-answer'>
-          <span>만능 답변을 수정해서 알맞게 만들어보세요!</span>
+          <span>만능 답변을 수정해 더욱 알맞게 만들어보세요!</span>
           {updatedAllAnswer !== '' && (
             <SaveButton onClick={onClickUpdateAllAnswer}>
               만능답변 저장하기
@@ -269,13 +270,14 @@ const Content = styled.section`
   }
 `;
 
-const ButtonContainer = styled.section`
+const ButtonContainer = styled(StickyBottomContainer)`
   display: flex;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 48px;
   gap: 12px;
-  position: sticky;
-  bottom: 12px;
+  // position: sticky;
+  // bottom: 12px;
+  background: ${({ theme }) => theme.colors['primary-500']};
 
   img {
     width: 200px;
