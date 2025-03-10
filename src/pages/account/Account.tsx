@@ -78,7 +78,7 @@ const Account = ({ close }: AccountClose) => {
       </Wrapper>
       <DeleteWrapper>
         <label onClick={logout}>로그아웃</label>
-        <Border />
+        {/* <Border /> */}
         <label
           onClick={() => {
             navigate('/delete');
@@ -122,7 +122,7 @@ const NavRight = styled(XICon)`
   position: absolute;
   width: 28px;
   height: 28px;
-  right: 0px;
+  right: -8px;
   path {
     stroke: ${({ theme }) => theme.colors['neutral-300']};
   }
@@ -150,7 +150,7 @@ const Info = styled.div`
   justify-content: space-between;
   align-items: center;
   background: ${({ theme }) => theme.colors.white};
-  padding: 10px 16px;
+  padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid ${({ theme }) => theme.colors['gray-200']};
 
@@ -208,7 +208,7 @@ const DeleteWrapper = styled.div`
   label {
     color: ${({ theme }) => theme.colors['neutral-300']};
     font-family: 'Pretendard Variable';
-    font-size: 13px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: 154%;
@@ -216,8 +216,8 @@ const DeleteWrapper = styled.div`
   }
 `;
 
-const Border = styled.div`
-  width: 1px;
-  height: 12px;
-  background: ${({ theme }) => theme.colors['gray-500']};
-`;
+// const Border = styled.div`
+//   width: 1px;
+//   height: 12px;
+//   background: ${({ theme }) => theme.colors['gray-500']};
+// `;

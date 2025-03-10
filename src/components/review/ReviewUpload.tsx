@@ -201,7 +201,6 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
           </ReviewWrapper>
 
           <StickyBottomContainer>
-            <Border />
             <NextButton
               onClick={() => handleReviewUpload(score, review)}
               disabled={!isEnable}
@@ -220,7 +219,7 @@ export default ReviewUpload;
 
 const Container = styled.div`
   position: relative;
-  padding: 0px 28px 48px 28px;
+  padding: 0px 28px 20px 28px;
   min-height: 100vh;
 `;
 
@@ -238,7 +237,7 @@ const NavRight = styled(MyInfo)`
   position: absolute;
   width: 36px;
   height: 36px;
-  right: 0px;
+  right: -8px;
   path {
     stroke: ${({ theme }) => theme.colors['neutral-300']};
   }
@@ -254,7 +253,7 @@ const TitleWrapper = styled.div`
 const Title = styled.label`
   color: ${({ theme }) => theme.colors['gray-800']};
   font-family: 'GmarketSansMedium';
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 400;
   line-height: 131%;
 `;
@@ -264,7 +263,8 @@ const TitleDetail = styled.label`
   font-family: 'Pretendard Variable';
   font-size: 14px;
   font-weight: 500;
-  line-height: 26px;
+  line-height: 170%;
+  letter-spacing: -0.6px;
 
   span {
     font-weight: 599;
@@ -299,11 +299,12 @@ const Scores = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 `;
 
 const Score = styled.div`
-  width: 64px;
-  height: 64px;
+  width: 45px;
+  height: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -319,7 +320,7 @@ const ReviewWrapper = styled.div`
 const ReviewButtonWrapper = styled.div<{ margin: boolean }>`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: ${({ margin }) => (margin ? '104px' : '57px')};
 `;
 
@@ -329,7 +330,7 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.colors['gray-600']};
+  border: 1px solid ${({ theme }) => theme.colors['gray-200']};
   background: ${({ theme }) => theme.colors.white};
 
   color: ${({ theme }) => theme.colors['neutral-600']};
@@ -437,10 +438,6 @@ const TextArea = styled.textarea`
 
   &::placeholder {
     color: ${({ theme }) => theme.colors['gray-500']};
-    font-family: 'Pretendard Variable';
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 162%;
   }
 
   &:focus {
@@ -459,17 +456,11 @@ const ToHistory = styled(Link)`
   color: ${({ theme }) => theme.colors['gray-600']};
   text-align: center;
   font-family: 'Pretendard Variable';
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 162.5%;
   text-decoration-line: underline;
-`;
-
-const Border = styled.div`
-  height: 1px;
-  background: ${({ theme }) => theme.colors['gray-200']};
-  margin: 0 -28px;
-  margin-bottom: 12px;
+  margin-top: 4px;
 `;
 
 const NextButton = styled.button<{ state: boolean }>`
@@ -484,6 +475,6 @@ const NextButton = styled.button<{ state: boolean }>`
 
   color: ${({ theme }) => theme.colors.white};
   font-family: 'Pretendard Variable';
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 599;
 `;

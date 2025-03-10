@@ -101,6 +101,9 @@ const ActionContainer = styled.div`
   a {
     margin-top: 16px;
   }
+  p {
+    line-height: 170%;
+  }
 `;
 
 const Link = styled.button`
@@ -109,7 +112,7 @@ const Link = styled.button`
   width: 100%;
   display: block;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 599;
   border-radius: 12px;
   padding: 14px 0;

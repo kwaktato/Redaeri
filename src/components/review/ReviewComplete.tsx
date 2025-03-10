@@ -101,7 +101,6 @@ const ReviewComplete = ({
           </AnswerWrapper>
 
           <StickyBottomContainer style={{ background: '#F3F7FA' }}>
-            {/* <Border /> */}
             <ButtonWrapper>
               <img src={Tooltip} alt='tooltip' />
               <Button
@@ -131,7 +130,7 @@ export default ReviewComplete;
 
 const Container = styled.div`
   position: relative;
-  padding: 0px 28px 48px 28px;
+  padding: 0px 28px 20px 28px;
   min-height: 100vh;
   background: ${({ theme }) => theme.colors['gray-100']};
 `;
@@ -169,7 +168,7 @@ const TitleWrapper = styled.div`
 const TitleDetail = styled.label`
   color: ${({ theme }) => theme.colors['gray-800']};
   font-family: 'GmarketSansMedium';
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 126%;
 
@@ -182,7 +181,7 @@ const TitleDetail = styled.label`
 const Title = styled.label<{ color: string }>`
   color: ${({ theme }) => theme.colors['gray-800']};
   font-family: 'GmarketSansMedium';
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 400;
   line-height: 126%;
 
@@ -221,7 +220,9 @@ const Score = styled.div`
   align-items: center;
 `;
 
-const Review = styled.label`
+const Review = styled.textarea`
+  width: 100%;
+  resize: none;
   display: flex;
   padding: 12px 16px;
   border-radius: 12px;
@@ -236,7 +237,7 @@ const Review = styled.label`
 `;
 
 const Arrow = styled(ArrowDown)`
-  margin: 16px auto;
+  margin: 12px auto;
   display: flex;
   justify-content: center;
   width: 28px;
@@ -293,7 +294,7 @@ const Rewrite = styled.button`
   color: ${({ theme }) => theme.colors['neutral-400']};
   text-align: end;
   font-family: 'Pretendard Variable';
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 162.5%;
   text-decoration-line: underline;
@@ -303,18 +304,12 @@ const Rewrite = styled.button`
   }
 `;
 
-// const Border = styled.div`
-//   height: 1px;
-//   background: ${({ theme }) => theme.colors['primary-600']};
-//   margin: 0px -28px;
-//   margin-bottom: 12px;
-// `;
-
 const ButtonWrapper = styled.div`
   display: flex;
   gap: 8px;
   justify-content: space-between;
   position: relative;
+  margin-top: 12px;
 
   img {
     width: 200px;

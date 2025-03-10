@@ -9,6 +9,7 @@ import { createPersonaByUpload, getPersona } from '@/services/persona';
 import Toast from '@/components/toast/toast';
 import { getUser } from '@/services/user';
 import { GetPersonaType } from '@/types/persona';
+import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
 
 export default function UploadReview() {
   const [persona, setPersona] = useState<GetPersonaType>();
@@ -220,7 +221,7 @@ const Container = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 40px 28px 48px 28px;
+  padding: 40px 28px 20px 28px;
 `;
 
 const Title = styled.section`
@@ -266,7 +267,7 @@ const Title = styled.section`
 const CustomButton = styled(Button)`
   font-weight: 400;
   margin-top: 12px;
-  font-size: 13px;
+  font-size: 14px;
 `;
 
 const Content = styled.section`
@@ -283,7 +284,7 @@ const Content = styled.section`
     padding: 12px 18px;
     color: ${({ theme }) => theme.colors['gray-900']};
     cursor: pointer;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 400;
     -webkit-tap-highlight-color: transparent;
     &:focus {
@@ -303,6 +304,7 @@ const Content = styled.section`
 `;
 
 const Textarea = styled.textarea`
+  resize: none;
   width: 100%;
   height: 150px;
   border: none;
@@ -315,7 +317,7 @@ const Textarea = styled.textarea`
     color: ${({ theme }) => theme.colors['gray-500']};
     font-size: 13px;
     letter-spacing: -0.32px;
-    line-height: 18px;
+    line-height: 156%;
   }
   &:empty::before {
     content: '첫 번째 줄\A두 번째 줄\A세 번째 줄';
@@ -381,10 +383,12 @@ const UploadContainer = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: pre-wrap;
+
+    padding-top: 6px;
   }
 `;
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled(StickyBottomContainer)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

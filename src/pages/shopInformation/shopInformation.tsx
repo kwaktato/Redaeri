@@ -124,6 +124,11 @@ const InputContainer = styled.div`
     border: 1px solid ${({ theme }) => theme.colors['gray-200']};
     border-radius: 12px;
     outline: none;
+    font-size: 12px;
+
+    &::placeholder {
+      font-size: 12px;
+    }
   }
 
   button {
@@ -178,6 +183,7 @@ const FoodTypeContainer = styled.div`
 
 const SubmitButton = styled(Button)`
   margin-top: 40px;
+  font-size: 16px;
 
   position: sticky;
   bottom: 12px;

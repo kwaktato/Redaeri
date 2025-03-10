@@ -199,7 +199,7 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 599;
   svg {
     width: 15px;
@@ -212,10 +212,10 @@ const Button = styled.button`
     margin-top: 10px;
     background: ${({ theme }) => theme.colors['gray-400']};
     color: ${({ theme }) => theme.colors['neutral-600']};
-    gap: 2px;
+    gap: 1px;
 
     div {
-      font-size: 10px;
+      font-size: 11px;
       display: flex;
       align-items: center;
       color: ${({ theme }) => theme.colors['neutral-400']};

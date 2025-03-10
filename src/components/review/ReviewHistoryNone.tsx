@@ -107,6 +107,6 @@ const Button = styled.button`
 
   color: ${({ theme }) => theme.colors.white};
   font-family: 'Pretendard Variable';
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 599;
 `;

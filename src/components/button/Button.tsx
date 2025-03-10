@@ -37,6 +37,7 @@ const StyledButton = styled.button<ButtonProps>`
   font-weight: 599;
   cursor: ${({ isLoading }) => (isLoading ? 'not-allowed' : 'pointer')};
   pointer-events: ${({ isLoading }) => (isLoading ? 'none' : 'auto')};
+  font-size: 16px;
 
   ${({ isLoading }) =>
     isLoading &&

@@ -75,6 +75,7 @@ const Title = styled.label`
   font-weight: 400;
   line-height: 133%;
   text-align: start;
+  letter-spacing: -0.6px;
 
   span {
     color: ${({ theme }) => theme.colors['primary-500']};
@@ -100,9 +101,9 @@ const Detail = styled.label`
   color: ${({ theme }) => theme.colors['gray-800']};
   text-align: center;
   font-family: 'Pretendard Variable';
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 156%;
+  line-height: 143%;
 
   span {
     font-weight: 599;
@@ -125,7 +126,7 @@ const ButtonBlue = styled.button`
   background: ${({ theme }) => theme.colors['primary-500']};
   color: ${({ theme }) => theme.colors.white};
   font-family: 'Pretendard Variable';
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 599;
 `;
 
@@ -139,6 +140,6 @@ const ButtonWhite = styled.button`
   background: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors['primary-500']};
   font-family: 'Pretendard Variable';
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 599;
 `;

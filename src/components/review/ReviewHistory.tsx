@@ -79,7 +79,7 @@ const ReviewHistory = () => {
                           <TimeLabel state='bold'>날짜</TimeLabel>
                           <TimeLabel state=''>{data.insertDate}</TimeLabel>
                         </TimeLabelWrapper>
-                        <Border />
+                        {/* <Border /> */}
                         <TimeLabelWrapper>
                           <TimeLabel state='bold'>시간</TimeLabel>
                           <TimeLabel state=''>{data.insertTime}</TimeLabel>
@@ -260,8 +260,8 @@ const TimeLabel = styled.label<{ state: string }>`
   line-height: 154%;
 `;
 
-const Border = styled.div`
-  width: 1px;
-  height: 12px;
-  background: ${({ theme }) => theme.colors['gray-500']};
-`;
+// const Border = styled.div`
+//   width: 1px;
+//   height: 12px;
+//   background: ${({ theme }) => theme.colors['gray-500']};
+// `;

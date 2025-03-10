@@ -96,6 +96,8 @@ const ImageQuestionButton = styled.button`
   text-align: start;
   font-size: 16px;
   background: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors['neutral-600']};
+
   &.selected {
     border: 1px solid ${({ theme }) => theme.colors['primary-500']};
     background: ${({ theme }) => theme.colors['primary-400']};
@@ -148,6 +150,7 @@ const QuestionButton = styled.button`
   color: ${({ theme }) => theme.colors['gray-900']};
   font-family: 'Pretendard Variable';
   border: 1px solid ${({ theme }) => theme.colors['gray-200']};
+  font-size: 13px;
 
   &.selected {
     border: 1px solid

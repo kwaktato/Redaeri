@@ -2,8 +2,8 @@ const Star = ({ filled }: { filled: boolean }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='50'
-      height='48'
+      width='45'
+      height='45'
       viewBox='0 0 50 48'
       fill={filled ? '#FFC800' : '#D9DFE5'}
     >

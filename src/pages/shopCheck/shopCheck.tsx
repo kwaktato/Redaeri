@@ -114,8 +114,8 @@ const Content = styled.section`
   padding: 30px 0;
   margin-bottom: 30px;
   img {
-    width: 250px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
   }
 `;
 

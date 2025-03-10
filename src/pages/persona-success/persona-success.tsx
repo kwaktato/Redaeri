@@ -118,8 +118,10 @@ export default function PersonaSuccess() {
             을 선호하는
           </p>
           <p>
-            <strong>{convert(personaMapping, user?.personaSelect)}</strong>{' '}
-            스타일이군요!
+            <strong>
+              {convert(personaMapping, user?.personaSelect || 'nicePersona')}
+            </strong>{' '}
+            이군요!
           </p>
         </div>
       </Title>
@@ -204,6 +206,7 @@ const Title = styled.section`
   div {
     img {
       width: 100%;
+      margin-bottom: 14px;
     }
     box-shadow: 0px 4px 10px 0px ${({ theme }) => theme.colors['primary-600']};
     font-family: 'Pretendard Variable';
@@ -223,7 +226,7 @@ const Title = styled.section`
 const Content = styled.section`
   color: ${({ theme }) => theme.colors['white']};
   font-size: 16px;
-  margin-top: 20px;
+  margin-top: 28px;
 
   textarea {
     height: 200px;
@@ -231,7 +234,8 @@ const Content = styled.section`
     width: 100%;
     outline: none;
     font-family: 'Pretendard Variable';
-    font-size: 15px;
+    font-size: 14px;
+    line-height: 156%;
     border-radius: 12px;
     padding: 12px 16px;
     background: ${({ theme }) => theme.colors['primary-100']};
@@ -267,6 +271,7 @@ const Content = styled.section`
     align-items: center;
     font-size: 12px;
     color: ${({ theme }) => theme.colors['primary-200']};
+    margin-top: 4px;
   }
 `;
 
@@ -274,7 +279,7 @@ const ButtonContainer = styled(StickyBottomContainer)`
   display: flex;
   justify-content: center;
   margin-top: 48px;
-  gap: 12px;
+  gap: 8px;
   // position: sticky;
   // bottom: 12px;
   background: ${({ theme }) => theme.colors['primary-500']};

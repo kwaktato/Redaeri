@@ -96,7 +96,7 @@ const Circle = styled.div`
   border-radius: 50%;
   top: 18%;
   left: 18%;
-  animation: ${rotate} 2s linear infinite;
+  animation: ${rotate} 1.5s linear infinite;
 `;
 
 const LabelWrapper = styled.div`

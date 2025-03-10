@@ -140,7 +140,7 @@ const TitleWrapper = styled.label`
 `;
 
 const TitleDetail = styled.label`
-  color: ${({ theme }) => theme.colors['gray-800']};
+  color: ${({ theme }) => theme.colors['neutral-400']};
   font-family: 'GmarketSansMedium';
   font-size: 16px;
   font-weight: 400;
@@ -150,7 +150,7 @@ const TitleDetail = styled.label`
 const Title = styled.label`
   color: ${({ theme }) => theme.colors['gray-800']};
   font-family: 'GmarketSansMedium';
-  font-size: 25px;
+  font-size: 24px;
   font-weight: 400;
   line-height: 135%;
 `;
@@ -216,7 +216,8 @@ const ExamTitle = styled.label`
 `;
 
 const Exam = styled.label`
-  height: 67px;
+  height: 60px;
+  // padding: 0;
   padding-left: 12px;
   display: flex;
   flex-direction: column;
@@ -264,6 +265,6 @@ const ButtonBottom = styled.button`
 
   color: ${({ theme }) => theme.colors.white};
   font-family: 'Pretendard Variable';
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 599;
 `;
