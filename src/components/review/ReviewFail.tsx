@@ -35,7 +35,7 @@ const ReviewFail = ({ toReview }: ReviewFailProps) => {
 export default ReviewFail;
 
 const Container = styled.div`
-  padding: 0px 28px 48px 28px;
+  padding: 0px 28px 20px 28px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

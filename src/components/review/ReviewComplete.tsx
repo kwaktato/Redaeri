@@ -287,7 +287,7 @@ const Answer = styled.textarea`
 `;
 
 const Copy = styled(CopyIcon)`
-  width: 32px;
+  height: 28px;
 `;
 
 const Rewrite = styled.button`

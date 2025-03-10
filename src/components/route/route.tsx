@@ -12,6 +12,7 @@ import ReviewHistory from '@/components/review/ReviewHistory';
 import LoginCallback from '@/pages/login/login-callback';
 import DeletePage from '@/pages/account/DeletePage';
 import DeleteComplete from '@/pages/account/DeleteComplete';
+import ShopUpdate from '@/pages/shopUpdate/ShopUpdate';
 
 export default function CustomRoute() {
   return (
@@ -25,6 +26,7 @@ export default function CustomRoute() {
         <Route path='/persona' element={<Persona />} />
         <Route path='/shop-information' element={<ShopInformation />} />
         <Route path='/shop-check' element={<ShopCheck />} />
+        <Route path='/update-store' element={<ShopUpdate />} />
         <Route path='/upload-answer' element={<UploadReview />} />
         <Route path='/persona' element={<Persona />} />
         <Route path='/persona-success' element={<PersonaSuccess />} />

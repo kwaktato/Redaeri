@@ -25,8 +25,14 @@ export default function ShopCheck() {
           storeName: storeName,
           storeType: selectedFoodType?.name,
         });
-        navigate('/upload-answer');
-        window.scrollTo(0, 0);
+
+        if (localStorage.getItem('token')) {
+          navigate('/update-store');
+          window.scrollTo(0, 0);
+        } else {
+          navigate('/upload-answer');
+          window.scrollTo(0, 0);
+        }
         setIsloading(false);
         return;
       }

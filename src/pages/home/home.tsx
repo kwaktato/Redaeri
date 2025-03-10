@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import LogoIcon from '@/assets/images/logo.svg?react';
 import GreetingImg from '@/assets/images/greeting.svg?react';
 import { useNavigate } from 'react-router';
@@ -53,11 +52,12 @@ export default function Home() {
 
 const Container = styled.div`
   background: ${({ theme }) => theme.colors['primary-500']};
-  padding: 40px 28px 0 28px;
+  padding: 40px 28px 20px 28px;
   display: grid;
   grid-template-rows: 1fr auto;
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
+  overflow-x: hidden;
 `;
 
 const Greeting = styled(GreetingImg)`
@@ -65,6 +65,7 @@ const Greeting = styled(GreetingImg)`
   width: 280px;
   height: 360px;
   top: 25%;
+  right: -5%;
 `;
 
 const Logo = styled(LogoIcon)`
@@ -92,10 +93,10 @@ const ActionContainer = styled.div`
   align-items: center;
   font-size: 14px;
   text-align: center;
-  position: sticky;
-  bottom: 18px;
   background: ${({ theme }) => theme.colors['primary-500']};
   gap: 8px;
+  position: sticky;
+  bottom: 12px;
 
   color: ${({ theme }) => theme.colors['primary-100']};
   a {

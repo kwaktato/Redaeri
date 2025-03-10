@@ -245,10 +245,11 @@ const Content = styled.section`
   .content-title {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     margin-top: 6px;
     svg {
       border-radius: 6px;
+      height: 28px;
     }
     strong {
       font-weight: 599;
