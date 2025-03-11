@@ -162,7 +162,7 @@ export default function PersonaSuccess() {
         <WhiteButton
           colorScheme='white'
           onClick={() => {
-            navigate('/persona');
+            navigate('/upload-answer');
             window.scrollTo(0, 0);
           }}
           role='link'

@@ -67,7 +67,7 @@ export default function ShopCheck() {
     <Container>
       <Title>
         <p>
-          <strong>{selectedFoodType?.name}</strong>를(을) 판매하는
+          <strong>{selectedFoodType?.name}</strong>을(를) 판매하는
         </p>
         <p>
           <strong>{storeName}</strong> 사장님이시군요!

@@ -218,9 +218,9 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
 export default ReviewUpload;
 
 const Container = styled.div`
-  position: relative;
   padding: 0px 28px 20px 28px;
   min-height: 100vh;
+  position: relative;
 `;
 
 const Navbar = styled.div`

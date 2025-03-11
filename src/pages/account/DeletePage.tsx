@@ -79,7 +79,7 @@ const Title = styled.label`
 
   span {
     color: ${({ theme }) => theme.colors['primary-500']};
-    font-weight: 500;
+    font-weight: 599;
   }
 `;
 

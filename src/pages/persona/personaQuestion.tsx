@@ -132,7 +132,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
 `;
 
 const QuestionContainer = styled.div`

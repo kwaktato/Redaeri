@@ -11,7 +11,7 @@ export const getImageText = async (file: File) => {
   const formData = new FormData();
   formData.append('reviewImgFile', file);
 
-  return await fetcher<GetText>('image/text/read', {
+  return await fetcher<GetText>('/image/text/read', {
     method: 'POST',
     headers: {
       'Content-Type': 'multipart/form-data',

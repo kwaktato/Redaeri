@@ -10,7 +10,7 @@ interface ToastProps {
   message: string;
 }
 
-const TOAST_DURATION = 3000;
+const TOAST_DURATION = 2000;
 // TODO: 우선 순위 낮춰서 Width full로 들어오게 수정 예정
 export default function Toast({ isOpen, ...props }: ToastProps) {
   if (typeof window === 'undefined') return null;

@@ -10,6 +10,7 @@ import { StickyBottomContainer } from '@/components/stickyBottomContainer/sticky
 import Account from '@/pages/account/Account';
 import { getUser } from '@/services/user';
 import { User } from '@/types/user';
+import Toast from '@/components/toast/toast';
 
 interface ReviewCompleteProps {
   patchReview: (logIdx: number) => void;
@@ -21,7 +22,7 @@ interface ReviewCompleteProps {
 }
 
 // 5.4 답변 완료 - 완료
-/* eslint-disable no-console */
+
 const ReviewComplete = ({
   patchReview,
   logIdx = 0,
@@ -36,13 +37,22 @@ const ReviewComplete = ({
 
   // 답변 복사하기
   const [copyText, setCopyText] = useState(generateAnswer);
+  const [toastStatus, setToastStatus] = useState({
+    isOpen: false,
+    message: '',
+  });
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(copyText);
-      alert('답변이 클립보드에 복사되었습니다!');
-    } catch (e) {
-      alert('복사에 실패했습니다. 다시 시도해주세요.');
-      console.log('클립보드 복사 실패: ', e);
+      setToastStatus({
+        isOpen: true,
+        message: '복사되었습니다.',
+      });
+    } catch {
+      setToastStatus({
+        isOpen: true,
+        message: '복사를 실패했습니다.',
+      });
     }
   };
 
@@ -120,6 +130,12 @@ const ReviewComplete = ({
               </Button>
             </ButtonWrapper>
           </StickyBottomContainer>
+
+          <Toast
+            isOpen={toastStatus.isOpen}
+            onClose={() => setToastStatus({ isOpen: false, message: '' })}
+            message={toastStatus.message}
+          />
         </Container>
       )}
     </>

@@ -39,9 +39,9 @@ export const lengthMapping: { [key: string]: string } = {
 };
 
 export const lengthMappingSuccess: { [key: string]: string } = {
-  long: '정성이 담긴 장문',
-  medium: '적당한 중간 길이',
-  short: '핵심만 간단하게 단문',
+  long: '정성이 담긴 장문의 답변',
+  medium: '적당한 중간 길이의 답변',
+  short: '핵심만 간단하게 단문의 답변',
 };
 
 export const PERSONA_SELECT_QUESTION_VALUE = [

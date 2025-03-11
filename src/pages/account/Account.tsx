@@ -7,6 +7,7 @@ import { User } from '@/types/user';
 import { getUser } from '@/services/user';
 import { FOOD_TYPE } from '@/types/food';
 import { personaMapping } from '@/types/persona';
+import Toast from '@/components/toast/toast';
 
 interface AccountClose {
   close: () => void;
@@ -16,6 +17,11 @@ const Account = ({ close }: AccountClose) => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState<User>();
+
+  const [toastStatus, setToastStatus] = useState({
+    isOpen: false,
+    message: '',
+  });
 
   const foodItem = FOOD_TYPE.find((item) => item.name === user?.storeType);
   const selectedImage = foodItem?.image;
@@ -29,6 +35,10 @@ const Account = ({ close }: AccountClose) => {
 
   const logout = () => {
     localStorage.removeItem('token');
+    setToastStatus({
+      isOpen: true,
+      message: '로그아웃되었습니다.',
+    });
     navigate('/');
     window.scrollTo(0, 0);
   };
@@ -65,7 +75,7 @@ const Account = ({ close }: AccountClose) => {
         </Info>
       </Wrapper>
       <Wrapper>
-        <Title>페르소나</Title>
+        <Title>답변 스타일</Title>
         <Info
           onClick={() => {
             navigate('/persona-success');
@@ -73,6 +83,18 @@ const Account = ({ close }: AccountClose) => {
           }}
         >
           <label>{convert(personaMapping, user?.personaSelect)}</label>
+          <ArrowNext />
+        </Info>
+      </Wrapper>
+      <Wrapper>
+        <Title>리뷰 히스토리</Title>
+        <Info
+          onClick={() => {
+            navigate('/review-history');
+            window.scrollTo(0, 0);
+          }}
+        >
+          <label>생성했던 AI 답변 확인</label>
           <ArrowNext />
         </Info>
       </Wrapper>
@@ -88,6 +110,12 @@ const Account = ({ close }: AccountClose) => {
           서비스 탈퇴
         </label>
       </DeleteWrapper>
+
+      <Toast
+        isOpen={toastStatus.isOpen}
+        onClose={() => setToastStatus({ isOpen: false, message: '' })}
+        message={toastStatus.message}
+      />
     </Container>
   );
 };
