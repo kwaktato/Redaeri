@@ -19,6 +19,7 @@ export interface Answer {
   logIdx: number;
   score: number;
   generateAnswer: string;
+  baseAnswer: string;
   reviewType: string;
   reviewText: string;
 }

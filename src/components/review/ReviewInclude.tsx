@@ -111,6 +111,8 @@ const Container = styled.div`
   padding: 0px 28px 20px 28px;
   min-height: 100vh;
   position: relative;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Navbar = styled.div`

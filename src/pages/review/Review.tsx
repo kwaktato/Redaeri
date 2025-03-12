@@ -125,6 +125,7 @@ const Review = () => {
           patchReview={patchReview}
           logIdx={data?.logIdx}
           score={data?.score}
+          baseAnswer={data?.baseAnswer}
           generateAnswer={data?.generateAnswer}
           reviewType={reviewTypeFormat}
           reviewText={data?.reviewText}

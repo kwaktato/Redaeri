@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-
+import XICon from '@/assets/images/X.svg?react';
 import CloseIcon from '@/assets/images/close.svg?react';
 import { FOOD_TYPE } from '@/types/food';
 import Button from '@/components/button/Button';
@@ -14,6 +14,7 @@ export default function ShopInformation() {
     selectedImage: string;
   }>();
   const navigate = useNavigate();
+  const [isClose, setIsClose] = useState(false);
 
   const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,8 +24,20 @@ export default function ShopInformation() {
     window.scrollTo(0, 0);
   };
 
+  const close = () => {
+    navigate(-1);
+    window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setIsClose(true);
+    }
+  });
+
   return (
     <Form onSubmit={onSubmitForm}>
+      <Navbar>{isClose && <NavRight onClick={close} />}</Navbar>
       <ContentContainer>
         <Greeting>
           <p>사장님, 안녕하세요!</p>
@@ -86,7 +99,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 40px 28px 48px 28px;
+  padding: 0 28px 48px 28px;
 `;
 
 const Greeting = styled.section`
@@ -103,6 +116,27 @@ const Greeting = styled.section`
 const ContentContainer = styled.section`
   display: flex;
   flex-direction: column;
+  margin-top: -56px;
+`;
+
+const Navbar = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 64px;
+`;
+
+const NavRight = styled(XICon)`
+  cursor: pointer;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  right: -8px;
+  path {
+    stroke: ${({ theme }) => theme.colors['neutral-300']};
+  }
 `;
 
 const InputContainer = styled.div`

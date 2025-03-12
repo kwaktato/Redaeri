@@ -189,8 +189,8 @@ const QuestionButton = styled.button`
   gap: 4px;
   width: 100%;
   border-radius: 10px;
-  // height: 47px;
-  padding: 14px 0;
+  height: 47px;
+  // padding: 14px 0;
   font-weight: 500;
   background: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors['gray-900']};

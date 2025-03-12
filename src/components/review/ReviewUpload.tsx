@@ -78,8 +78,9 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
 
   return (
     <>
-      {infoOpen && <Account close={() => setInfoOpen(false)} />}
-      {!infoOpen && (
+      {infoOpen ? (
+        <Account close={() => setInfoOpen(false)} />
+      ) : (
         <Container>
           <Navbar>
             <NavRight onClick={() => setInfoOpen(true)} />
@@ -218,9 +219,11 @@ const ReviewUpload = ({ handleReviewUpload }: ReviewUploadProps) => {
 export default ReviewUpload;
 
 const Container = styled.div`
-  padding: 0px 28px 20px 28px;
+  padding: 0 28px 20px 28px;
   min-height: 100vh;
   position: relative;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Navbar = styled.div`
