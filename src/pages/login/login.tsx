@@ -140,14 +140,15 @@ const SwiperContainer = styled(Swiper)`
 `;
 
 const SwiperContent = styled(SwiperSlide)`
-  width: auto;
+  width: 100%;
   background: transparent;
   border-radius: 12px;
   img {
     border-radius: 20px;
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
     width: 100%;
-    height: auto;
+    height: 100%;
+    padding: 16px;
   }
 `;
 
