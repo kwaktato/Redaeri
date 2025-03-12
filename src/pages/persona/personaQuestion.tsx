@@ -39,14 +39,16 @@ export default function PersonaQuestion({
   isLastPage,
 }: PersonaQuestionProps) {
   const [selectedQuestion, setSelectedQuestion] = useState('');
-  const [preferPersona, setPreferPersona] = useState<PersonaPrefer>();
+  const [preferPersona, setPreferPersona] = useState<PersonaPrefer>({
+    preferPersona: '',
+  });
 
   useEffect(() => {
     (async () => {
       const data = await getPreferPersona();
       setPreferPersona(data);
     })();
-  }, [preferPersona]);
+  }, []);
 
   return (
     <>
@@ -80,7 +82,7 @@ export default function PersonaQuestion({
                         }
                         onClick={() => setSelectedQuestion(question)}
                       >
-                        {'nicePersona' ===
+                        {preferPersona.preferPersona ===
                           personaMapping[
                             PERSONA_SELECT_PERSONA_KEY[
                               PERSONA_SELECT_QUESTION_VALUE.indexOf(question)
