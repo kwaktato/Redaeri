@@ -29,6 +29,7 @@ export interface History {
   logIdx: number;
   score: number;
   generateAnswer: string;
+  baseAnswer: string;
   reviewType: string;
   reviewText: string;
   insertDate: string;

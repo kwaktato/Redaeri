@@ -186,7 +186,7 @@ const QuestionButton = styled.button`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  // gap: 4px;
   width: 100%;
   border-radius: 10px;
   height: 47px;

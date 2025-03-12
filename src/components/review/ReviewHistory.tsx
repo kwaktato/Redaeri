@@ -95,6 +95,7 @@ const ReviewHistory = () => {
             <ReviewCompleteClick
               logIdx={clickData.logIdx}
               score={clickData.score}
+              baseAnswer={clickData.baseAnswer}
               generateAnswer={clickData.generateAnswer}
               reviewType={reviewTypeFormat(clickData.reviewType)}
               reviewText={clickData.reviewText}
