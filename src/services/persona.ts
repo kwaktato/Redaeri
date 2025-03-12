@@ -1,5 +1,5 @@
 import { fetcher } from './request';
-import { GetPersonaType } from '@/types/persona';
+import { GetPersonaType, PersonaPrefer } from '@/types/persona';
 
 export const getPersona = async () => {
   const { data } = await fetcher<GetPersonaType>('/persona/get');
@@ -98,4 +98,9 @@ export const updatePersona = async ({
       personaSelect,
     },
   });
+};
+
+export const getPreferPersona = async () => {
+  const { data } = await fetcher<PersonaPrefer>('/persona/prefer');
+  return data;
 };

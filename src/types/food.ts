@@ -7,15 +7,15 @@ import Western from '@/assets/images/food/pasta.png';
 import Snack from '@/assets/images/food/tteok.png';
 import Night from '@/assets/images/food/night.png';
 import Dessert from '@/assets/images/food/dessert.png';
-import SelectedChicken from '@/assets/images/food/chicken-active.png';
-import SelectedFastFood from '@/assets/images/food/hambuger-active.png';
-import SelectedKorean from '@/assets/images/food/bibimbab-active.png';
-import SelectedChinese from '@/assets/images/food/asian-active.png';
-import SelectedJapanese from '@/assets/images/food/sushi-active.png';
-import SelectedWestern from '@/assets/images/food/pasta-active.png';
-import SelectedSnack from '@/assets/images/food/tteok-active.png';
-import SelectedNight from '@/assets/images/food/night-active.png';
-import SelectedDessert from '@/assets/images/food/dessert-active.png';
+import SelectedChicken from '@/assets/images/food/chicken.mp4';
+import SelectedFastFood from '@/assets/images/food/hamburger.mp4';
+import SelectedKorean from '@/assets/images/food/bibimbab.mp4';
+import SelectedChinese from '@/assets/images/food/asian.mp4';
+import SelectedJapanese from '@/assets/images/food/sushi.mp4';
+import SelectedWestern from '@/assets/images/food/pasta.mp4';
+import SelectedSnack from '@/assets/images/food/tteok.mp4';
+import SelectedNight from '@/assets/images/food/night.mp4';
+import SelectedDessert from '@/assets/images/food/dessert.mp4';
 
 export const FOOD_TYPE = [
   { name: '치킨/피자', image: Chicken, selectedImage: SelectedChicken },

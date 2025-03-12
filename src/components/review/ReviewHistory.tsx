@@ -237,7 +237,7 @@ const TextLabel = styled.label`
   font-weight: 500;
   line-height: 162.5%;
   height: 52px;
-  overflow: scroll;
+  overflow: hidden;
 `;
 
 const TimeWrapper = styled.div`

@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/components/button/Button';
@@ -6,8 +6,16 @@ import ReviewLong from '@/assets/images/review-long.png';
 import ReviewShort from '@/assets/images/review-short.png';
 import ReviewMeddle from '@/assets/images/review-middle.png';
 import ArrowLeft from '@/assets/images/arrow-left.svg?react';
-import { PERSONA_LENGTH_QUESTION, PersonaInsertType } from '@/types/persona';
+import {
+  PERSONA_LENGTH_QUESTION,
+  PERSONA_SELECT_PERSONA_KEY,
+  PERSONA_SELECT_QUESTION_VALUE,
+  PersonaInsertType,
+  personaMapping,
+  PersonaPrefer,
+} from '@/types/persona';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
+import { getPreferPersona } from '@/services/persona';
 
 const PERSONA_LENGTH_QUESTION_IMG = [ReviewLong, ReviewMeddle, ReviewShort];
 
@@ -31,6 +39,14 @@ export default function PersonaQuestion({
   isLastPage,
 }: PersonaQuestionProps) {
   const [selectedQuestion, setSelectedQuestion] = useState('');
+  const [preferPersona, setPreferPersona] = useState<PersonaPrefer>();
+
+  useEffect(() => {
+    (async () => {
+      const data = await getPreferPersona();
+      setPreferPersona(data);
+    })();
+  }, [preferPersona]);
 
   return (
     <>
@@ -55,17 +71,39 @@ export default function PersonaQuestion({
                       />
                     </ImageQuestionButton>
                   ))
-                : questions.map((question) => (
-                    <QuestionButton
-                      key={question}
-                      className={
-                        selectedQuestion === question ? 'selected' : ''
-                      }
-                      onClick={() => setSelectedQuestion(question)}
-                    >
-                      {question}
-                    </QuestionButton>
-                  ))}
+                : isFirstPage
+                  ? questions.map((question) => (
+                      <QuestionButton
+                        key={question}
+                        className={
+                          selectedQuestion === question ? 'selected' : ''
+                        }
+                        onClick={() => setSelectedQuestion(question)}
+                      >
+                        {'nicePersona' ===
+                          personaMapping[
+                            PERSONA_SELECT_PERSONA_KEY[
+                              PERSONA_SELECT_QUESTION_VALUE.indexOf(question)
+                            ]
+                          ] && (
+                          <label>
+                            많은 사장님들이 선택한 답변 스타일이에요!
+                          </label>
+                        )}
+                        {question}
+                      </QuestionButton>
+                    ))
+                  : questions.map((question) => (
+                      <QuestionButton
+                        key={question}
+                        className={
+                          selectedQuestion === question ? 'selected' : ''
+                        }
+                        onClick={() => setSelectedQuestion(question)}
+                      >
+                        {question}
+                      </QuestionButton>
+                    ))}
             </QuestionContainer>
           }
         </div>
@@ -142,8 +180,14 @@ const QuestionContainer = styled.div`
 `;
 
 const QuestionButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
   width: 100%;
   border-radius: 10px;
+  // height: 47px;
   padding: 14px 0;
   font-weight: 500;
   background: ${({ theme }) => theme.colors.white};
@@ -152,11 +196,19 @@ const QuestionButton = styled.button`
   border: 1px solid ${({ theme }) => theme.colors['gray-200']};
   font-size: 13px;
 
+  label {
+    font-size: 10px;
+    color: ${({ theme }) => theme.colors['primary-400']};
+  }
+
   &.selected {
-    border: 1px solid
-      ${({ theme }) => theme.colors['<primary-5></primary-5>00']};
+    border: 1px solid ${({ theme }) => theme.colors['primary-500']};
     background: ${({ theme }) => theme.colors['primary-400']};
     color: ${({ theme }) => theme.colors.white};
+
+    label {
+      color: ${({ theme }) => theme.colors.white};
+    }
   }
 `;
 

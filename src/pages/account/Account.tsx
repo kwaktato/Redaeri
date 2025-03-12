@@ -94,7 +94,7 @@ const Account = ({ close }: AccountClose) => {
             window.scrollTo(0, 0);
           }}
         >
-          <label>생성했던 AI 답변 확인</label>
+          <label>히스토리 확인하기</label>
           <ArrowNext />
         </Info>
       </Wrapper>

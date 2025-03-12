@@ -87,3 +87,7 @@ export interface GetPersonaType {
   personaIdx: number;
   storeIdx: number;
 }
+
+export interface PersonaPrefer {
+  preferPersona: string;
+}

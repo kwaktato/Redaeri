@@ -3,6 +3,7 @@ import LogoIcon from '@/assets/images/logo.svg?react';
 import GreetingImg from '@/assets/images/greeting.svg?react';
 import { useNavigate } from 'react-router';
 import { getUser } from '@/services/user';
+import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ export default function Home() {
 
 const Container = styled.div`
   background: ${({ theme }) => theme.colors['primary-500']};
-  padding: 40px 28px 20px 28px;
+  padding: 40px 0 20px 0;
   display: grid;
   grid-template-rows: 1fr auto;
   position: relative;
@@ -74,6 +75,7 @@ const Logo = styled(LogoIcon)`
 `;
 
 const Title = styled.div`
+  padding: 0 28px;
   color: ${({ theme }) => theme.colors['primary-200']};
   font-family: 'GmarketSansLight';
   font-size: 12px;
@@ -86,7 +88,7 @@ const Title = styled.div`
   }
 `;
 
-const ActionContainer = styled.div`
+const ActionContainer = styled(StickyBottomContainer)`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -95,8 +97,7 @@ const ActionContainer = styled.div`
   text-align: center;
   background: ${({ theme }) => theme.colors['primary-500']};
   gap: 8px;
-  position: sticky;
-  bottom: 12px;
+  padding: 0 28px;
 
   color: ${({ theme }) => theme.colors['primary-100']};
   a {
