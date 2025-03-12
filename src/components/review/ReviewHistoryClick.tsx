@@ -17,6 +17,7 @@ interface ReviewCompleteProps {
   //   patchReview: (logIdx: number) => void;
   logIdx?: number;
   score?: number;
+  baseAnswer?: string;
   generateAnswer?: string;
   reviewType?: string;
   reviewText?: string;
@@ -28,6 +29,7 @@ const ReviewCompleteClick = ({
   //   patchReview,
   logIdx = 0,
   score = 0,
+  baseAnswer = '',
   generateAnswer = '',
   reviewType,
   reviewText,
@@ -35,6 +37,10 @@ const ReviewCompleteClick = ({
   const navigate = useNavigate();
   const [user, setUser] = useState<User>();
   const [infoOpen, setInfoOpen] = useState(false);
+  const [toggle, setToggle] = useState(true);
+  const handleToggle = () => {
+    setToggle((prev) => !prev);
+  };
 
   // 답변 복사하기
   const [copyText, setCopyText] = useState(generateAnswer);
@@ -102,10 +108,18 @@ const ReviewCompleteClick = ({
               <AnswerTitle>
                 이렇게 <span>답변해보시는 건 어떨까요?</span>
               </AnswerTitle>
-              <Copy onClick={copy} />
+              <div className='wrapper'>
+                <div className='left'>
+                  <label>말투적용</label>
+                  <ToggleContainer onClick={handleToggle}>
+                    <Toggle checked={toggle} />
+                  </ToggleContainer>
+                </div>
+                <Copy onClick={copy} />
+              </div>
             </AnswerTitleWrapper>
             <Answer
-              value={copyText}
+              value={toggle ? copyText : baseAnswer}
               onChange={(e) => setCopyText(e.target.value)}
             />
             {/* <Rewrite onClick={() => patchReview(logIdx)}>
@@ -153,6 +167,8 @@ const Container = styled.div`
   padding: 0px 28px 20px 28px;
   min-height: 100vh;
   background: ${({ theme }) => theme.colors['gray-100']};
+  display: flex;
+  flex-direction: column;
 `;
 
 const Navbar = styled.div`
@@ -298,6 +314,64 @@ const AnswerTitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .left {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+    label {
+      color: ${({ theme }) => theme.colors['neutral-400']};
+      font-family: 'Pretendard Variable';
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 162.5%;
+      letter-spacing: -0.32px;
+    }
+  }
+`;
+
+const ToggleContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-itmes: center;
+  position: relative;
+  cursor: pointer;
+  width: 36px;
+  height: 18px;
+`;
+
+const Toggle = styled.div<{ checked: boolean }>`
+  position: absolute;
+  top: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: ${({ theme, checked }) =>
+    checked ? theme.colors['primary-500'] : theme.colors['gray-300']};
+
+  border-radius: 20px;
+  transition: background-color 0.5s;
+
+  &::before {
+    position: absolute;
+    content: '';
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: ${({ theme }) => theme.colors.white};
+    border-radius: 50%;
+    transition: transform 0.5s;
+    transform: ${({ checked }) =>
+      checked ? 'translateX(18px)' : 'translateX(0)'};
+  }
 `;
 
 const AnswerTitle = styled.label`

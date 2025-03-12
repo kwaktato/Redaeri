@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import LogoIcon from '@/assets/images/logo.svg?react';
-import GreetingImg from '@/assets/images/greeting.svg?react';
+import Intro from '@/assets/images/Intro.gif';
 import { useNavigate } from 'react-router';
 import { getUser } from '@/services/user';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
@@ -35,7 +35,7 @@ export default function Home() {
           <h1>리대리</h1>
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Greeting />
+          <Greeting src={Intro} />
         </div>
       </Title>
 
@@ -54,19 +54,17 @@ export default function Home() {
 const Container = styled.div`
   background: ${({ theme }) => theme.colors['primary-500']};
   padding: 40px 0 20px 0;
-  display: grid;
-  grid-template-rows: 1fr auto;
+  display: flex;
+  flex-direction: column;
   position: relative;
   min-height: 100vh;
-  overflow-x: hidden;
 `;
 
-const Greeting = styled(GreetingImg)`
+const Greeting = styled.img`
   position: absolute;
-  width: 280px;
-  height: 360px;
   top: 25%;
-  right: -5%;
+  height: 360px;
+  margin-right: -28px;
 `;
 
 const Logo = styled(LogoIcon)`
@@ -97,7 +95,8 @@ const ActionContainer = styled(StickyBottomContainer)`
   text-align: center;
   background: ${({ theme }) => theme.colors['primary-500']};
   gap: 8px;
-  padding: 0 28px;
+  padding-left: 28px;
+  padding-right: 28px;
 
   color: ${({ theme }) => theme.colors['primary-100']};
   a {

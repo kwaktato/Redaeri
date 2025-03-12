@@ -5,7 +5,7 @@ import { Autoplay } from 'swiper/modules';
 
 import WhiteLogo from '@/assets/images/blue-logo.svg?react';
 import NaverLogo from '@/assets/images/naver-logo.svg?react';
-import SlideImageOne from '@/assets/images/login-slide-1.png';
+import SlideImageOne from '@/assets/images/login-slide-1.svg';
 import SlideImageTwo from '@/assets/images/login-slide-2.png';
 import SlideImageThree from '@/assets/images/login-slide-3.png';
 // import KakaoLogo from '@/assets/images/kakao-logo.svg?react';
@@ -14,6 +14,7 @@ import Warning from '@/assets/images/warning.svg?react';
 import 'swiper/css';
 import { getTestToken } from '@/services/user';
 import { useNavigate } from 'react-router';
+import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ export default function Login() {
         height={200}
         modules={[Autoplay]}
         autoplay={{
-          delay: 4000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         loop={true}
@@ -122,15 +123,17 @@ export default function Login() {
 }
 
 const Container = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  padding: 40px 0 20px 0;
 `;
 
 const SwiperContainer = styled(Swiper)`
   width: 100%;
+  height: 100%;
   padding: 28px;
+  padding-bottom: 10px;
   .swiper-pagination-bullets {
     position: relative;
   }
@@ -149,8 +152,8 @@ const SwiperContent = styled(SwiperSlide)`
 `;
 
 const Title = styled.section`
-  padding: 0 35px;
-  padding-top: 20px;
+  padding: 0 28px;
+
   color: ${({ theme }) => theme.colors['primary-500']};
   font-size: 19px;
   h1 {
@@ -170,16 +173,15 @@ const Title = styled.section`
   }
 `;
 
-const LoginContainer = styled.section`
+const LoginContainer = styled(StickyBottomContainer)`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 0 35px;
   align-self: end;
   text-align: center;
-  margin-top: 32px;
-  position: sticky;
-  bottom: 18px;
+  padding-top: 18px;
+  padding-left: 28px;
+  padding-right: 28px;
   z-index: 100;
   background: ${({ theme }) => theme.colors['gray-100']};
 
