@@ -11,10 +11,11 @@ const DeletePage = () => {
   const [reviewCount, setReviewCount] = useState(0);
 
   const handleDelete = () => {
-    deleteUser();
-    localStorage.removeItem('token');
-    navigate('/delete-complete');
-    window.scrollTo(0, 0);
+    deleteUser().then(() => {
+      localStorage.removeItem('token');
+      navigate('/delete-complete');
+      window.scrollTo(0, 0);
+    });
   };
 
   useEffect(() => {
