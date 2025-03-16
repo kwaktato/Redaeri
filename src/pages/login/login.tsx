@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 
 import WhiteLogo from '@/assets/images/blue-logo.svg?react';
 import NaverLogo from '@/assets/images/naver-logo.svg?react';
@@ -64,9 +64,8 @@ export default function Login() {
       <Title>
         <h1>사장님의</h1>
         <div>
-          <h1>리뷰 답변 도우미,</h1>
           <h1>
-            <strong>리대리</strong>
+            리뷰 답변 도우미, <span>리대리</span>
           </h1>
           <WhiteLogo />
         </div>
@@ -75,9 +74,10 @@ export default function Login() {
       <SwiperContainer
         spaceBetween={16}
         slidesPerView={1}
-        pagination={true}
+        pagination={{ clickable: true }}
+        navigation={true}
         height={200}
-        modules={[Autoplay]}
+        modules={[Autoplay, Pagination]}
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,
@@ -130,12 +130,26 @@ const Container = styled.div`
 `;
 
 const SwiperContainer = styled(Swiper)`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   padding: 28px;
   padding-bottom: 10px;
-  .swiper-pagination-bullets {
-    position: relative;
+
+  .swiper-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .swiper-pagination-bullet {
+    background: ${({ theme }) => theme.colors['neutral-200']};
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: ${({ theme }) => theme.colors['primary-500']};
   }
 `;
 
@@ -145,7 +159,6 @@ const SwiperContent = styled(SwiperSlide)`
   border-radius: 12px;
   img {
     border-radius: 20px;
-    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
     width: 100%;
     height: 100%;
     padding: 16px;
@@ -158,7 +171,10 @@ const Title = styled.section`
   color: ${({ theme }) => theme.colors['primary-500']};
   font-size: 19px;
   h1 {
-    font-weight: 400;
+    font-weight: 500;
+  }
+  span {
+    font-weight: 650;
   }
   div {
     display: flex;

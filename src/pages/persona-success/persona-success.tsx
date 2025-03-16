@@ -240,6 +240,7 @@ const Content = styled.section`
     padding: 12px 16px;
     background: ${({ theme }) => theme.colors['primary-100']};
     color: ${({ theme }) => theme.colors['primary-700']};
+    resize: none;
   }
 
   .content-title {

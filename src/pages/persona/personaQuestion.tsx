@@ -76,6 +76,14 @@ export default function PersonaQuestion({
                 : isFirstPage
                   ? questions.map((question) => (
                       <QuestionButton
+                        isFavorite={
+                          preferPersona.preferPersona ===
+                          personaMapping[
+                            PERSONA_SELECT_PERSONA_KEY[
+                              PERSONA_SELECT_QUESTION_VALUE.indexOf(question)
+                            ]
+                          ]
+                        }
                         key={question}
                         className={
                           selectedQuestion === question ? 'selected' : ''
@@ -97,6 +105,7 @@ export default function PersonaQuestion({
                     ))
                   : questions.map((question) => (
                       <QuestionButton
+                        isFavorite={false}
                         key={question}
                         className={
                           selectedQuestion === question ? 'selected' : ''
@@ -181,7 +190,7 @@ const QuestionContainer = styled.div`
   flex-direction: column;
 `;
 
-const QuestionButton = styled.button`
+const QuestionButton = styled.button<{ isFavorite: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -195,7 +204,10 @@ const QuestionButton = styled.button`
   background: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors['gray-900']};
   font-family: 'Pretendard Variable';
-  border: 1px solid ${({ theme }) => theme.colors['gray-200']};
+  border: 1px solid
+    ${({ theme, isFavorite }) =>
+      isFavorite ? theme.colors['primary-500'] : theme.colors['gray-200']};
+
   font-size: 13px;
 
   label {

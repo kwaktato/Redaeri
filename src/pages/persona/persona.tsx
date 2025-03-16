@@ -103,12 +103,14 @@ export default function Persona() {
           <ProgressBar className={currentPage >= 0 ? 'active' : ''} />
           <ProgressBar className={currentPage >= 1 ? 'active' : ''} />
           <ProgressBar className={currentPage >= 2 ? 'active' : ''} />
-          <NavRight
-            onClick={() => {
-              navigate(-1);
-              window.scrollTo(0, 0);
-            }}
-          />
+          {persona && (
+            <NavRight
+              onClick={() => {
+                navigate('/persona-success');
+                window.scrollTo(0, 0);
+              }}
+            />
+          )}
         </ProgressBarContainer>
       </Navbar>
 

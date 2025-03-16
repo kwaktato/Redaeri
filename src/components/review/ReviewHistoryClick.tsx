@@ -101,7 +101,7 @@ const ReviewCompleteClick = ({
             ))}
           </Scores>
 
-          <Review>{reviewText}</Review>
+          <Review disabled={true}>{reviewText}</Review>
           <Arrow />
           <AnswerWrapper>
             <AnswerTitleWrapper>
@@ -121,6 +121,7 @@ const ReviewCompleteClick = ({
             <Answer
               value={toggle ? copyText : baseAnswer}
               onChange={(e) => setCopyText(e.target.value)}
+              disabled={toggle ? false : true}
             />
             {/* <Rewrite onClick={() => patchReview(logIdx)}>
               원하는 답변이 아닌가요? <span>답변 재작성하기</span>
@@ -290,6 +291,7 @@ const Review = styled.textarea`
   font-weight: 500;
   line-height: 162%;
   min-height: 152px;
+  outline: none;
 `;
 
 const Arrow = styled(ArrowDown)`
@@ -397,6 +399,7 @@ const Answer = styled.textarea`
   line-height: 162%;
   min-height: 200px;
   resize: none;
+  outline: none;
 `;
 
 const Copy = styled(CopyIcon)`
