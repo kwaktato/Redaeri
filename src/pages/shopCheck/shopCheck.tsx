@@ -75,7 +75,9 @@ export default function ShopCheck() {
         <p>가게 정보 설정을 완료할까요?</p>
       </Title>
       <Content>
-        <img src={selectedFoodType?.selectedImage} alt='' />
+        <video>
+          <source src={selectedFoodType?.selectedImage} type='video/mp4' />
+        </video>
       </Content>
       <LinkContainer>
         <BackButton

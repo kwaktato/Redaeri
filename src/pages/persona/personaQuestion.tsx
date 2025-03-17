@@ -7,6 +7,8 @@ import ReviewShort from '@/assets/images/review-short.png';
 import ReviewMeddle from '@/assets/images/review-middle.png';
 import ArrowLeft from '@/assets/images/arrow-left.svg?react';
 import {
+  emotionMapping,
+  EmotionPrefer,
   PERSONA_LENGTH_QUESTION,
   PERSONA_SELECT_PERSONA_KEY,
   PERSONA_SELECT_QUESTION_VALUE,
@@ -15,7 +17,7 @@ import {
   PersonaPrefer,
 } from '@/types/persona';
 import { StickyBottomContainer } from '@/components/stickyBottomContainer/stickyBottomContainer';
-import { getPreferPersona } from '@/services/persona';
+import { getPreferEmotion, getPreferPersona } from '@/services/persona';
 
 const PERSONA_LENGTH_QUESTION_IMG = [ReviewLong, ReviewMeddle, ReviewShort];
 
@@ -42,11 +44,17 @@ export default function PersonaQuestion({
   const [preferPersona, setPreferPersona] = useState<PersonaPrefer>({
     preferPersona: '',
   });
+  const [preferEmotion, setPreferEmotion] = useState<EmotionPrefer>({
+    preferEmotion: '',
+  });
 
   useEffect(() => {
     (async () => {
-      const data = await getPreferPersona();
-      setPreferPersona(data);
+      const persona = await getPreferPersona();
+      setPreferPersona(persona);
+
+      const emotion = await getPreferEmotion();
+      setPreferEmotion(emotion);
     })();
   }, []);
 
@@ -105,13 +113,22 @@ export default function PersonaQuestion({
                     ))
                   : questions.map((question) => (
                       <QuestionButton
-                        isFavorite={false}
+                        isFavorite={
+                          preferEmotion.preferEmotion ===
+                          emotionMapping[question]
+                        }
                         key={question}
                         className={
                           selectedQuestion === question ? 'selected' : ''
                         }
                         onClick={() => setSelectedQuestion(question)}
                       >
+                        {preferEmotion.preferEmotion ===
+                          emotionMapping[question] && (
+                          <label>
+                            많은 사장님들이 선택한 감정 스타일이에요!
+                          </label>
+                        )}
                         {question}
                       </QuestionButton>
                     ))}

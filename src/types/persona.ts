@@ -91,3 +91,7 @@ export interface GetPersonaType {
 export interface PersonaPrefer {
   preferPersona: string;
 }
+
+export interface EmotionPrefer {
+  preferEmotion: string;
+}
