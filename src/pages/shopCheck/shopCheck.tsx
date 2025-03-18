@@ -121,7 +121,7 @@ const Content = styled.section`
   align-items: center;
   padding: 30px 0;
   margin-bottom: 30px;
-  img {
+  video {
     width: 300px;
     height: 300px;
   }
