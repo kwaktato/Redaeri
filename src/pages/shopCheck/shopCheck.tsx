@@ -75,7 +75,7 @@ export default function ShopCheck() {
         <p>가게 정보 설정을 완료할까요?</p>
       </Title>
       <Content>
-        <video>
+        <video autoPlay loop muted playsInline>
           <source src={selectedFoodType?.selectedImage} type='video/mp4' />
         </video>
       </Content>
@@ -121,9 +121,12 @@ const Content = styled.section`
   align-items: center;
   padding: 30px 0;
   margin-bottom: 30px;
+  overflow: visible;
+
   video {
+    display: flex;
     width: 300px;
-    height: 300px;
+    height: auto;
   }
 `;
 

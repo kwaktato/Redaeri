@@ -35,7 +35,7 @@ export const emotionMappingSuccess: { [key: string]: string } = {
 export const lengthMapping: { [key: string]: string } = {
   '정성이 최고 긴~ 답변': 'long',
   '길지도 짧지도 않게 알잘딱깔센': 'medium',
-  '정성이 최고 짧은~ 답변': 'short',
+  '짧고 핵심만 간단하게! 단문 답변': 'short',
 };
 
 export const lengthMappingSuccess: { [key: string]: string } = {
